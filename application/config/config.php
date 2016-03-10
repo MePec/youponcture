@@ -10,6 +10,7 @@ define("TPL_DIR", "../application/templates/");
 //require_once(SMARTY_DIR . 'Smarty.class.php');
 
 require_once('Smarty.class.php');
+require_once('DBconfig.php');
 
 
 

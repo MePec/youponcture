@@ -1,21 +1,23 @@
 <?php
 
-// 1ère fonction de Test PDO pour requete SQL
-/* fonction getSymptoms()
- Description : permet de récupérer la liste de toutes les pathologies de la BDD
- Paramètres : ...
-*/
-function getPathos() {
-$sql = "SELECT * FROM patho ;";
+class Requetes{
 
-$querry = $dbh->prepare($sql);
-$querry->execute();
+	// 1ère fonction de Test PDO pour requete SQL
+	/* fonction getSymptoms()
+	 Description : permet de récupérer la liste de toutes les pathologies de la BDD
+	 Paramètres : ...
+	*/
+	function getPathos() {
+	$sql = "SELECT * FROM patho ;";
 
-$result = $querry->fetch(PDO::FETCH_ASSOC);
+	$querry = $this->dbh->prepare($sql);
+	$querry->execute();
 
-return $result;
+	$result = $querry->fetch(PDO::FETCH_ASSOC);
+
+	return $result;
+	}
+
 }
-
-
 
 ?>
