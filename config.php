@@ -4,12 +4,12 @@
 define("TPL_DIR", "www/display/tpl/");
 
 // Style Windows
-define('SMARTY_DIR', 'c:/Program Files (x86)/Smarty/libs/');
+//define('SMARTY_DIR', 'c:/Program Files (x86)/Smarty/libs/');
 
 // On inclut la classe Smarty
-require_once(SMARTY_DIR . 'Smarty.class.php');
+//require_once(SMARTY_DIR . 'Smarty.class.php');
 
-//require_once('Smarty.class.php');
+require_once('Smarty.class.php');
 
 
 
