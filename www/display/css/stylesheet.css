@@ -1,36 +1,11 @@
-/*GENERAL CONF*/
 body{
 	padding: 0;
 	margin: 0;
 }
 
-/*TOP HEAD*/
 header{
 	margin: 0;
 	padding: 0;
+	height: 40px;
+	background-color: red;
 }
-.bandeau{
-	margin: 0;
-	width: 100%;
-	background-color: #ed1313;
-
-}
-.bandeau h1{
-	position: relative;
-	left: 10%;
-	font-weight: bold;
-    font-size: 6em;
-    line-height: 1em;
-    color: #dcd9d9;
-    opacity: 0.8;
-    text-shadow: ;
-}
-.menu{
-
-}
-
-/*BOTTOM FOOTER*/
-
-
-/*CONTENT PAGE*/
-
