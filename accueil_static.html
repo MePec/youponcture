@@ -10,20 +10,44 @@
 
 <body>
 	<header>
-		<img src="" alt="">
-		<span>YouPoncture</span>
-		<nav>
-			<ul>
-				<li>Accueil</li>
-				<li>Wiki pathologie</li>
-				<li>Auteur</li>
-			</ul>
-		</nav>
-		<span><i class="fa fa-user"></i></span>
+		<div class="bandeau">
+			<img src="" alt="">
+			<span>YouPoncture</span>
+			<span><i class="fa fa-user"></i></span>
+		</div>
+		<div class="menu">
+			<nav>
+				<ul>
+					<li>Accueil</li>
+					<li>Wiki pathologie</li>
+					<li>Auteur</li>
+				</ul>
+			</nav>
+		</div>
 	</header>
 
-	<div class="content">
 
+	<div class="content">
+		<div class="register">
+			<h1>Nouvel utilisateur</h1>
+			<form>
+				<input class="nom"></input>
+				<input class="prenom"></input>
+				<input class="mail"></input>
+				<input class="mdp" type="password"></input>
+				<input class="confirm" type="password"></input>
+				<input type="submit">Créer un compte</input>
+			</form>
+		</div>
+		<div class="login">
+			<h1>Se connecter</h1>
+			<form>
+				<input class="mail"></input>
+				<input class="mdp" type="password"></input>
+				<input type="submit">Connexion</input>
+
+			</form>
+		</div>
 	</div>
 
 	<footer>
@@ -33,5 +57,6 @@
 			<li>Copyright</li>
 		</ul>
 	</footer>
+
 </body>
 </html>
