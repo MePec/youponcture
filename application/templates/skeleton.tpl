@@ -12,7 +12,7 @@
 	<header>
 		<div class="bandeau">
 			<img src="" alt="">
-			<h1>You Poncture</h1>
+			<h1>YouPoncture</h1>
 			<span><i class="fa fa-user"></i></span>
 		</div>
 		<div class="menu">
