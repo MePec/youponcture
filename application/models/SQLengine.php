@@ -10,7 +10,7 @@ class Requetes{
 	function getPathos() {
 	$sql = "SELECT * FROM patho ;";
 
-	$querry = $this->dbh->prepare($sql);
+	$querry = $dbh->prepare($sql);
 	$querry->execute();
 
 	$result = $querry->fetch(PDO::FETCH_ASSOC);

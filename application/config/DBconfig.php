@@ -2,6 +2,7 @@
 
 /* Ce fichier permet de configurer le lien avec la BDD */
 
+
 class DBconnection{
 	//$host = 'www.youponcture.sexidude.com'; //90.66.50.47	
 	private $host = 'localhost';
@@ -13,15 +14,16 @@ class DBconnection{
 
 	private $dbh;
 
-	public function dbcon($host, $user, $pass, $db, $charset , $dbh){
+	public function dbcon($host, $user, $pass, $db, $charset){
 		try
 		{
 
 			// Connexion à la BDD
-		    $this->dbh = new PDO('mysql:host='.$host.';dbname='.$db.';charset='.$charset.'', 'root', '', array(PDO::ATTR_PERSISTENT => true));
+		    $dbh = new PDO('mysql:host='.$host.';dbname='.$db.';charset='.$charset.'', 'root', '', array(PDO::ATTR_PERSISTENT => true));
 
 		    // Configurations supplémentaires
-			$this->dbh->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION); 
+			$dbh->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION); 
+			return $this->dbh;
 
 		}
 		catch (Exception $e)
@@ -34,6 +36,14 @@ class DBconnection{
 	}
 } // fin DBconnection
 
+class BaseModel {
+    protected $dbh;
 
+    public function __construct()
+    {
+        $database = new DbConnection();
+        $this->dbh = $database->dbcon('localhost',  'root', '' , 'youponcture_develop', 'utf8');
+    }
+}
 
 ?>

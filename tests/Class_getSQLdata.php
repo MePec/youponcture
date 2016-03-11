@@ -1,18 +1,20 @@
 <?php 
 
-require '../application/config/config.php';
-require '../application/models/SQLengine.php';
+include '../application/config/config.php';
+include '../application/models/SQLengine.php';
 
 
+$SQLdb = new BaseModel();
+//$SQLdb->dbcon($host, $user, $pass, $db, $charset , $dbh);
+//$db = $SQLdb->$dbh;
 
-$SQLeng = new Requetes();
-$resultat = $SQLeng->getPathos();
+
+$req = new Requetes();
+$resultat = $req->getPathos();
+
 
 print_r($resultat);
 
- // while($row = $req->fetch()) {    
- //      echo '<a href="membre-'.$row['id'].'.html">'.$row['pseudo'].'</a><br/>';    
- // } 
 
 
 

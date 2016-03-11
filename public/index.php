@@ -2,7 +2,7 @@
 
 require_once("../application/config/config.php");
 
-
+start_session();
 
 /*---------test temporaire SMARTY-------------*/
 $smarty = new Smarty();
