@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-03-11 11:07:04
+<?php /* Smarty version Smarty-3.1.21-dev, created on 2016-03-11 11:55:18
          compiled from "../application/templates/accueil_static_v2.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:94287274656e298a2c44b14-83539473%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,13 +7,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '6e62beb9b14cdf9d995b937eed41feab48a9b4ca' => 
     array (
       0 => '../application/templates/accueil_static_v2.tpl',
-      1 => 1457690822,
+      1 => 1457693228,
       2 => 'file',
     ),
     'f87efefc3b703e922c4cbad0469c4efe18b4b2ad' => 
     array (
       0 => '/home/maxime/public_html/application/templates/trame.tpl',
-      1 => 1457639852,
+      1 => 1457693228,
       2 => 'file',
     ),
   ),
