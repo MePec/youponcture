@@ -20,7 +20,7 @@
 				<ul>
 					<li>Accueil</li>
 					<li>Wiki pathologie</li>
-					<li><a href="infos.tpl">Informations<a/></li>
+					<li>Informations</li>
 				</ul>
 			</nav>
 		</div>
