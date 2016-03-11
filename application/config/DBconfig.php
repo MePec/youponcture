@@ -3,7 +3,7 @@
 /* Ce fichier permet de configurer le lien avec la BDD */
 
 
-class DBconnection{
+class DBconnection extends PDO {
 	//$host = 'www.youponcture.sexidude.com'; //90.66.50.47	
 	private $host = 'localhost';
 	private $port = '3306';
@@ -14,7 +14,7 @@ class DBconnection{
 
 	private $dbh;
 
-	public function dbcon($host, $user, $pass, $db, $charset){
+	public static function dbcon($host, $user, $pass, $db, $charset){
 		try
 		{
 
@@ -23,27 +23,15 @@ class DBconnection{
 
 		    // Configurations supplémentaires
 			$dbh->setAttribute(PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION); 
-			return $this->dbh;
-
 		}
 		catch (Exception $e)
 
 		{
-
 		        die('Erreur : ' . $e->getMessage());
-
 		}
+		return $dbh;
 	}
 } // fin DBconnection
 
-class BaseModel {
-    protected $dbh;
-
-    public function __construct()
-    {
-        $database = new DbConnection();
-        $this->dbh = $database->dbcon('localhost',  'root', '' , 'youponcture_develop', 'utf8');
-    }
-}
 
 ?>

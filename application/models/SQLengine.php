@@ -18,6 +18,22 @@ class Requetes{
 	return $result;
 	}
 
+	// 1ère fonction de Test PDO pour requete SQL
+	/* fonction getMeridiens()
+	 Description : permet de récupérer la liste de toutes les méridiens de la BDD
+	 Paramètres : aucun
+	*/
+	function getMeridiens() {
+	$sql = "SELECT nom FROM meridien ;";
+
+	$querry = $dbh->prepare($sql);
+	$querry->execute();
+
+	$result = $querry->fetch(PDO::FETCH_ASSOC);
+
+	return $result;
+	}
+
 }
 
 ?>
