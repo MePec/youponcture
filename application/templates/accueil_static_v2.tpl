@@ -1,4 +1,4 @@
-{extends file='www/display/tpl/trame.tpl'}
+{extends file='./trame.tpl'}
 {block name=contenu}
 		<div class="register">
 			<h1>Nouvel utilisateur</h1>

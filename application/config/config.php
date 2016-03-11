@@ -1,7 +1,7 @@
 <?php
 
 // définitions des Constantes utilisées pour tout le site
-define("TPL_DIR", "www/display/tpl/");
+define("TPL_DIR", "../application/templates/");
 
 // Style Windows
 //define('SMARTY_DIR', 'c:/Program Files (x86)/Smarty/libs/');
