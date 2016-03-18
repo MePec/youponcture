@@ -34,7 +34,7 @@
 		<ul>
 			<li><a href="">Auteur</a></li>
 			<li><a href="">Plan du site</a></li>
-			<li>Copyright {$name}</li>
+			<li>Copyright</li>
 		</ul>
 	</footer>
 
