@@ -2,12 +2,7 @@
     class DB {
 		private $dbh = null;
 
-        private $host = 'localhost';
-        private $port = '3306';
-        private $db = 'youponcture_develop';
-        private $user = 'christophe';
-        private $pass = 'christophe';
-        private $charset = 'utf8';
+        //private $charset = 'utf8';
 
 		/**
 	   	 * Constructeur
@@ -17,7 +12,6 @@
             if($this->dbh == null){
                 try {
                     $this->dbh = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
-                    //$this->dbh = new PDO('mysql:host='.$host.';dbname='.$db.'', 'root', '', array(PDO::ATTR_PERSISTENT => true));
                     $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     $this->dbh->exec('SET NAMES utf8');
                 } catch (PDOException $e) {

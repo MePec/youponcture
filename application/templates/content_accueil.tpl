@@ -3,7 +3,7 @@
 		<div class="register">
 			<h1>Nouvel utilisateur</h1>
 			<form action="#">
-				<input type="text" alt="Nom" name="nom" value="etrer votre nom"></input>
+				<input type="text" alt="Nom" name="nom" value="Rentrer votre nom"></input>
 				<input type="text" alt="Prenom" name="prenom" ></input>
 				<input type="text" ></input>
 				<input type="text" type="password"></input>

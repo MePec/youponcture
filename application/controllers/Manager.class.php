@@ -32,8 +32,12 @@
 							break;	
 
 						case "2":
+							$this->submitForm_MainRecherches();
+							break;
+
+						case "3":
 							$this->submitForm_KeywordRecherches();
-							break;	
+							break;		
 
 						default:
 							$this->displayRecherches();
@@ -61,7 +65,6 @@
 		 * Permet d'afficher la page principale de recherches (sans traitements)
 		 */
 		public function displayRecherches(){
-			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 
 			$resultat_patho = $this->engine->getPathos();
 			$data_patho = $resultat_patho['data'];
@@ -106,7 +109,85 @@
 			}
 			$this->smarty->assign('symptoms',$list_sympt);
 
+
+			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 		}
+
+		/**
+		 * Fonction submitForm_KeywordRecherches
+		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par mot clés
+		 */
+		public function submitForm_KeywordRecherches(){
+				if (isset($_POST['keywords']) && !empty($_POST['keywords']))
+					$data_send = true;
+				else{
+					$data_send = false;
+					header('Location: index.php?p=2'); //prévoir message d'erreur
+				}
+				
+
+				if($data_send == true){
+					$key = $_POST['keywords'];
+
+					$result_sympt_ky = $this->engine->getSymptoms_Keywords($key);
+					$data_sympt_ky = $result_sympt_ky['data'];
+					$nb_sympt_ky = $result_sympt_ky['nb'];
+
+					$list_sympt_ky = array();
+
+					if($nb_sympt_ky > 0) {								
+						for($i = 0; $i < $nb_sympt_ky; $i++){	
+							$list_sympt_ky[$i]['SYMPTOMS'] = $data_sympt_ky[$i]['desc'];
+						}
+					}
+					$this->smarty->assign('symptoms_ky',$list_sympt_ky);
+
+				}		
+
+			$this->displayRecherches();	
+
+			$this->smarty->display(TPL_DIR."content_recherche.tpl");		
+		}	
+
+				/**
+		 * Fonction submitForm_MainRecherches
+		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par critère
+		 */
+		public function submitForm_MainRecherches(){
+				if (isset($_POST['type_patho']) && !empty($_POST['type_patho']) 
+					&& isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) 
+					&& isset($_POST['caracteristiques_meridien']) && !empty($_POST['caracteristiques_meridien']) )
+					$data_send = true;
+				else
+					$data_send = false;
+					header('Location: index.php?p=2');
+					//prévoir message d'erreur
+
+				if($data_send == true){
+					$patho = $_POST['type_patho'];
+					$meridien = $_POST['type_meridien'];
+					$caracter = $_POST['caracteristiques_meridien'];
+
+					$result_path = $this->engine->getList_Patho($patho,$meridien,$caracter);
+					$data_path = $result_path['data'];
+					$nb_path = $result_path['nb'];
+
+					$list_patho = array();
+
+					if($nb_path > 0) {								
+						for($i = 0; $i < $nb_path; $i++){	
+							$list_patho[$i]['SYMPTOMS'] = $data_path[$i]['desci'];
+						}
+					}
+					$this->smarty->assign('pathos',$list_patho);
+
+				}
+
+			$this->displayRecherches();	
+
+			$this->smarty->display(TPL_DIR."content_recherche.tpl");		
+		}	
+
 
 		/**
 		 * Fonction displayCredits

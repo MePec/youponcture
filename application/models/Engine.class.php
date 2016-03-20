@@ -64,11 +64,29 @@
 		 Paramètres : aucun
 		*/
 		function getSymptoms_Keywords($keyword) {
-			// $sql = "SELECT * FROM symptome 
-			// 		WHERE desc LIKE '%".$keyword."%' 
-			// 		UNION ALL 
-			// 		SELECT * FROM patho
-			// 		WHERE desc LIKE '%".$keyword."%' ;";
+			$sql = "SELECT * FROM patho pat
+					LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
+					LEFT JOIN symptome sy ON sp.idS = sy.idS
+					LEFT JOIN keysympt ks ON sy.idS = ks.idS
+					LEFT JOIN keywords kw ON kw.idK = ks.idK 
+					WHERE kw.name LIKE '".$keyword."' ";
+
+			$query = $this->db->prepare($sql);
+			$query->execute();
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$result['nb'] = $query->rowCount();
+				
+			return $result;	
+		}
+
+		/* fonction getList_Patho()
+		 Description : permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
+		 Paramètres : aucun
+		*/
+		function getList_Patho($patho,$meridien,$caracter) {
+			$sql = "SELECT * FROM patho pat
+					WHERE type LIKE '%".$meridien."%' ;";
 
 			$query = $this->db->prepare($sql);
 			$query->execute();
