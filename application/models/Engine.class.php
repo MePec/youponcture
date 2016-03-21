@@ -10,7 +10,57 @@
 	       	$this->db = $db;		
 	  	}
 
-		// 1ère fonction de Test PDO pour requete SQL
+
+	  	/**
+		 * checkIdentity
+		 * Permet de vérifier si l'utilisateur est loggué 
+		 * @param $login : Login envoyé par le formulaire $_POST
+		 * @param $MDP : MDP envoyé par le formulaire $_POST
+		 * @result le résultat de la requete
+		 */
+		public function checkIdentity($login,$MDP){
+			$sql = "SELECT DISTINCT login, 
+									MDP
+					FROM  Users
+					WHERE Login = :LOGIN AND 
+						  MDP = :MDP";
+			
+			$query = $this->db->prepare($sql);		
+			
+			$query->bindValue(':LOGIN', $login);
+			$query->bindValue(':MDP', $MDP);
+			
+			$query->execute();
+				
+			return $query->rowCount();			
+		}
+
+		/**
+		 * signIn
+		 * Permet d'insérer les données pour l'inscription d'un membre
+		 * @result le résultat de la requete
+		 */
+		public function signIn($login,$mdp, $nom ,$prenom){
+			$sql = "INSERT INTO Users(name, prenom, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN) ";
+			
+			$query = $this->db->prepare($sql);		
+			
+			$query->bindValue(':LOGIN', $login);
+			$query->bindValue(':MDP', $mdp);
+			$query->bindValue(':NOM', $nom);
+			$query->bindValue(':PRENOM', $prenom);
+			
+			$resultats = $query->execute();
+
+			//pour tester si l'insertion s'est bien faite
+			if($resultats===FALSE){
+				$data = false;
+			}else{
+				$data = true;
+				return $data;
+			}		
+		}
+
 		/* fonction getPathos()
 		 Description : permet de récupérer la liste de toutes les pathologies de la BDD
 		 Paramètres : ...
@@ -70,6 +120,9 @@
 					LEFT JOIN keysympt ks ON sy.idS = ks.idS
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
 					WHERE kw.name LIKE '".$keyword."' ";
+
+			// $sql = "SELECT * FROM symptome
+			// 		WHERE desc LIKE '".$keyword."' ";
 
 			$query = $this->db->prepare($sql);
 			$query->execute();

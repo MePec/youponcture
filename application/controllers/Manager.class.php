@@ -20,10 +20,51 @@
 			$this->page = $page;
 			$this->section = $section;
 			
+			$logged = false;
+				
+			// Controle du Login et MDP lors de la connexion
+			if (isset($_POST['login']) && isset($_POST['mdp'])) {
+				//$mdp = md5($_POST['MDP']);
+				$mdp = $_POST['mdp'];
+				
+				$logged = $this->engine->checkIdentity($_POST['login'], $mdp);
+				
+				if (isset($_POST['connexion']) && ($logged != true)) {
+					$_SESSION['login'] = $_POST['login'];
+					$_SESSION['mdp'] = $mdp;	
+					$_SESSION['Logged'] = true;			
+					$_SESSION['logon_status'] = "Connecté";
+				}
+				else{
+					$_SESSION['Logged'] = false;
+					$_SESSION['logon_status'] = "Non connecté";
+				}
+			}
+				
+			if(isset($_SESSION['Logged']) && $_SESSION['Logged'] != true){
+				$logged = false; // faire avec $_SESSION['Logged'] sinon (si probleme de visibilité de la variable)
+				$_SESSION['logon_status'] = "Non connecté";
+			}
+			//penser à faire : si pas loggé : pas afficher rechercher par mots-clés dans page Recherches
+
+
+			// a voir si je le laisse ici ou à déplacer				
+			//$this->smarty->assign('session',$logon_status);
+
 			switch($page){
 				case "1":
-					$this->displayHome();
-					break;
+				switch($this->section){
+						case "1":
+							$this->submitSignForm();
+							break;	
+
+						case "2":
+							$this->submitLoginForm();
+							break;	
+
+						default:
+							$this->displayHome();
+				}
 			
 				case "2":
 					switch($this->section){
@@ -56,10 +97,88 @@
 		 * Fonction displayHome
 		 * Permet d'afficher la page d'accueil
 		 */
-		public function displayHome(){
-			$this->smarty->display(TPL_DIR."content_accueil.tpl");		
+		public function displayHome(){	
+			$this->smarty->display(TPL_DIR."content_accueil.tpl");	
 		}	
 		
+
+		/**
+		 * Fonction submitLoginForm
+		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
+		 */
+		public function submitLoginForm(){
+			// Controle du Login et MDP lors de la connexion
+			if (isset($_POST['login']) && isset($_POST['mdp'])) {
+				//$mdp = md5($_POST['MDP']);
+				$mdp = $_POST['mdp'];
+				
+				$logged = $this->engine->checkIdentity($_POST['login'], $mdp);
+				
+				if (isset($_POST['connexion']) && ($logged != true)) {
+					$_SESSION['login'] = $_POST['login'];
+					$_SESSION['mdp'] = $mdp;	
+					$_SESSION['Logged'] = true;	
+					header('Location: index.php?p=2');		
+				}
+				else {
+					$_SESSION['Logged'] = false;
+					header('Location: index.php?p=1'); 
+				}
+			}
+			else
+				header('Location: index.php?p=1'); 
+				//prévoir message d'erreur		
+		}	
+
+		/**
+		 * Fonction submitSignForm
+		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
+		 */
+		public function submitSignForm(){
+			if (isset($_POST['send_signup']) && !empty($_POST['send_signup']))
+				$data_send = true;
+			else {
+				$data_send = false;
+				header('Location: index.php?p=1'); 
+				// prévoir fonction php de gestion de message d'erreur qui renvoit une alerte JS
+			}
+
+			if ($data_send == true) {
+				//$mdp = md5($_POST['MDP']);
+				$login = $_POST['login'];
+				$mdp = $_POST['mdp'];
+				$mdp_bis = $_POST['mdp_bis'];
+				$nom = $_POST['nom'];
+				$prenom = $_POST['prenom'];
+				//$email = $_POST['email'];
+				
+				// vérification de la sdouble saisie du mdp
+				if($mdp == $mdp_bis){
+
+					$sign_in = $this->engine->signIn($login, $mdp, $nom , $prenom);
+					// $this->engine->signIn($login, $mdp, $nom , $prenom);
+				
+					// message si erreur dans l'insertion en BDD
+					if ($sign_in == false)  {
+						header('Location: index.php?p=1');
+					}
+					else{
+						// insertion s'est bien passé
+					}
+
+					// penser à prévoir messsage JS (ou insertion en PHP  en dur) pour confirmer l'inscription quand pas de problèmes
+					header('Location: index.php?p=3');
+
+				}
+				else{
+					header('Location: index.php?p=1');
+					// message d'avertissement : MDP non égaux
+
+				}
+			}
+	
+		}
+
 		/**
 		 * Fonction displayRecherches
 		 * Permet d'afficher la page principale de recherches (sans traitements)
@@ -149,7 +268,7 @@
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");		
 		}	
 
-				/**
+		/**
 		 * Fonction submitForm_MainRecherches
 		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par critère
 		 */
