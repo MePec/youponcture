@@ -42,7 +42,7 @@
 
 	<div class="keyword_results">
 		<h1>Résultats par mots-clé :</h1>
-		<table id="ky_results" border="1" >
+<!-- 		<table id="ky_results" border="1" >
 			<tr>
 			   <th>Résultat</th>
 			</tr>
@@ -52,7 +52,7 @@
 			{/section}
 			</tr>
 			
-		</table>
+		</table> -->
 	</div>
 
 	<div class="list">

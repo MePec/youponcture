@@ -221,12 +221,12 @@
 
 
 			// Assignation Symptomes
-			if($nb_sympt > 0) {								
-				for($i = 0; $i < $nb_sympt; $i++){	
-					$list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desci'];
-				}
-			}
-			$this->smarty->assign('symptoms',$list_sympt);
+			// if($nb_sympt > 0) {								
+			// 	for($i = 0; $i < $nb_sympt; $i++){	
+			// 		$list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desci'];
+			// 	}
+			// }
+			// $this->smarty->assign('symptoms',$list_sympt);
 
 
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");
