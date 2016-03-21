@@ -42,37 +42,52 @@
 
 	<div class="keyword_results">
 		<h1>Résultats par mots-clé :</h1>
-<!-- 		<table id="ky_results" border="1" >
+		<table id="ky_results" border="1" >
 			<tr>
 			   <th>Résultat</th>
+			   <th>Symptômes</th>
 			</tr>
-			{section name=result_sympt loop=$symptoms_ky}
+			{section name=result_patho loop=$patho_ky}
 			<tr>
-				<td>{$symptoms_ky[result_sympt].SYMPTOMS}</td>	
-			{/section}
-			</tr>
-			
-		</table> -->
+				<td>{$patho_ky[result_patho].PATHOS}</td>			
+			</tr>		
+			{/section}	
+		</table>
 	</div>
 
+
+ 
 	<div class="list">
 		<h1>Liste des résultats :</h1>
-		<table id="list_result" border="1" >
+		<table id="list_result_pat" border="1" >
 			<tr>
 			   <th>Pathologies</th>
-<!-- 			   <th>Méridiens</th>
-			   <th>Symptomes</th> -->
 			</tr>
 			{section name=customer loop=$pathology}
 			<tr>
 				<td>{$pathology[customer].PATHO_DESC}</td>	
-<!-- 			{/section}
-			{section name=merid loop=$meridiens}
-				<td>{$meridiens[merid].MERID_DESC}</td>	
+			</tr>
 			{/section}
+		</table>
+
+		<table id="list_result_mer" border="1" >
+			<tr>
+			   <th>Méridiens</th>
+			</tr>
+			{section name=merid loop=$meridiens}
+			<tr>
+				<td>{$meridiens[merid].MERID_DESC}</td>	
+			</tr>
+			{/section}
+		</table>
+
+		<table id="list_result_sympt" border="1" >
+			<tr>
+			   <th>Symptomes</th>
+			</tr>
 			{section name=sympt loop=$symptoms}
-				<td>{$symptoms[sympt].SYMPT_DESC}</td> -->	
-				
+			<tr>
+				<td>{$symptoms[sympt].SYMPT_DESC}</td>	
 			</tr>
 			{/section}
 		</table>

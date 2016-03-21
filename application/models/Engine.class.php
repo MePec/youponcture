@@ -109,11 +109,11 @@
 			return $result;	
 		}
 
-		/* fonction getSymptoms_Keywords()
-		 Description : permet de récupérer la liste des symptoms par mot-clé
+		/* fonction getPathos_Keywords()
+		 Description : permet de récupérer la liste des pathologies par mot-clé
 		 Paramètres : aucun
 		*/
-		function getSymptoms_Keywords($keyword) {
+		function getPathos_Keywords($keyword) {
 			$sql = "SELECT * FROM patho pat
 					LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
 					LEFT JOIN symptome sy ON sp.idS = sy.idS
@@ -121,8 +121,29 @@
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
 					WHERE kw.name LIKE '".$keyword."' ";
 
+			//$sql = "SELECT * FROM patho pat ";
+
 			// $sql = "SELECT * FROM symptome
 			// 		WHERE desc LIKE '".$keyword."' ";
+
+			$query = $this->db->prepare($sql);
+			$query->execute();
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$result['nb'] = $query->rowCount();
+				
+			return $result;	
+		}
+
+		/* fonction getSymptoms_Keywords()
+		 Description : permet de récupérer la liste des symptoms comprenant le mot-clé  -  en association avec la fonction getPathos_Keywords
+		 Paramètres : aucun
+		*/
+		function getSymptoms_Keywords($keyword) {
+			$sql = "SELECT * FROM symptome sy
+					LEFT JOIN keysympt ks ON sy.idS = ks.idS
+					LEFT JOIN keywords kw ON kw.idK = ks.idK 
+					WHERE kw.name LIKE '".$keyword."' ";
 
 			$query = $this->db->prepare($sql);
 			$query->execute();

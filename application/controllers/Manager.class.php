@@ -221,12 +221,12 @@
 
 
 			// Assignation Symptomes
-			// if($nb_sympt > 0) {								
-			// 	for($i = 0; $i < $nb_sympt; $i++){	
-			// 		$list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desci'];
-			// 	}
-			// }
-			// $this->smarty->assign('symptoms',$list_sympt);
+			if($nb_sympt > 0) {								
+				for($i = 0; $i < $nb_sympt; $i++){	
+					$list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desc'];
+				}
+			}
+			$this->smarty->assign('symptoms',$list_sympt);
 
 
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");
@@ -248,18 +248,41 @@
 				if($data_send == true){
 					$key = $_POST['keywords'];
 
-					$result_sympt_ky = $this->engine->getSymptoms_Keywords($key);
-					$data_sympt_ky = $result_sympt_ky['data'];
-					$nb_sympt_ky = $result_sympt_ky['nb'];
+					// récupération des résultats de pathologie selon le mots clé
+					$result_path_ky = $this->engine->getPathos_Keywords($key);
+					$data_patho_ky = $result_path_ky['data'];
+					$nb_patho_ky = $result_path_ky['nb'];
 
-					$list_sympt_ky = array();
+					$list_patho_ky = array();
 
-					if($nb_sympt_ky > 0) {								
-						for($i = 0; $i < $nb_sympt_ky; $i++){	
-							$list_sympt_ky[$i]['SYMPTOMS'] = $data_sympt_ky[$i]['desc'];
+					if($nb_patho_ky > 0) {								
+						for($i = 0; $i < $nb_patho_ky; $i++){	
+							$list_patho_ky[$i]['PATHOS'] = $data_patho_ky[$i]['desc'];
 						}
 					}
-					$this->smarty->assign('symptoms_ky',$list_sympt_ky);
+					$this->smarty->assign('patho_ky',$list_patho_ky);
+					var_dump($list_patho_ky);
+
+					// récupération des symptomes selon le mot-clé
+					// $result_sympt_ky = $this->engine->getSymptoms_Keywords($key);
+					// $data_sympt_ky = $result_sympt_ky['data'];
+					// $nb_sympt_ky = $result_sympt_ky['nb'];
+
+					// $list_sympt_ky = array();
+
+					// if($nb_sympt_ky > 0) {								
+					// 	for($i = 0; $i < $nb_sympt_ky; $i++){	
+					// 		$list_sympt_ky[$i]['SYMPTOMS'] = $data_sympt_ky[$i]['desc'];
+					// 	}
+					// }
+					// $this->smarty->assign('symptoms_ky',$list_sympt_ky);
+					//var_dump($list_sympt_ky);
+
+					// $datas = array(
+					// 	          array('sympt' => $list_sympt_ky),
+					// 	          array('pat' => $list_patho_ky)
+					// 	        );
+					// $this->smarty->assign('results',$datas);
 
 				}		
 
