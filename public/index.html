@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<meta name="keywords" content="xhtml, html5, form" />
+	<meta name="author" content="PE Cochet - Fr Michel - Ch Chaumier - Mx Brunet" />
+	<title>YouPoncture</title>
+	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+	<header>
+		<div class="bandeau">
+			<img src="" alt="">
+			<h1>YouPoncture</h1>
+			<span><i class="fa fa-user"></i></span>
+		</div>
+		<div class="menu">
+				<ul>
+					<li><a href="../public/index.html">Accueil</a></li>
+					<li><a href="../public/recherche.html">Wiki pathologie</a></li>
+					<li><a href="../public/infos.html">Informations</a></li>				
+				</ul>
+		</div>
+	</header>
+	<div class="content">
+		<div class="login">
+			<h1>Se connecter</h1>
+			<form action="#">
+				<input class="mail"></input>
+				<input class="mdp" type="password"></input>
+				<input type="submit">Connexion</input>
+
+			</form>
+		</div>
+
+		<div class="register">
+			<h1>Nouvel utilisateur</h1>
+			<form action="index.html" method="post">
+				<input type="text" alt="Nom" name="nom" value="Rentrer votre nom"></input>
+				<input type="text" alt="Prenom" name="prenom" value="Rentrer votre prenom"></input>
+				<input type="text" alt="Login" name="login" value="e mail"></input>
+				<input type="text" type="password" name="mdp" value="mdp"></input>
+				<input type="text" class="confirm"  type="password" name="mdp_bis" value="mdp bis">MDP Bis</input>
+				<input type="submit" value="Créer un compte" name="send_signup"></input>
+			</form>
+		</div>
+
+		<div class="login">
+			<h1>Se connecter</h1>
+			<form action="html" method="post">
+				<input class="mail" type="text" name="login" autofocus><label for="Login">Identifiant</label></input>
+				<input class="mdp" type="password" name="mdp"><label for="MDP">Mot de Passe</label></input>
+				<input type="submit" name="connexion" value="Se connecter">Connexion</input>
+
+			</form>
+		</div>
+	</div>
+
+
+
+
+	<footer>
+		<ul>
+			<li><a href="">Auteur</a></li>
+			<li><a href="">Plan du site</a></li>
+			<li>Copyright</li>
+		</ul>
+	</footer>
+
+</body>
+</html>
