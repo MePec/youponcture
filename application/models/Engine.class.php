@@ -61,6 +61,9 @@
 			}		
 		}
 
+
+
+
 		/* fonction getPathos()
 		 Description : permet de récupérer la liste de toutes les pathologies de la BDD
 		 Paramètres : ...
@@ -114,14 +117,19 @@
 		 Paramètres : aucun
 		*/
 		function getPathos_Keywords($keyword) {
-			$sql = "SELECT * FROM patho pat
-					LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
-					LEFT JOIN symptome sy ON sp.idS = sy.idS
-					LEFT JOIN keysympt ks ON sy.idS = ks.idS
-					LEFT JOIN keywords kw ON kw.idK = ks.idK 
-					WHERE kw.name LIKE '".$keyword."' ";
+			// $sql = "SELECT DISTINCT * FROM patho pat
+			// 		LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
+			// 		LEFT JOIN symptome sy ON sp.idS = sy.idS
+			// 		LEFT JOIN keysympt ks ON sy.idS = ks.idS
+			// 		LEFT JOIN keywords kw ON kw.idK = ks.idK 
+			// 		WHERE kw.name LIKE '".$keyword."' ";
 
-			//$sql = "SELECT * FROM patho pat ";
+			$sql = "SELECT * FROM patho p
+					RIGHT JOIN symptPatho sp ON sp.idP = p.idP
+					RIGHT JOIN symptome sy ON sp.idS = sy.idS
+					WHERE p.idP = 11";
+
+					// tester petit à petit en rajoutant LEFT JOIN
 
 			// $sql = "SELECT * FROM symptome
 			// 		WHERE desc LIKE '".$keyword."' ";
@@ -171,15 +179,31 @@
 		}
 
 
+		/**
+		 * getType_Merid
+		 * Permet de récupérer le type de meridien en rentrant en paramètre la catégorie de meridien et le caracteristique
+		 * @result le résultat de la requete
+		 */
+		public function getType_Merid($categorie_patho,$caracter) {
+			$sql = "SELECT type_mer FROM caracteristiques
+					WHERE type_patho = '".$categorie_patho."' AND type_caracteristiques = '".$caracter."' ;";
+			
+			$query = $this->db->prepare($sql);		
+			
+			$resultats = $query->execute();
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+				
+			return $result;	
+		}
+
 		/* fonction getList_Patho()
 		 Description : permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
 		 Paramètres : aucun
 		*/
-		function getList_Patho($categorie_patho,$meridien,$caracter) {
-			$sql = "SELECT * FROM patho pat
-					LEFT JOIN caracteristiques car ON car.type_patho = :CAR AND car.type_caracteristiques = :PATHO
-					WHERE pat.mer = '".$meridien."'
-					 ;";
+		function getList_Patho($meridien,$type_mer) {
+			$sql = "SELECT * FROM patho
+					WHERE mer = '".$meridien."' AND type = '".$type_mer."' ;";
 
 			// revoir principe de la requete
 
@@ -197,8 +221,8 @@
 
 			$query = $this->db->prepare($sql);
 			
-			$query->bindValue(':CAR', $caracter);
-			$query->bindValue(':PATHO', $categorie_patho);
+			// $query->bindValue(':CAR', $caracter);
+			// $query->bindValue(':PATHO', $categorie_patho);
 
 			$query->execute();
 

@@ -308,25 +308,32 @@
 
 				if($data_send == true){
 					$categorie_patho = $_POST['type_patho'];
+					$caracter = $_POST['caracteristiques_meridien'];
 					$meridien = $_POST['type_meridien'];
 					$data_meridien = $this->engine->getCodeMeridien($meridien);
 					$meridien = $data_meridien['data'][0]['code'] ;
 
-					$caracter = $_POST['caracteristiques_meridien'];
+					$data_type_mer = $this->engine->getType_Merid($categorie_patho,$caracter);
+					$type_mer = $data_type_mer['data'][0]['type_mer'];
 
-					$result_path = $this->engine->getList_Patho($categorie_patho,$meridien,$caracter);
+					$result_path = $this->engine->getList_Patho($meridien,$type_mer);
 					$data_path = $result_path['data'];
 					$nb_path = $result_path['nb'];
 
 					$list_patho = array();
 
-					if($nb_path > 0) {								
+					if($nb_path > 0) {						
 						for($i = 0; $i < $nb_path; $i++){	
 							$list_patho[$i]['RESULT_PATHO'] = $data_path[$i]['desc'];
 						}
 					}
-					$this->smarty->assign('patho_res',$list_patho);
-
+					if($list_patho != null){
+						$this->smarty->assign('patho_res',$list_patho);
+					}
+					else{
+						$msg[0]['RESULT_PATHO'] = "Pas de résultats trouvés pour cette recherche";
+						$this->smarty->assign('patho_res',$msg);
+					}
 				}
 
 			$this->displayRecherches();	

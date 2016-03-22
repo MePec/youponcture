@@ -7,9 +7,9 @@ define('DB_DSN', 'mysql:dbname=youponcture_develop;host=localhost');
 define('DB_USER', 'guest');
 define('DB_PASSWORD', 'Y0uPonctur3');
 
-// define('DB_DSN', 'mysql:dbname=youponcture_develop;host=');
-// define('DB_USER', 'christophe');
-// define('DB_PASSWORD', 'christophe');
+// define('DB_DSN', 'mysql:dbname=youponcture_develop;host=localhost');
+// define('DB_USER', 'root');
+// define('DB_PASSWORD', '');
 
 // Style Windows
 //define('SMARTY_DIR', 'c:/Program Files (x86)/Smarty/libs/');

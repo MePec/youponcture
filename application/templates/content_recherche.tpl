@@ -7,21 +7,38 @@
 				<legend>Par critère : </legend>
 				<label class="type_critere" for="type_patho">Type de Pathologie :</label>
 				 <select name="type_patho">
-				   <option value="meridien">Méridien</option>
-				   <option value="organe_viscere">Organe/Viscère</option>
-				   <option value="luo">Luo</option>
-				   <option value="merveilleux">Merveilleux vaisseaux</option>
-				   <option value="jing">Jing jin</option>
+				   <option value="m">Méridien</option>{assign var="meridien" value="m"}
+				   <option value="tf">Organe/Viscère</option>
+				   <option value="l">Luo</option>
+				   <option value="mv">Merveilleux vaisseaux</option>
+				   <option value="j">Jing jin</option>
 				</select> 
+
+				{*
+				{if $meridien == 'm'}
 				<label class="type_critere" for="caracteristiques">Caractéristiques :</label>
 				 <select name="caracteristiques_meridien" tabindex="">
-				   <option value="plein">Plein</option>
-				   <option value="chaud">Chaud</option>
-				   <option value="vide">Vide</option>
-				   <option value="froid">Froid</option>
-				   <option value="interne">Interne</option>
-				   <option value="externe">Externe</option>
+				   <option value="i">Interne</option>
+				   <option value="e">Externe</option>
 				</select> 
+				{else}
+					<div>Test Tof !!</div>
+				{/if}
+				*}
+
+
+
+				<label class="type_critere" for="caracteristiques">Caractéristiques :</label>
+				 <select name="caracteristiques_meridien" tabindex="">
+				   <option value="p">Plein</option>
+				   <option value="c">Chaud</option>
+				   <option value="v">Vide</option>
+				   <option value="f">Froid</option>
+				   <option value="i">Interne</option>
+				   <option value="e">Externe</option>
+				</select> 
+
+
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
 				 <select name="type_meridien" multiple tabindex="">
 				 	{section name=merid loop=$meridiens}
@@ -44,8 +61,8 @@
 		<h1>Résultats par mots-clé :</h1>
 		<table id="ky_results" border="1" >
 			<tr>
-			   <th>Résultat</th>
-			   <th>Symptômes</th>
+			   <th>Pathologie</th>
+			   <!-- <th>Symptômes</th> -->
 			</tr>
 			{section name=result_patho loop=$patho_ky}
 			<tr>
