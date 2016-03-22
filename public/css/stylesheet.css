@@ -1,7 +1,7 @@
 /*GENERAL CONF */
-body {
-  background: url(../img/image_acupuncture_dos.jpg);
-  display: inline-block; }
+html, body {
+  margin: 0;
+  padding: 0; }
 
 /*TOP HEAD */
 /* HEADER */
@@ -11,15 +11,15 @@ header, nav {
 
 .bandeau {
   margin: 0;
+  padding: 0;
   width: 100%;
   background-color: #E0286C;
-  box-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5); }
+  box-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
+  display: block; }
 
 .bandeau h1 {
   margin: 0;
-  padding: 5px;
-  position: relative;
-  left: 10%;
+  padding: 0 0 0 35px;
   font-weight: bold;
   font-size: 6em;
   line-height: 1em;
@@ -34,7 +34,7 @@ header, nav {
   min-height: 10px;
   max-height: 60px;
   overflow-y: hidden;
-  display: inline-block;
+  display: block;
   background-color: #EFF5D3; }
 
 .menu ul {
@@ -51,15 +51,17 @@ header, nav {
 /*BOTTOM FOOTER */
 /*FOOTER */
 footer {
+  display: block;
   width: 100%;
-  position: absolute;
-  bottom: 0;
   background: #4C585C;
   height: 70px;
   overflow: hidden; }
 
 /*CONTENT PAGE */
 /*CONTENT */
+.content {
+  display: block; }
+
 .register, .login {
   background: white;
   opacity: 0.8;
