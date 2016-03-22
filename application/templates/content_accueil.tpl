@@ -2,10 +2,10 @@
 {block name=contenu}
 		<div class="login">
 			<h1>Se connecter</h1>
-			<form action="#">
-				<input class="mail"></input>
-				<input class="mdp" type="password"></input>
-				<input type="submit">Connexion</input>
+			<form action="index.php?p=1&q=2" method="post">
+				<input class="mail" type="text" name="login" autofocus><label for="Login">Identifiant</label></input>
+				<input class="mdp" type="password" name="mdp"><label for="MDP">Mot de Passe</label></input>
+				<input type="submit" name="connexion" value="Se connecter">Connexion</input>
 
 			</form>
 		</div>
@@ -22,13 +22,5 @@
 			</form>
 		</div>
 
-		<div class="login">
-			<h1>Se connecter</h1>
-			<form action="index.php?p=1&q=2" method="post">
-				<input class="mail" type="text" name="login" autofocus><label for="Login">Identifiant</label></input>
-				<input class="mdp" type="password" name="mdp"><label for="MDP">Mot de Passe</label></input>
-				<input type="submit" name="connexion" value="Se connecter">Connexion</input>
-
-			</form>
-		</div>
+		
 {/block}
