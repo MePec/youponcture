@@ -261,7 +261,7 @@
 						}
 					}
 					$this->smarty->assign('patho_ky',$list_patho_ky);
-					var_dump($list_patho_ky);
+					//var_dump($list_patho_ky);
 
 					// récupération des symptomes selon le mot-clé
 					// $result_sympt_ky = $this->engine->getSymptoms_Keywords($key);
@@ -300,17 +300,21 @@
 					&& isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) 
 					&& isset($_POST['caracteristiques_meridien']) && !empty($_POST['caracteristiques_meridien']) )
 					$data_send = true;
-				else
+				else{
 					$data_send = false;
-					header('Location: index.php?p=2');
+					header('Location: index.php?p=3');
 					//prévoir message d'erreur
+				}
 
 				if($data_send == true){
-					$patho = $_POST['type_patho'];
+					$categorie_patho = $_POST['type_patho'];
 					$meridien = $_POST['type_meridien'];
+					$data_meridien = $this->engine->getCodeMeridien($meridien);
+					$meridien = $data_meridien['data'][0]['code'] ;
+
 					$caracter = $_POST['caracteristiques_meridien'];
 
-					$result_path = $this->engine->getList_Patho($patho,$meridien,$caracter);
+					$result_path = $this->engine->getList_Patho($categorie_patho,$meridien,$caracter);
 					$data_path = $result_path['data'];
 					$nb_path = $result_path['nb'];
 
@@ -318,10 +322,10 @@
 
 					if($nb_path > 0) {								
 						for($i = 0; $i < $nb_path; $i++){	
-							$list_patho[$i]['SYMPTOMS'] = $data_path[$i]['desci'];
+							$list_patho[$i]['RESULT_PATHO'] = $data_path[$i]['desc'];
 						}
 					}
-					$this->smarty->assign('pathos',$list_patho);
+					$this->smarty->assign('patho_res',$list_patho);
 
 				}
 

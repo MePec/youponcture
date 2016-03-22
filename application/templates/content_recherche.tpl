@@ -13,12 +13,6 @@
 				   <option value="merveilleux">Merveilleux vaisseaux</option>
 				   <option value="jing">Jing jin</option>
 				</select> 
-				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
-				 <select name="type_meridien" multiple tabindex="">
-				 	{section name=merid loop=$meridiens}
-					<option value="{$meridiens[merid].MERID_DESC}">{$meridiens[merid].MERID_DESC}</option>
-					{/section}
-				</select> 
 				<label class="type_critere" for="caracteristiques">Caractéristiques :</label>
 				 <select name="caracteristiques_meridien" tabindex="">
 				   <option value="plein">Plein</option>
@@ -27,6 +21,12 @@
 				   <option value="froid">Froid</option>
 				   <option value="interne">Interne</option>
 				   <option value="externe">Externe</option>
+				</select> 
+				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
+				 <select name="type_meridien" multiple tabindex="">
+				 	{section name=merid loop=$meridiens}
+					<option value="{$meridiens[merid].MERID_DESC}">{$meridiens[merid].MERID_DESC}</option>
+					{/section}
 				</select> 
 				<input type="submit" value="Rechercher"></input>
 			</fieldset>
@@ -55,7 +55,19 @@
 		</table>
 	</div>
 
-
+	<div class="criter_results">
+		<h1>Résultats par critères :</h1>
+		<table id="cri_results" border="1" >
+			<tr>
+			   <th>Pathologies</th>
+			</tr>
+			{section name=result_criter loop=$patho_res}
+			<tr>
+				<td>{$patho_res[result_criter].RESULT_PATHO}</td>		
+			</tr>		
+			{/section}	
+		</table>
+	</div>
  
 	<div class="list">
 		<h1>Liste des résultats :</h1>
@@ -96,3 +108,13 @@
 {/block}
 
 
+{* {/section}
+{section name=result_sympt loop=$symptoms_ky}
+	<td>{$symptoms_ky[result_sympt].SYMPTOMS}</td>			
+
+{section name=resultats loop=$results}
+<tr>
+	<td>{$results[resultats].sympt.SYMPTOMS}</td>
+	<td>{$results[resultats].pat.PATHOS}</td>
+</tr>
+{/section} *}

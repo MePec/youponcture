@@ -154,15 +154,52 @@
 			return $result;	
 		}
 
+		/* fonction getCodeMeridien()
+		 Description : permet de récupérer le code pour chaque méridiens
+		 Paramètres : aucun
+		*/
+		function getCodeMeridien($merid) {
+			$sql = "SELECT code FROM meridien
+					WHERE nom LIKE '".$merid."' ";
+
+			$query = $this->db->prepare($sql);
+			$query->execute();
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+				
+			return $result;	
+		}
+
+
 		/* fonction getList_Patho()
 		 Description : permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
 		 Paramètres : aucun
 		*/
-		function getList_Patho($patho,$meridien,$caracter) {
+		function getList_Patho($categorie_patho,$meridien,$caracter) {
 			$sql = "SELECT * FROM patho pat
-					WHERE type LIKE '%".$meridien."%' ;";
+					LEFT JOIN caracteristiques car ON car.type_patho = :CAR AND car.type_caracteristiques = :PATHO
+					WHERE pat.mer = '".$meridien."'
+					 ;";
+
+			// revoir principe de la requete
+
+			 //INNER JOIN caracteristiques car ON car.type_patho = '.$categorie_patho.' AND car.type_caracteristiques = '.$caracter.'
+
+			// WHERE type LIKE '%".$meridien."%'
+			//LEFT JOIN meridien m ON m.code = '.$meridien.'
+
+					// SELECT * FROM patho pat
+					// LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
+					// LEFT JOIN symptome sy ON sp.idS = sy.idS
+					// LEFT JOIN keysympt ks ON sy.idS = ks.idS
+					// LEFT JOIN keywords kw ON kw.idK = ks.idK 
+					// WHERE kw.name LIKE '".$keyword."'
 
 			$query = $this->db->prepare($sql);
+			
+			$query->bindValue(':CAR', $caracter);
+			$query->bindValue(':PATHO', $categorie_patho);
+
 			$query->execute();
 
 			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
