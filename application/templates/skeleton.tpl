@@ -21,11 +21,6 @@
 					<li><a href="../public/index.php?p=2">Wiki pathologie</a></li>
 					<li><a href="../public/index.php?p=3">Informations</a></li>				
 				</ul>
-
-				<ul>
-					<li>{$smarty.server.logon_status}</li>
-				</ul>	
-			
 		</div>
 	</header>
 
