@@ -1,5 +1,5 @@
 /*GENERAL CONF */
-html, body {
+html, body, div {
   margin: 0;
   padding: 0; }
 
@@ -16,16 +16,15 @@ header, nav {
   background-color: #E0286C;
   box-shadow: 0px 3px 3px rgba(255, 255, 255, 0.5);
   display: block; }
-
-.bandeau h1 {
-  margin: 0;
-  padding: 0 0 0 35px;
-  font-weight: bold;
-  font-size: 6em;
-  line-height: 1em;
-  color: white;
-  opacity: 1;
-  text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5); }
+  .bandeau h1 {
+    margin: 0;
+    padding: 0 0 0 35px;
+    font: 6em Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1em;
+    color: white;
+    opacity: 1;
+    text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5); }
 
 .menu {
   margin: 0;
@@ -36,17 +35,18 @@ header, nav {
   overflow-y: hidden;
   display: block;
   background-color: #EFF5D3; }
-
-.menu ul {
-  margin: 0;
-  padding: 4px 0px 4px 10%;
-  display: relative; }
-
-.menu ul li {
-  list-style-list: none;
-  display: inline-block;
-  padding: 0 10px;
-  font-size: 1.2em; }
+  .menu ul {
+    margin: 0;
+    padding: 4px 0px 4px 10%;
+    display: relative; }
+    .menu ul li {
+      list-style-list: none;
+      display: inline-block;
+      padding: 0 10px;
+      font: 1.2em Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif; }
+      .menu ul li a {
+        color: black;
+        text-decoration: none; }
 
 /*BOTTOM FOOTER */
 /*FOOTER */
@@ -55,12 +55,26 @@ footer {
   width: 100%;
   background: #4C585C;
   height: 70px;
-  overflow: hidden; }
+  overflow: hidden;
+  font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif; }
+  footer ul {
+    list-style-type: none; }
+    footer ul li {
+      display: inline-block;
+      color: white;
+      padding: 0 12%; }
+      footer ul li a {
+        text-decoration: none;
+        color: white; }
 
 /*CONTENT PAGE */
 /*CONTENT */
 .content {
-  display: block; }
+  margin: 0;
+  padding: 0;
+  display: block;
+  font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+  background: lime; }
 
 .register, .login {
   background: white;
