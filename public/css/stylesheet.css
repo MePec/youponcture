@@ -1,11 +1,11 @@
 /*GENERAL CONF */
 body {
-  padding: 0;
-  margin: 0; }
+  background: url(../img/image_acupuncture_dos.jpg);
+  display: inline-block; }
 
 /*TOP HEAD */
 /* HEADER */
-header {
+header, nav {
   margin: 0;
   padding: 0; }
 
@@ -51,22 +51,15 @@ header {
 /*BOTTOM FOOTER */
 /*FOOTER */
 footer {
-  background: #4C585C;
-  height: 70px;
-  overflow: hidden;
   width: 100%;
   position: absolute;
-  bottom: 0; }
+  bottom: 0;
+  background: #4C585C;
+  height: 70px;
+  overflow: hidden; }
 
 /*CONTENT PAGE */
 /*CONTENT */
-body {
-  background: url(../img/image_acupuncture_dos.jpg);
-  overflow-x: hidden;
-  overflow-y: hidden;
-  web-filter: blur(50px);
-  z-index: 1; }
-
 .register, .login {
   background: white;
   opacity: 0.8;
