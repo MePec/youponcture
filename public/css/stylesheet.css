@@ -32,7 +32,7 @@ header, nav {
   padding: 0;
   width: 100%;
   min-height: 10px;
-  max-height: 60px;
+  max-height: 30px;
   overflow-y: hidden;
   display: block;
   background-color: #EFF5D3; }
