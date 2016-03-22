@@ -16,13 +16,16 @@
 			<span><i class="fa fa-user"></i></span>
 		</div>
 		<div class="menu">
-			<nav>
 				<ul>
-					<li>Accueil</li>
-					<li>Wiki pathologie</li>
-					<li>Informations</li>
+					<li><a href="../public/index.php?p=1">Accueil</a></li>
+					<li><a href="../public/index.php?p=2">Wiki pathologie</a></li>
+					<li><a href="../public/index.php?p=3">Informations</a></li>				
 				</ul>
-			</nav>
+
+				<ul>
+					<li>{$smarty.server.logon_status}</li>
+				</ul>	
+			
 		</div>
 	</header>
 
@@ -34,7 +37,7 @@
 		<ul>
 			<li><a href="">Auteur</a></li>
 			<li><a href="">Plan du site</a></li>
-			<li>Copyright {$name}</li>
+			<li>Copyright</li>
 		</ul>
 	</footer>
 
