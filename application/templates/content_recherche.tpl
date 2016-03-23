@@ -1,43 +1,78 @@
 {extends file='./skeleton.tpl'}
 {block name=contenu}
+
+
+
 	<div class="search">
 		<h1>Recherche</h1>
 		<form action="index.php?p=2&q=2" method="post">
 			<fieldset class="public_search">
 				<legend>Par critère : </legend>
 				<label class="type_critere" for="type_patho">Type de Pathologie :</label>
-				 <select name="type_patho">
-				   <option value="m">Méridien</option>{assign var="meridien" value="m"}
+				 <select name="type_patho" id="type_patho">
+				   <option value="m">Méridien</option>
 				   <option value="tf">Organe/Viscère</option>
 				   <option value="l">Luo</option>
 				   <option value="mv">Merveilleux vaisseaux</option>
 				   <option value="j">Jing jin</option>
 				</select> 
 
-				{*
-				{if $meridien == 'm'}
-				<label class="type_critere" for="caracteristiques">Caractéristiques :</label>
-				 <select name="caracteristiques_meridien" tabindex="">
+				<label class="caracteristiques_meridien" for="caracteristiques">Caractéristiques :</label>
+				 <select name="caracteristiques_meridien" class="caracteristiques_meridien">
+				<!--  <option selected="true" disabled="disabled">-</option> -->
 				   <option value="i">Interne</option>
 				   <option value="e">Externe</option>
-				</select> 
-				{else}
-					<div>Test Tof !!</div>
-				{/if}
-				*}
-
-
-
-				<label class="type_critere" for="caracteristiques">Caractéristiques :</label>
-				 <select name="caracteristiques_meridien" tabindex="">
 				   <option value="p">Plein</option>
 				   <option value="c">Chaud</option>
 				   <option value="v">Vide</option>
 				   <option value="f">Froid</option>
-				   <option value="i">Interne</option>
-				   <option value="e">Externe</option>
 				</select> 
 
+
+				<script type="text/javascript">
+				function Meridien_selected(){
+
+					$(".caracteristiques_meridien").show();	
+					$("select[name='caracteristiques_meridien'] option:not([value='e'],[value='i'])").hide();
+
+					$('#type_patho').change(function()
+					{
+						 $Option_selected = $("select[name='type_patho'] > option:selected").val();
+
+						switch ($Option_selected) {
+						  case 'm':
+						    $(".caracteristiques_meridien").show();					
+							$("select[name='caracteristiques_meridien'] option:not([value='e'],[value='i'])").hide();
+							$("select[name='caracteristiques_meridien'] option:not([value='c'],[value='f'],[value='p'],[value='v'])").show();
+						    break;
+						  case "tf": 
+						  	$(".caracteristiques_meridien").show();	
+						  	$("select[name='caracteristiques_meridien'] option:not([value='c'],[value='f'],[value='p'],[value='v'])").hide();
+						  	$("select[name='caracteristiques_meridien'] option:not([value='e'],[value='i'])").show();
+							// $("select[name='caracteristiques_meridien'] option[value='p'].attr('selected','selected'");
+
+							break; 		    
+						  case 'j': 
+						   $(".caracteristiques_meridien").hide();	
+						    break; 
+						  case 'l':
+						    $(".caracteristiques_meridien").show();	
+						    $("select[name='caracteristiques_meridien'] option:not([value='p'],[value='v'])").hide();
+							$("select[name='caracteristiques_meridien'] option:not([value='c'],[value='f'],[value='i'],[value='e'])").show();	
+						    break;
+						  case 'mv':
+						    $(".caracteristiques_meridien").hide();	
+						    break;
+						  default:
+						    $(".caracteristiques_meridien").show();	
+							$("select[name='caracteristiques_meridien'] option:not([value='e'],[value='i'])").hide();
+							$("select[name='caracteristiques_meridien'] option:not([value='c'],[value='f'],[value='p'],[value='v'])").show();
+						}
+					});
+				}					
+				</script>
+
+				<script type="text/javascript">Meridien_selected();</script>
 
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
 				 <select name="type_meridien" multiple tabindex="">

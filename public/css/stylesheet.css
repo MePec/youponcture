@@ -89,3 +89,8 @@ footer {
   overflow: hidden; }
 
 /*# sourceMappingURL=stylesheet.css.map */
+
+/* Test Tof Content PAGE  sur balises SELECT */
+.caracteristiques_meridien {
+	display:inline-block;
+}
