@@ -116,3 +116,8 @@ input[type="submit"] {
   margin: 2px 10px 2px auto; }
 
 /*# sourceMappingURL=stylesheet.css.map */
+
+/* Test Tof Content PAGE  sur balises SELECT */
+.caracteristiques_meridien {
+	display:inline-block;
+}
