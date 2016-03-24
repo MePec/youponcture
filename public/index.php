@@ -20,5 +20,4 @@
 		$section = null;
 
 	$manager = new Manager($page,$section);
-
 ?>

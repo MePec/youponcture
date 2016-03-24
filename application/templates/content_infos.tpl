@@ -1,5 +1,6 @@
 {extends file='./skeleton.tpl'}
 {block name=contenu}
+
 		<div class="dev">
 			<h1>Développements effectués</h1>
 			<table id="list_result" border="1" >
@@ -32,7 +33,6 @@
 
 		<div class="ressources">
 			<h1>Bibliographie - Webographie</h1>
-
 		</div>
 
 {/block}
