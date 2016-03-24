@@ -22,8 +22,6 @@ class CheckValues {
     }
 
     // Verifie la syntaxe de l'adresse mail et l'existance du MX du domaine
-    // Retourne 0, si la syntaxe est mauvaise,
-    // et 2, si le MX n'existe pas.
     function checkEmail($email) {
 
         $domain = NULL;
@@ -31,12 +29,12 @@ class CheckValues {
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             $domain = substr(strrchr($email, "@"), 1);
             if(checkdnsrr($domain, 'MX')){
-                return 1;
+                return true;
             } else {
-                return 2;
+                return false;
             }
         } else {
-            return 0;
+            return false;
         }
     }
 }
