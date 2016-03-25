@@ -257,32 +257,12 @@
 
 					if($nb_patho_ky > 0) {								
 						for($i = 0; $i < $nb_patho_ky; $i++){	
-							$list_patho_ky[$i]['PATHOS'] = $data_patho_ky[$i]['desc'];
+							$list_patho_ky[$i]['PATHOS'] = $data_patho_ky[$i]['Patho'];
+							$list_patho_ky[$i]['SYMPT'] = $data_patho_ky[$i]['Symp'];
 						}
 					}
 					$this->smarty->assign('patho_ky',$list_patho_ky);
 					//var_dump($list_patho_ky);
-
-					// récupération des symptomes selon le mot-clé
-					// $result_sympt_ky = $this->engine->getSymptoms_Keywords($key);
-					// $data_sympt_ky = $result_sympt_ky['data'];
-					// $nb_sympt_ky = $result_sympt_ky['nb'];
-
-					// $list_sympt_ky = array();
-
-					// if($nb_sympt_ky > 0) {								
-					// 	for($i = 0; $i < $nb_sympt_ky; $i++){	
-					// 		$list_sympt_ky[$i]['SYMPTOMS'] = $data_sympt_ky[$i]['desc'];
-					// 	}
-					// }
-					// $this->smarty->assign('symptoms_ky',$list_sympt_ky);
-					//var_dump($list_sympt_ky);
-
-					// $datas = array(
-					// 	          array('sympt' => $list_sympt_ky),
-					// 	          array('pat' => $list_patho_ky)
-					// 	        );
-					// $this->smarty->assign('results',$datas);
 
 				}		
 
@@ -309,31 +289,82 @@
 				if($data_send == true){
 					$categorie_patho = $_POST['type_patho'];
 					$caracter = $_POST['caracteristiques_meridien'];
-					$meridien = $_POST['type_meridien'];
-					$data_meridien = $this->engine->getCodeMeridien($meridien);
-					$meridien = $data_meridien['data'][0]['code'] ;
+					if($caracter == "default"){
+						$data_type_mer = $this->engine->getType_Merid_Default($categorie_patho);
+						// $nb_data_type_mer = $data_type_mer['nb'];
+						// if($nb_data_type_mer > 0){
+						// 	for($cpt = 0;$cpt > nb_data_type_mer;$cpt++){
+						// 		$type_mer[$cpt] = $data_type_mer['data'][$cpt]['type_mer'];
+						// 	}
+						// }
+					}
+					else {
+						$data_type_mer = $this->engine->getType_Merid($categorie_patho,$caracter);
+						$type_mer = $data_type_mer['data'][0]['type_mer'];
+						// $type_mer[0] = $data_type_mer['data'][0]['type_mer'];
 
-					$data_type_mer = $this->engine->getType_Merid($categorie_patho,$caracter);
-					$type_mer = $data_type_mer['data'][0]['type_mer'];
+					}
 
-					$result_path = $this->engine->getList_Patho($meridien,$type_mer);
-					$data_path = $result_path['data'];
-					$nb_path = $result_path['nb'];
+					$j = 0;
+					foreach($_POST['type_meridien'] as $val){   
+						$data_meridien = $this->engine->getCodeMeridien($val);
+						$meridien[$j] = $data_meridien['data'][0]['code'] ;
+						$j++;
+					}
+
+					// $data_meridien = $this->engine->getCodeMeridien($meridien);
+					// $meridien = $data_meridien['data'][0]['code'] ;
+
+					for($l = 0;$l < $j;$l++){
+						$result_path = $this->engine->getList_Patho($meridien[$l],$type_mer);
+						$data_path[$l] = $result_path['data'];
+						$nb_path[$l] = $result_path['nb'];
+					}
+
 
 					$list_patho = array();
 
-					if($nb_path > 0) {						
-						for($i = 0; $i < $nb_path; $i++){	
-							$list_patho[$i]['RESULT_PATHO'] = $data_path[$i]['desc'];
+					for($k = 0;$k < $l;$k++) {
+						if($nb_path[$k] > 0) {						
+							for($i = 0; $i < $nb_path[$k]; $i++){	
+								$list_patho[$k][$i]['RESULT_PATHO'] = $data_path[$k][$i]['desc'];
+							}
 						}
 					}
+					var_dump($list_patho);
+
 					if($list_patho != null){
 						$this->smarty->assign('patho_res',$list_patho);
 					}
-					else{
-						$msg[0]['RESULT_PATHO'] = "Pas de résultats trouvés pour cette recherche";
-						$this->smarty->assign('patho_res',$msg);
-					}
+					// else{
+					// 	$msg[0]['RESULT_PATHO'] = "Pas de résultats trouvés pour cette recherche";
+					// 	$this->smarty->assign('patho_res',$msg);
+					// }
+
+
+					// récupération données symptome + affichage 
+					// $result_sy = $this->engine->getList_SymptomsByPatho($meridien[$l],$type_mer);
+					// $data_sy[$l] = $result_sy['data'];
+					// $nb_sy[$l] = $result_sy['nb'];
+
+					// $list_sy = array();
+
+					// for($k = 0;$k < $l;$k++) {
+					// 	if($nb_path[$k] > 0) {						
+					// 		for($i = 0; $i < $nb_path[$k]; $i++){	
+					// 			$list_sy[$k][$i]['RESULT_PATHO'] = $data_sy[$k][$i]['desc'];
+					// 		}
+					// 	}
+					// }
+
+					// if($list_patho != null){
+					// 	$this->smarty->assign('sy_res',$list_sy);
+					// }
+					// else{
+					// 	$msg[0]['RESULT_SY'] = "Pas de résultats trouvés pour cette recherche";
+					// 	$this->smarty->assign('sy_res',$msg);
+					// }
+
 				}
 
 			$this->displayRecherches();	

@@ -19,7 +19,7 @@
 
 				<label class="caracteristiques_meridien" for="caracteristiques">Caractéristiques :</label>
 				 <select name="caracteristiques_meridien" class="caracteristiques_meridien">
-				<!--  <option selected="true" disabled="disabled">-</option> -->
+				 <option selected="true" value="default">-</option>
 				   <option value="i">Interne</option>
 				   <option value="e">Externe</option>
 				   <option value="p">Plein</option>
@@ -49,7 +49,6 @@
 						  	$(".caracteristiques_meridien").show();	
 						  	$("select[name='caracteristiques_meridien'] option:not([value='c'],[value='f'],[value='p'],[value='v'])").hide();
 						  	$("select[name='caracteristiques_meridien'] option:not([value='e'],[value='i'])").show();
-							// $("select[name='caracteristiques_meridien'] option[value='p'].attr('selected','selected'");
 
 							break; 		    
 						  case 'j': 
@@ -75,9 +74,10 @@
 				<script type="text/javascript">Meridien_selected();</script>
 
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
-				 <select name="type_meridien" multiple tabindex="">
+				 <!-- <select name="type_meridien" multiple > -->
+				  <select name="type_meridien[]" multiple >
 				 	{section name=merid loop=$meridiens}
-					<option value="{$meridiens[merid].MERID_DESC}">{$meridiens[merid].MERID_DESC}</option>
+					<option value="{$meridiens[merid].MERID_DESC}" >{$meridiens[merid].MERID_DESC}</option>
 					{/section}
 				</select> 
 				<input type="submit" value="Rechercher"></input>
@@ -97,11 +97,12 @@
 		<table id="ky_results" border="1" >
 			<tr>
 			   <th>Pathologie</th>
-			   <!-- <th>Symptômes</th> -->
+			   <th>Symptômes</th>
 			</tr>
 			{section name=result_patho loop=$patho_ky}
 			<tr>
-				<td>{$patho_ky[result_patho].PATHOS}</td>			
+				<td>{$patho_ky[result_patho].PATHOS}</td>	
+				<td>{$patho_ky[result_patho].SYMPT}</td>			
 			</tr>		
 			{/section}	
 		</table>
@@ -109,7 +110,7 @@
 
 	<div class="criter_results">
 		<h1>Résultats par critères :</h1>
-		<table id="cri_results" border="1" >
+		<table id="cri_results_pat" border="1" >
 			<tr>
 			   <th>Pathologies</th>
 			</tr>
@@ -119,6 +120,17 @@
 			</tr>		
 			{/section}	
 		</table>
+
+<!-- 		<table id="cri_results_sy" border="1" >
+			<tr>
+			   <th>Symptômes</th>
+			</tr>
+			{section name=result_criter loop=$sy_res}
+			<tr>
+				<td>{$sy_res[result_criter].RESULT_SY}</td>		
+			</tr>		
+			{/section}	
+		</table> -->
 	</div>
  
 	<div class="list">
@@ -134,7 +146,7 @@
 			{/section}
 		</table>
 
-		<table id="list_result_mer" border="1" >
+<!-- 		<table id="list_result_mer" border="1" >
 			<tr>
 			   <th>Méridiens</th>
 			</tr>
@@ -154,7 +166,7 @@
 				<td>{$symptoms[sympt].SYMPT_DESC}</td>	
 			</tr>
 			{/section}
-		</table>
+		</table> -->
 	</div>
 
 {/block}
