@@ -22,6 +22,23 @@
 			</form>
 		</div>
 
+		<div class="flux_rss">
+			<h1>Flux RSS</h1>
+			<table id="rss" border="1" >
+				<tr>
+				   <th>Informations de dernières minutes</th>
+				</tr>
+				<tr>
+					<td>Test</td>		
+				</tr>		
+<!-- 				{section name=result_criter loop=$sy_res}
+				<tr>
+					<td>{$sy_res[result_criter].RESULT_SY}</td>		
+				</tr>		
+				{/section}	 -->
+			</table>
+		</div>
+
 {/block}
 
 <!-- 		<div class="login">

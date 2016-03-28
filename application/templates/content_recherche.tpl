@@ -10,7 +10,7 @@
 				<legend>Par critère : </legend>
 				<label class="type_critere" for="type_patho">Type de Pathologie :</label>
 				 <select name="type_patho" id="type_patho">
-				   <option value="m">Méridien</option>
+				   <option value="m" selected="selected">Méridien</option>
 				   <option value="tf">Organe/Viscère</option>
 				   <option value="l">Luo</option>
 				   <option value="mv">Merveilleux vaisseaux</option>
@@ -74,10 +74,9 @@
 				<script type="text/javascript">Meridien_selected();</script>
 
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
-				 <!-- <select name="type_meridien" multiple > -->
 				  <select name="type_meridien[]" multiple >
 				 	{section name=merid loop=$meridiens}
-					<option value="{$meridiens[merid].MERID_DESC}" >{$meridiens[merid].MERID_DESC}</option>
+					<option value="{$meridiens[merid].MERID_DESC}" selected="selected">{$meridiens[merid].MERID_DESC}</option>
 					{/section}
 				</select> 
 				<input type="submit" value="Rechercher"></input>
@@ -121,7 +120,7 @@
 			{/section}	
 		</table>
 
-<!-- 		<table id="cri_results_sy" border="1" >
+		<table id="cri_results_sy" border="1" >
 			<tr>
 			   <th>Symptômes</th>
 			</tr>
@@ -130,7 +129,7 @@
 				<td>{$sy_res[result_criter].RESULT_SY}</td>		
 			</tr>		
 			{/section}	
-		</table> -->
+		</table>
 	</div>
  
 	<div class="list">

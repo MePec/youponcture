@@ -123,9 +123,7 @@
 					LEFT JOIN keysympt ks ON sy.idS = ks.idS
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
 					WHERE kw.name LIKE '".$keyword."' ";
-
-					// tester petit à petit en rajoutant LEFT JOIN
-
+					
 			$query = $this->db->prepare($sql);
 			$query->execute();
 
