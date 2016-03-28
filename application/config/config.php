@@ -22,5 +22,8 @@ require_once('Smarty.class.php');
 require_once("DB.class.php");
 require_once("../application/models/Engine.class.php");
 
+require_once("../vendors/magpierss/rss_fetch.inc");
+
+
 
 ?>

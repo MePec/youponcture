@@ -24,18 +24,22 @@
 
 		<div class="flux_rss">
 			<h1>Flux RSS</h1>
-			<table id="rss" border="1" >
+<!-- 			<ul id="rss">
+				{section name=result_rss loop=$rss}
+				<li>{$rss[result_rss].ITEM_DATE}</li>					
+				<li><a href=\"".{$rss[result_rss].ITEM_LINK}."\">{$rss[result_rss].ITEM_TITLE}</li>;					
+				<li>{$rss[result_rss].ITEM_DESCRIPTION}</li>;	
+				</li>				
+			</ul>
+			{/section}	 -->
+			<table id="rss">
+				{section name=result_rss loop=$rss}
 				<tr>
-				   <th>Informations de dernières minutes</th>
-				</tr>
-				<tr>
-					<td>Test</td>		
+					<!-- <td>{$rss[result_rss].ITEM_DATE}</td>;	 -->
+					<td><a href="{$rss[result_rss].ITEM_LINK}">{$rss[result_rss].ITEM_TITLE}</td>			
+					<td>{$rss[result_rss].ITEM_DESCRIPTION}</td>;	
 				</tr>		
-<!-- 				{section name=result_criter loop=$sy_res}
-				<tr>
-					<td>{$sy_res[result_criter].RESULT_SY}</td>		
-				</tr>		
-				{/section}	 -->
+				{/section}	
 			</table>
 		</div>
 
