@@ -91,6 +91,8 @@
 		</form>
 	</div>
 
+
+
 	<div class="keyword_results">
 		<h1>Résultats par mots-clé :</h1>
 		<table id="ky_results" border="1" >
@@ -107,9 +109,29 @@
 		</table>
 	</div>
 
+
+
 	<div class="criter_results">
 		<h1>Résultats par critères :</h1>
 		<table id="cri_results_pat" border="1" >
+			<tr>
+			   <th>Pathologies</th>
+			   <th>Symptômes</th>
+			</tr>
+			{section name=result_criter loop=$patho_res}
+			<tr>
+				<td>{$patho_res[result_criter].RESULT_PATHO}</td>	
+			{section name=result_criter loop=$sy_res}
+				<td>{$sy_res[result_criter].RESULT_SY}</td>	
+<!-- 			{foreach from=$nb_patho item=par}
+				<td>{$sy_res[result_criter].{$par}.RESULT_SY}</td>	
+			{/foreach} -->
+			{/section}		
+			</tr>		
+			{/section}
+		</table>
+
+<!-- 		<table id="cri_results_pat" border="1" >
 			<tr>
 			   <th>Pathologies</th>
 			</tr>
@@ -118,9 +140,9 @@
 				<td>{$patho_res[result_criter].RESULT_PATHO}</td>		
 			</tr>		
 			{/section}	
-		</table>
+		</table> -->
 
-		<table id="cri_results_sy" border="1" >
+<!-- 		<table id="cri_results_sy" border="1" >
 			<tr>
 			   <th>Symptômes</th>
 			</tr>
@@ -129,7 +151,7 @@
 				<td>{$sy_res[result_criter].RESULT_SY}</td>		
 			</tr>		
 			{/section}	
-		</table>
+		</table> -->
 	</div>
  
 	<div class="list">
@@ -145,17 +167,6 @@
 			{/section}
 		</table>
 
-<!-- 		<table id="list_result_mer" border="1" >
-			<tr>
-			   <th>Méridiens</th>
-			</tr>
-			{section name=merid loop=$meridiens}
-			<tr>
-				<td>{$meridiens[merid].MERID_DESC}</td>	
-			</tr>
-			{/section}
-		</table>
-
 		<table id="list_result_sympt" border="1" >
 			<tr>
 			   <th>Symptomes</th>
@@ -165,7 +176,7 @@
 				<td>{$symptoms[sympt].SYMPT_DESC}</td>	
 			</tr>
 			{/section}
-		</table> -->
+		</table>
 	</div>
 
 {/block}

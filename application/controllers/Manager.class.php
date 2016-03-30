@@ -382,39 +382,44 @@
 							// $nb_path[$i][$l] = $result_path['nb'];							
 							$data_path[$mark] = $result_path['data'];
 							$nb_path[$mark]= $result_path['nb'];
+							// $mark++;
+
+							// traitement pour récupérer les symptomes associées
+							$result_sy = $this->engine->getList_SymptomsByPatho($meridien[$l],$type_mer[$i]);
+							$data_sy[$mark] = $result_sy['data'];
+							$nb_sy[$mark] = $result_sy['nb'];
 							$mark++;
 						}
 					$id = $i+1;
 					}
 
-					// sans selection multiple
-					// $id = 0;
-					// for($i = 0; $i < $cpt; $i++){	
-					// 	$result_path = $this->engine->getList_Patho($meridien,$type_mer[$i]);
-					// 	$data_path[$i] = $result_path['data'];
-					// 	$nb_path[$i] = $result_path['nb'];
-					// 	$id = $i+1;
-					// }
 
 					$tmp = 0;
-					// pour sélection de toutes les méridiens en paramètres - sans distinction intern,externe,... - sans prise en charge selection multiple des méridiens
-					// for($k = 0;$k < $id;$k++) {
-					// 	if($nb_path[$k] > 0)
-					// 		for($p = 0; $p < $nb_path[$k]; $p++){	
-					// 			$list_patho[$tmp]['RESULT_PATHO'] = $data_path[$k][$p]['desc'];
-					// 			$tmp++;		
-					// 		}
-					// }
-
 					$nb_results = sizeof($nb_path);
-					// for($p = 0; $p < $nb_path[$kl]; $p++){
-					// test pour selection multiple Meridien
 					for($kl = 0;$kl < $nb_results;$kl++) {
 						if($nb_path[$kl] > 0){
 							for($p = 0; $p < $nb_path[$kl]; $p++){				
-											$list_patho[$tmp]['RESULT_PATHO'] = $data_path[$kl][$p]['desc'];
-											$tmp++;		
-	
+								$list_patho[$tmp]['RESULT_PATHO'] = $data_path[$kl][$p]['desc'];
+								$mpt = 0;
+								// $data_recv = true;
+
+								// if($data_recv == true) {
+									while(($data_sy[$kl][$mpt]['desc'])){
+										$list_sy[$tmp][$mpt]['RESULT_SY'] = $data_sy[$kl][$mpt]['desc'];
+										$mpt++;
+
+										// if(($data_sy[$kl][$mpt+1]['desc']) != null){
+										// 	echo 'test';
+										// 	$mpt++;
+										// }
+
+										// if($data_sy[$kl][$mpt]['desc'] != null)
+										// 	$data_recv = true;
+										// else
+										// 	$data_recv = false;
+									}
+								// }
+								$tmp++;		
 							}
 						}
 					}	
@@ -426,29 +431,34 @@
 						$msg[0]['RESULT_PATHO'] = "Pas de résultats trouvés pour cette recherche";
 						$this->smarty->assign('patho_res',$msg);
 					}
+					
+					//var_dump($list_sy);
+					// var_dump($list_patho);
+					// var_dump($data_sy);
 
-
-					// récupération données symptome + affichage 
-					// $result_sy = $this->engine->getList_SymptomsByPatho($meridien[$l],$type_mer[$i]);
-					// $data_sy[$l] = $result_sy['data'];
-					// $nb_sy[$l] = $result_sy['nb'];
 
 					
 					// for($k = 0;$k < $l;$k++) {
 					// 	if($nb_path[$k] > 0) {						
 					// 		for($i = 0; $i < $nb_path[$k]; $i++){	
-					// 			$list_sy[$k][$i]['RESULT_PATHO'] = $data_sy[$k][$i]['desc'];
+					// 			$list_sy[$k][$i]['RESULT_SY'] = $data_sy[$k][$i]['desc'];
 					// 		}
 					// 	}
 					// }
 
-					if($list_patho != null){
-						$this->smarty->assign('sy_res',$list_sy);
+					if($list_sy != null){
+						// $this->smarty->assign('sy_res',$list_sy);
+						$this->smarty->assign('sy_res',$list_sy[0]);
+						for($c = 0;$c < $tmp;$c++){
+							$arr[$tmp] = $tmp;
+							// dans $arr : nombre de pathologies remontées
+						}
+						$this->smarty->assign('nb_patho',$arr);
 					}
-					else{
-						$msg[0]['RESULT_SY'] = "Pas de résultats trouvés pour cette recherche";
-						$this->smarty->assign('sy_res',$msg);
-					}
+					// else{
+					// 	$msg[0]['RESULT_SY'] = "Pas de résultats trouvés pour cette recherche";
+					// 	$this->smarty->assign('sy_res',$msg);
+					// }
 
 				}
 

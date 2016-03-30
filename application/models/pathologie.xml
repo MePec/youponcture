@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<!DOCTYPE pathologies SYSTEM "pathologies.dtd" >
+<pathologies>
+	<pathologie>
+		<nom>Meridien interne de la vessie</nom>
+		<description></description>
+		<meridien type="interne" nom="Méridien"></meridien>
+		<symptome>Mal au coeur</symptome>
+		<partie_corps>Poumon</partie_corps>
+	</pathologie>
+</pathologies>

@@ -206,5 +206,28 @@
 				
 			return $result;	
 		}
+
+		/* fonction getList_SymptomsByPatho()
+		 Description : permet de récupérer la liste des psymptomes associés à chaque pathologie en fonction des 3 critères du premier formulaire
+		 Paramètres : aucun
+		*/
+		function getList_SymptomsByPatho($meridien,$type_mer) {
+			$sql = "SELECT s.desc FROM symptome s
+					LEFT JOIN symptpatho sp ON s.idS = sp.idS
+					LEFT JOIN patho p ON sp.idP = p.idP
+					WHERE p.mer = :MER AND p.type = :TYPE ;";
+
+			$query = $this->db->prepare($sql);
+			
+			$query->bindValue(':MER', $meridien);
+			$query->bindValue(':TYPE', $type_mer);
+
+			$query->execute();
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$result['nb'] = $query->rowCount();
+				
+			return $result;	
+		}
 	}
 ?>

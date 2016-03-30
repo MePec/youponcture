@@ -6,7 +6,7 @@
 			<form action="#" method="post">
 				<input class="email" type="email" id="email_addr" name="email_addr" tabindex="1" required oninput="checkMail(this)">
 				<input class="pwd" type="password" id="password" name="password" tabindex="2" required>
-				<input type="submit" tabindex="3">Connexion>
+				<input type="submit" tabindex="3">
 			</form>
 		</div>
 
@@ -37,7 +37,7 @@
 				<tr>
 					<!-- <td>{$rss[result_rss].ITEM_DATE}</td>;	 -->
 					<td><a href="{$rss[result_rss].ITEM_LINK}">{$rss[result_rss].ITEM_TITLE}</td>			
-					<td>{$rss[result_rss].ITEM_DESCRIPTION}</td>;	
+					<td>{$rss[result_rss].ITEM_DESCRIPTION}</td>
 				</tr>		
 				{/section}	
 			</table>

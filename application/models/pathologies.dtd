@@ -1,0 +1,10 @@
+ <?xml version="1.0" ?>
+ <!ELEMENT pathologies (pathologie*)>
+ <!ELEMENT pathologie (nom,description,meridien,symptome+,partie_corps)>
+ <!ATTLIST meridien type(aucun|interne|externe|chaud|froid|vide|plein) "aucun" >
+ <!ATTLIST meridien nom(Méridien|Organe/Viscère|Luo|Jing jin|Merveilleux vaisseaux) "Méridien" >
+ <!ELEMENT nom (#PCDATA)>
+ <!ELEMENT description (#PCDATA)>
+ <!ELEMENT meridien (EMPTY)>
+ <!ELEMENT partie_corps (#PCDATA)>
+ <!ELEMENT symptome (#PCDATA)>
