@@ -120,38 +120,14 @@
 			</tr>
 			{section name=result_criter loop=$patho_res}
 			<tr>
-				<td>{$patho_res[result_criter].RESULT_PATHO}</td>	
-			{section name=result_criter loop=$sy_res}
-				<td>{$sy_res[result_criter].RESULT_SY}</td>	
-<!-- 			{foreach from=$nb_patho item=par}
-				<td>{$sy_res[result_criter].{$par}.RESULT_SY}</td>	
-			{/foreach} -->
-			{/section}		
-			</tr>		
+				<td>{$patho_res[result_criter].RESULT_PATHO}</td>
+				<!-- {counter start=0 assign=cmpt} -->
+				<!-- $nb_sy[{$smarty.section.result_criter.index}]	 -->
+				<td><ul>{section name=itera loop=$sy_res[{$smarty.section.result_criter.index}]}<li>{$sy_res[{$smarty.section.result_criter.index}].{$smarty.section.itera.index}.RESULT_SY}</li>{/section}</ul></td>
+
+			</tr>	
 			{/section}
 		</table>
-
-<!-- 		<table id="cri_results_pat" border="1" >
-			<tr>
-			   <th>Pathologies</th>
-			</tr>
-			{section name=result_criter loop=$patho_res}
-			<tr>
-				<td>{$patho_res[result_criter].RESULT_PATHO}</td>		
-			</tr>		
-			{/section}	
-		</table> -->
-
-<!-- 		<table id="cri_results_sy" border="1" >
-			<tr>
-			   <th>Symptômes</th>
-			</tr>
-			{section name=result_criter loop=$sy_res}
-			<tr>
-				<td>{$sy_res[result_criter].RESULT_SY}</td>		
-			</tr>		
-			{/section}	
-		</table> -->
 	</div>
  
 	<div class="list">
