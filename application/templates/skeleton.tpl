@@ -6,7 +6,10 @@
 	<meta name="description" content="Easily search acupuncture pathology with key words">
 	<meta name="keywords" content="acupuncture, pathology, search" />
 	<meta name="author" content="PE Cochet - Fr Michel - Ch Chaumier - Mx Brunet" />
-	<link href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<link media="screen and (min-device-width: 501px)" href="css/stylesheet.css" rel="stylesheet" type="text/css"/>
+	<link media="max-device-width: 500px)" href="css/stylesheet_mobile.css" rel="stylesheet" type="text/css"/>
+	<link media="print" href="css/stylesheet_print.css" rel="stylesheet" type="text/css"/>
+
 	<script type="text/javascript" src="../vendors/jquery/jquery.min.js"></script>
 </head>
 
