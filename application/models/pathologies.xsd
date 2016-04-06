@@ -1,22 +1,29 @@
-  <?xml version="1.0" encoding="UTF-8" ?>
-  <xsd:schema xmlns:xsd="http://www.w3.org/2000/10/XMLSchema" >
-	<xsd:element name="pathologies">
-		<xsd:complexType>
-			<xsd:choice maxOccurs="unbounded">
-				<xsd:element name="pathologie">
-					<xsd:complexType>
-						<xsd:sequence>
-							<xsd:element name="nom" type="xsd:string"/>
-							<xsd:element name="description" type="xsd:string"/>
-							<xsd:element name="symptome" type="xsd:string"/>
-							<xsd:element name="partie_corps" type="xsd:string"/>
-							<xsd:element name="meridien" type="xsd:string"/>
-							<xsd:attribute name="type" type="xsd:string"/>
-							<xsd:attribute name="nom" type="xsd:string"/>
-						</xsd:sequence>	
-					</xsd:complexType>
-				</xsd:element>
-			</xsd:choice>
-		</xsd:complexType>
-	</xsd:element>
-</xsd:schema>
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="pathologies">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pathologie">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="nom"/>
+              <xs:element type="xs:string" name="description"/>
+              <xs:element name="meridien">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="type"/>
+                      <xs:attribute type="xs:string" name="nom"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element type="xs:string" name="symptome"/>
+              <xs:element type="xs:string" name="partie_corps"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

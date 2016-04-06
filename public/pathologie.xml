@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!DOCTYPE pathologies SYSTEM "pathologies.dtd">
 <pathologies>
 	<pathologie>
 		<nom/>
 		<description/>
-		<meridien type="" nom=""/>
+		<meridien type="" nom="" tsetse=""/>
 		<symptome/>
 		<partie_corps/>
 	</pathologie>

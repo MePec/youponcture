@@ -95,15 +95,19 @@
 				case "5":
 					switch($this->section){
 						case "1":
-							$this->Web_Service_model();
+							$this->Web_Service_modelView();
 							break;	
 
 						case "2":
+							$this->Web_Service_modelDownload();
+							break;
+
+						case "3":
 							$this->Web_Service_modify();
 							break;
 
 						default:
-							$this->Web_Service_model();
+							$this->Web_Service_modelView();
 					}
 
 				case "6":
@@ -163,33 +167,32 @@
 		 */
 		public function display404(){
 			// gérer la redirection pour le Web Service
-			// if (ereg('^/page-([0-9]+).html$', $_SERVER['REDIRECT_URL'], $match))
-		
-			// if (ereg('^/WS.php', $_SERVER['REDIRECT_URL'], $match)) {
-			if(preg_match('^/WS/models^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)){
+			if(preg_match('^/WS/models$^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)){
 			  //modification du code retour
 			  header("Status: 200 OK", false, 200);
 
 			  header("Location: /youponcture/public/index.php?p=5&q=1");			  
-			  // header("Location: index.php?p=5&param=".$_GET['param']);
 			}
-			elseif(preg_match('^/WS/modify^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)) {
+			elseif(preg_match('^/WS/download$^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)) {
 			  header("Status: 200 OK", false, 200);
 
-
-		  
-			  header("Location: index.php?p=5&q=2");
+			  header("Location: /youponcture/public/index.php?p=5&q=2");
 			}
-			elseif(preg_match('^/WS/addition/([0-9])/([0-9])^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)){
-			// revoir REGEX pour l'addition ! + vérifier Array retrounée par match de preg_match
-			  //modification du code retour
+			elseif(preg_match('^/WS/modify/add/([a-zA-Z]*)^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)) {
+			  header("Status: 200 OK", false, 200);
+
+			  $_GET['champs'] = $match[1][0];
+			  // $_REQUEST['champs'] = $match[1][0];
+
+			  header("Location: /youponcture/public/index.php?p=5&q=3&champs=".$_GET['champs']);
+			}
+			elseif(preg_match('^/WS/addition/([0-9])/([0-9])$^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)){
 			  header("Status: 200 OK", false, 200);
 			  //alimentation du paramètre GET
 			  $_GET['param1'] = $match[1][0];
-			  $_REQUEST['param1'] = $match[1][1];
+			  // $_REQUEST['param1'] = $match[1][0];
 			  $_GET['param2'] = $match[2][0];
-			  $_REQUEST['param2'] = $match[2][0];
-			  // var_dump($match);
+			  // $_REQUEST['param2'] = $match[2][0];
 		  
 			  header("Location: /youponcture/public/index.php?p=6&param1=".$_GET['param1']."&param2=".$_GET['param2']);
 			} 
@@ -198,57 +201,70 @@
 		}
 
 		/**
-		 * Fonction Web_Service
-		 * Permet de rediriger vers le Web_service
+		 * Fonction Web_Service_modelDownload
+		 * Permet de rediriger vers le Web_service qui telecharge le fichier modele XML
 		 */
-		public function Web_Service_model(){
+		public function Web_Service_modelDownload(){
+			// gérer contenu de fichier exporté (readfile) : via Smarty???
 
-			header('Content-Disposition: attachment; filename=../application/models/pathologie.xml');
-			header("Content-Type: text/xml");
-			header("Content-Type: application/force-download");
-			header("Content-Transfer-Encoding: $type\n"); // Surtout ne pas enlever le \n
+			readfile("../application/models/pathologie.xml");
+
+			header("Cache-Control: no-cache, must-revalidate");
+			header("Cache-Control: post-check=0,pre-check=0");
+			header("Cache-Control: max-age=0");
 			header("Pragma: no-cache");
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0, public");
 			header("Expires: 0");
 
-			/// 0) vérifier téléchargment fichier XML ? => Web_Service_model()
-			// 1) => chercher à afficher XML format navigateur => via header('Content-Type: application/xml'); ???
-			// 2) modify => permettre à l'utilisateur de modifier model (attributs?) ???
+			header("Content-Type: application/force-download");
+			header("Content-disposition: attachment; filename=modele.xml");
 
-
-			// echo "Test passage parametre WS :" ;
-			// echo $_GET['param'] ; 
-			// echo $_POST['param'] ; 
-
-			// faire avec fichier XML : renvoyer fichier XML à parser / donner possibilité de modifier attribusts fichier XML par exemple ?
-
-			// pour renvoyer des données (par exemple renvoyer une news au format XML) ou récupération modele XML ou en se servant de données de BDD :
-			// exempl en JSON
-			 // $tab = array(); 
-			 // $tab["context"] = array("id" => "441618","owner" => "DORIGNY Robert", "local" => "fr,Saint Remy les chevreuse","First boot"=>"15/08/2013"); $tab["pht"] = array("pres" => "1003","hum" => "54","temp" => "22.06");
-			 // print(json_encode($tab));
-
-			 // utilisation parseur de base php5 : simpleXML
-			 // $patho_model = simplexml_load_file('../application/models/pathologie.xml');  
-
-			// header('Content-Type: application/xml');
-
-			 // exemple de parse de partie du fichier XML
-		    // foreach ($patho_model->pathologie as $patho) {  
-			   //  echo "Nom pathologie : $patho->nom\n"; 
-			   //  echo "Type meridien : $patho->meridien['type']\n";   
-		    // }  
-
-			// foreach($patho_model->children() as $pathos=>$patho) {  
-			//  echo $pathos." = ".$patho->nom;  
-			// }  
 
 
 			 // exemple pour consommer le WS à partir d'un autre service
 			 // $livre = file_get_contents('http://...');
-			 // $livre = json_decode(file_get_contents('http://bibliotheque/livre/1'));
+			 // $livre = json_decode(file_get_contents('http://.../'));
+		}
 
-			// $this->smarty->display(TPL_DIR."404.tpl");	
+		/**
+		 * Fonction Web_Service
+		 * Permet de rediriger vers le Web_service de vue du modèle
+		 */
+		public function Web_Service_modelView(){
+			header("Location: ../application/models/pathologie.xml");
+			// essayer de cacher adresse URL ?
+		}
+
+		/**
+		 * Fonction Web_Service_modify
+		 * Permet de rediriger vers le Web_service
+		 */
+		public function Web_Service_modify(){
+			// pour exemple, permet d'ajouter un champs à la balise <pathologie>
+
+			$add = $_GET['champs'];
+		  
+			// $patho_model = simplexml_load_file('../application/models/pathologie.xml');  
+			$patho_model = simplexml_load_file('pathologie.xml');
+			$file = "pathologie.xml";
+			// $file = "../application/models/pathologie.xml"; => pour version finale
+
+			// 2nde version : ajouter une balise à pathologie
+			// $patho_model->pathologie->addChild($add);
+
+			// 1ère version : ajoute attribut à balise existante <meridien>:
+			// $nodeChildrens = $patho_model->pathologie->children();
+			//$nodeChildrens['meridien']->addAttribute($add,"");
+			$patho_model->pathologie->meridien->addAttribute($add,"");
+
+			$patho_model->saveXML($file);
+	
+			// utilisation parseur de base php5 : simpleXML
+			// parse de partie du fichier XML
+		    // foreach ($patho_model->pathologie as $patho) {  
+			   //  echo "Nom pathologie : $patho->nom\n"; 
+			   //  echo "Type meridien : $patho->meridien['type']\n";   
+		    // }  
+			$this->displayHome();
 		}
 
 		/**
@@ -257,15 +273,18 @@
 		 */
 		public function Web_Service_Calculatrice(){
 
-			$p1 = $_GET['param1'];
-			$p2 = $_GET['param2'];
-			$sum = $p1 + $p2; 
+			if(isset($_GET['param1']) && isset($_GET['param1'])){
+				$p1 = $_GET['param1'];
+				$p2 = $_GET['param2'];
+				$sum = $p1 + $p2; 
 
-			echo "Resultat Addition : " ;
-			echo $sum; 
+				echo "Resultat addition : " ;
+				echo $sum; 
 
-
-			// $this->smarty->display(TPL_DIR."404.tpl");	
+				$this->displayHome();
+			}	
+			else
+				echo 'Erreur';
 		}
 
 		/**
