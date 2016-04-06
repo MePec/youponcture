@@ -122,4 +122,14 @@ table {
   display: inline-block;
 }
 
+.member_search{
+	display: none;
+	visibility:hidden;
+}
+
+div.keyword_results{
+	display: none;
+	visibility:hidden;
+}
+
 /*# sourceMappingURL=stylesheet.css.map */

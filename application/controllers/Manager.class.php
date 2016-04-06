@@ -25,6 +25,7 @@
 			// Controle du Login et MDP lors de la connexion
 			if (isset($_POST['login']) && isset($_POST['mdp'])) {
 				//$mdp = md5($_POST['MDP']);
+				//$mdp = shz256($_POST['MDP']);
 				$mdp = $_POST['mdp'];
 				
 				$logged = $this->engine->checkIdentity($_POST['login'], $mdp);
@@ -45,7 +46,18 @@
 				$logged = false; // faire avec $_SESSION['Logged'] sinon (si probleme de visibilité de la variable)
 				$_SESSION['logon_status'] = "Non connecté";
 			}
+
 			//penser à faire : si pas loggé : pas afficher rechercher par mots-clés dans page Recherches
+			if($logged == false){
+				//Cacher class  recherche par mots clé via CSS => hidden ou none ou via AJAX
+				$show_keyword_search = false;
+
+
+			}
+			else{
+				// par défaut on cache le formulaire de recherche par mots-clés
+				$show_keyword_search = true;
+			}
 
 
 			// a voir si je le laisse ici ou à déplacer				
@@ -412,7 +424,8 @@
 				}
 			}
 			$this->smarty->assign('symptoms',$list_sympt);
-
+			// pour gérer l'affichage ou non du formulaire de recherche par mots-clé (réservé aux membres)
+			$this->smarty->assign('show_keywords',$show_keyword_search);
 
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 		}

@@ -30,6 +30,18 @@
 
 
 				<script type="text/javascript">
+				// fonction qui gère affichage recherche par mot-clés
+				function loadKwSearch() {
+					  var xhttp = new XMLHttpRequest();
+					  xhttp.onreadystatechange = function() {
+					    if (xhttp.readyState == 4 && xhttp.status == 200) {
+					     document.getElementById("demo").innerHTML = xhttp.responseText;
+					    }
+					  };
+					  xhttp.open("GET", "ajax_info.txt", true);
+					  xhttp.send();
+					} 
+
 				function Meridien_selected(){
 
 					$(".caracteristiques_meridien").show();	
@@ -82,7 +94,7 @@
 				<input type="submit" value="Rechercher"></input>
 			</fieldset>
 		</form>
-		<form action="index.php?p=2&q=3" method="post">
+		<form action="index.php?p=2&q=3" method="post" class="member_search">
 			<fieldset class="member_search">
 				<legend>Par mot-clés : </legend>
 				<input type="text" id="search_input" name="keywords"/>
@@ -156,15 +168,3 @@
 	</div>
 
 {/block}
-
-
-{* {/section}
-{section name=result_sympt loop=$symptoms_ky}
-	<td>{$symptoms_ky[result_sympt].SYMPTOMS}</td>			
-
-{section name=resultats loop=$results}
-<tr>
-	<td>{$results[resultats].sympt.SYMPTOMS}</td>
-	<td>{$results[resultats].pat.PATHOS}</td>
-</tr>
-{/section} *}
