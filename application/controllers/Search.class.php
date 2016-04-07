@@ -4,7 +4,7 @@
 		 * Fonction displaySearch
 		 * Permet d'afficher la page principale de recherches (sans traitements)
 		 */
-		public function displaySearch(Engine $engine, Smarty $smarty, $show_keyword_search){
+		public static function displaySearch(Engine $engine, Smarty $smarty){
 
 			$resultat_patho = $engine->getPathos();
 			$data_patho = $resultat_patho['data'];
@@ -30,7 +30,7 @@
 			// else {
 			// 	$smarty->assign('pathology',array());
 			// }
-			$this->smarty->assign('pathology',$list_patho);
+			$smarty->assign('pathology',$list_patho);
 
 			// Assignation Méridiens
 			if($nb_merid > 0) {								
@@ -49,7 +49,7 @@
 			}
 			$smarty->assign('symptoms',$list_sympt);
 			// pour gérer l'affichage ou non du formulaire de recherche par mots-clé (réservé aux membres)
-			$smarty->assign('show_keywords',$show_keyword_search);
+			// $smarty->assign('show_keywords',$show_keyword_search);
 
 			$smarty->display(TPL_DIR."content_recherche.tpl");
 
@@ -59,7 +59,7 @@
 		 * Fonction submitForm_KeywordSearch
 		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par mot clés
 		 */
-		public function submitForm_KeywordSearch(Engine $engine, Smarty $smarty, $show_keyword_search){
+		public static function submitForm_KeywordSearch(Engine $engine, Smarty $smarty){
 			if (isset($_POST['keywords']) && !empty($_POST['keywords']))
 				$data_send = true;
 			else{
@@ -95,7 +95,7 @@
 
 			}		
 
-			Search::displaySearch($engine, $smarty, $show_keyword_search);	
+			Search::displaySearch($engine, $smarty);	
 
 			$smarty->display(TPL_DIR."content_recherche.tpl");		
 		}	
@@ -104,7 +104,7 @@
 		 * Fonction submitForm_MainRecherches
 		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par critère
 		 */
-		public function submitForm_MainSearch(Engine $engine, Smarty $smarty, $show_keyword_search){
+		public static function submitForm_MainSearch(Engine $engine, Smarty $smarty, $show_keyword_search){
 			if (isset($_POST['type_patho']) && !empty($_POST['type_patho']) 
 					&& isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) 
 					&& isset($_POST['caracteristiques_meridien']) && !empty($_POST['caracteristiques_meridien']) )
@@ -204,7 +204,7 @@
 
 				}
 
-			Search::displaySearch($engine, $smarty, $show_keyword_search);	
+			Search::displaySearch($engine, $smarty);	
 
 			$smarty->display(TPL_DIR."content_recherche.tpl");	
 		}

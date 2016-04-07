@@ -5,7 +5,7 @@
 		 * Fonction displayHome
 		 * Permet d'afficher la page d'accueil
 		 */
-		public function displayHome(Smarty $smarty){	
+		public static function displayHome(Smarty $smarty){	
 			//fonction Affichage flux RSS
 
 			// Flux RSS source
@@ -38,7 +38,7 @@
 			}
 
 			// affecte les valeurs de RSS pour affichage sur la page
-			$smarty->assign('rss',$list_rss);
+			$smarty->assign('rss',$list_rss);	
 
 			$smarty->display(TPL_DIR."content_accueil.tpl");	
 		}	
@@ -48,36 +48,40 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public function submitLoginForm(Engine $engine){
+		public static function submitLoginForm(Engine $engine){
 			// Controle du Login et MDP lors de la connexion
-			if (isset($_POST['login']) && isset($_POST['mdp'])) {
-				//$mdp = md5($_POST['MDP']);
-				$mdp = $_POST['mdp'];
+			if (isset($_POST['login']) && isset($_POST['password'])) {
+				//$mdp = md5($_POST['MDP']); ou sha256()
+				$password = $_POST['password'];
 				
-				$logged = $engine->checkIdentity($_POST['login'], $mdp);
-				
-				if (isset($_POST['connexion']) && ($logged != true)) {
+				$loged = $engine->checkIdentity($_POST['login'], $password);
+
+				if (isset($_POST['connection']) && ($loged > 0)) {
 					$_SESSION['login'] = $_POST['login'];
-					$_SESSION['mdp'] = $mdp;	
+					$_SESSION['password'] = $password;	
 					$_SESSION['Logged'] = true;	
 					header('Location: index.php?p=2');		
+					// on peut prévoir une alert() en JS qui dit qu'on est bien connecté
 				}
 				else {
 					$_SESSION['Logged'] = false;
 					header('Location: index.php?p=1'); 
+					// prévoir Vrai message d'erreur
 				}
 			}
 			else
 				header('Location: index.php?p=1'); 
-				//prévoir message d'erreur		
+				//prévoir Vrai message d'erreur		
 		}	
 
 		/**
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public function submitSignForm(Engine $engine){
-			if (isset($_POST['send_signup']) && !empty($_POST['send_signup']))
+		public static function submitSignForm(Engine $engine){
+			var_dump($_POST);
+
+			if (isset($_POST['accnt_subscr']) && !empty($_POST['accnt_subscr']))
 				$data_send = true;
 			else {
 				$data_send = false;
@@ -88,28 +92,27 @@
 			if ($data_send == true) {
 				//$mdp = md5($_POST['MDP']);
 				$login = $_POST['login'];
-				$mdp = $_POST['mdp'];
-				$mdp_bis = $_POST['mdp_bis'];
-				$nom = $_POST['nom'];
-				$prenom = $_POST['prenom'];
-				//$email = $_POST['email'];
+				$pwd = $_POST['pwd_subscr'];
+				$pwd2 = $_POST['pwd_2_subscr'];
+				$name = $_POST['name'];
+				$first_name = $_POST['first_name'];
 				
-				// vérification de la sdouble saisie du mdp
-				if($mdp == $mdp_bis){
+				// vérification de la double saisie du mdp
+				if($pwd == $pwd2){
 
-					$sign_in = $engine->signIn($login, $mdp, $nom , $prenom);
+					$sign_in = $engine->signIn($login, $pwd, $name , $first_name);
 					// $this->engine->signIn($login, $mdp, $nom , $prenom);
 				
 					// message si erreur dans l'insertion en BDD
 					if ($sign_in == false)  {
 						header('Location: index.php?p=1');
 					}
-					else{
+					else {
 						// insertion s'est bien passé
 					}
 
 					// penser à prévoir messsage JS (ou insertion en PHP  en dur) pour confirmer l'inscription quand pas de problèmes
-					header('Location: index.php?p=3');
+					header('Location: index.php?p=2');
 
 				}
 				else{
@@ -117,6 +120,7 @@
 					// message d'avertissement : MDP non égaux
 
 				}
+				// penser à gérer si utilisateur déjà inscrit
 			}
 	
 		}

@@ -8,7 +8,7 @@
 		 * Fonction Web_Service_modelDownload
 		 * Permet de rediriger vers le Web_service qui telecharge le fichier modele XML
 		 */
-		public function Web_Service_modelDownload(){
+		public static function Web_Service_modelDownload(){
 			// gérer contenu de fichier exporté (readfile) : via Smarty???
 
 			readfile("../application/models/pathologie.xml");
@@ -33,7 +33,7 @@
 		 * Fonction Web_Service
 		 * Permet de rediriger vers le Web_service de vue du modèle
 		 */
-		public function Web_Service_modelView(){
+		public static function Web_Service_modelView(){
 			header("Location: ../application/models/pathologie.xml");
 			// essayer de cacher adresse URL ?
 		}
@@ -42,7 +42,7 @@
 		 * Fonction Web_Service_modify
 		 * Permet de rediriger vers le Web_service
 		 */
-		public function Web_Service_modify(Smarty $smarty){
+		public static function Web_Service_modify(Smarty $smarty){
 			// pour exemple, permet d'ajouter un champs à la balise <pathologie>
 
 			$add = $_GET['champs'];
@@ -75,7 +75,7 @@
 		 * Fonction Web_Service_Calculatrice
 		 * Permet de rediriger vers le Web_service Calculatrice
 		 */
-		public function Web_Service_Calculatrice(Smarty $smarty){
+		public static function Web_Service_Calculatrice(Smarty $smarty){
 
 			if(isset($_GET['param1']) && isset($_GET['param1'])){
 				$p1 = $_GET['param1'];

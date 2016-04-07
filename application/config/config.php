@@ -4,8 +4,8 @@
 define("TPL_DIR", "../application/templates/");
 
 // define('DB_DSN', 'mysql:dbname=youponcture_develop;host=localhost');
-// define('DB_USER', 'guest');
-// define('DB_PASSWORD', 'Y0uPonctur3');
+// define('DB_USER', 'root');
+// define('DB_PASSWORD', '');
 
 define('DB_DSN', 'mysql:dbname=youponcture_develop;host=localhost');
 define('DB_USER', 'guest');

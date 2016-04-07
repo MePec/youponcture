@@ -22,7 +22,7 @@
 			$sql = "SELECT DISTINCT login, 
 									MDP
 					FROM  Users
-					WHERE Login = :LOGIN AND 
+					WHERE login = :LOGIN AND 
 						  MDP = :MDP";
 			
 			$query = $this->db->prepare($sql);		
@@ -41,7 +41,7 @@
 		 * @result le résultat de la requete
 		 */
 		public function signIn($login,$mdp, $nom ,$prenom){
-			$sql = "INSERT INTO Users(name, prenom, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN) ";
+			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN) ";
 			
 			$query = $this->db->prepare($sql);		
 			

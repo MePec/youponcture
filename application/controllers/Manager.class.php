@@ -4,6 +4,7 @@
 	require_once ('Credits.class.php');
 	require_once ('Web_Service.class.php');
 	require_once ('ErrorPage.class.php');
+	require_once ('Member.class.php');
 
 	class Manager {
 		private $db;
@@ -26,48 +27,24 @@
 			$this->page = $page;
 			$this->section = $section;
 			
-			$logged = false;
-				
-			// Controle du Login et MDP lors de la connexion
-			if (isset($_POST['login']) && isset($_POST['mdp'])) {
-				//$mdp = md5($_POST['MDP']);
-				//$mdp = shz256($_POST['MDP']);
-				$mdp = $_POST['mdp'];
-				
-				$logged = $this->engine->checkIdentity($_POST['login'], $mdp);
-				
-				if (isset($_POST['connexion']) && ($logged != true)) {
-					$_SESSION['login'] = $_POST['login'];
-					$_SESSION['mdp'] = $mdp;	
-					$_SESSION['Logged'] = true;			
-					$_SESSION['logon_status'] = "Connecté";
-				}
-				else{
-					$_SESSION['Logged'] = false;
-					$_SESSION['logon_status'] = "Non connecté";
-				}
-			}
-				
-			if(isset($_SESSION['Logged']) && $_SESSION['Logged'] != true){
-				$logged = false; // faire avec $_SESSION['Logged'] sinon (si probleme de visibilité de la variable)
+			// Vérification si on est déjà logué
+			if(!isset($_SESSION['Logged']) && empty($_SESSION['Logged'])){
+				$logged = false;
+				$_SESSION['Logged'] = false;
 				$_SESSION['logon_status'] = "Non connecté";
 			}
-
-			//penser à faire : si pas loggé : pas afficher rechercher par mots-clés dans page Recherches
-			if($logged == false){
-				//Cacher class  recherche par mots clé via CSS => hidden ou none ou via AJAX
-				$show_keyword_search = false;
-
-
+			elseif(isset($_SESSION['Logged']) && $_SESSION['Logged'] != true){
+				$_SESSION['logon_status'] = "Non connecté";
 			}
-			else{
-				// par défaut on cache le formulaire de recherche par mots-clés
-				$show_keyword_search = true;
+			elseif(isset($_SESSION['Logged']) && $_SESSION['Logged'] == true){
+				$_SESSION['logon_status'] = "Connecté";
 			}
+			
+			// var_dump($_SESSION['Logged']);
 
-
-			// a voir si je le laisse ici ou à déplacer				
-			//$this->smarty->assign('session',$logon_status);
+			// a voir si je le laisse ici ou à déplacer	: pour indiquer sur toutes les pages si on est connectés			
+			// normalement $_SESSION['logon_status'] toujours définie mais vérifier avant
+			$this->smarty->assign('logon',$_SESSION['logon_status']);
 
 			switch($page){
 				case "1":
@@ -83,25 +60,27 @@
 						default:
 							Home::displayHome($this->smarty);
 				}
-			
+				break;
+
 				case "2":
 					switch($this->section){
 						case "1":
-							Search::displaySearch($this->engine, $this->smarty, $show_keyword_search);
+							Search::displaySearch($this->engine, $this->smarty);
 							break;	
 
 						case "2":
-							Search::submitForm_MainSearch($this->engine, $this->smarty, $show_keyword_search);
+							Search::submitForm_MainSearch($this->engine, $this->smarty);
 							break;
 
 						case "3":
-							Search::submitForm_KeywordSearch($this->engine, $this->smarty, $show_keyword_search);
+							Search::submitForm_KeywordSearch($this->engine, $this->smarty);
 							break;		
 
 						default:
-							Search::displaySearch($this->engine, $this->smarty, $show_keyword_search);
+							Search::displaySearch($this->engine, $this->smarty);
 					}	
-
+				break;
+				
 				case "3":
 					Credits::displayCredits($this->smarty);
 					break;
@@ -130,6 +109,10 @@
 
 				case "6":
 					Web_Service::Web_Service_Calculatrice($this->smarty);
+					break;
+
+				case "7":
+					Member::Member_connection();
 					break;
 
 				default:

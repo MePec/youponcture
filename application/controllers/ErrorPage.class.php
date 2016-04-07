@@ -5,7 +5,7 @@
 		 * Fonction display404
 		 * Permet d'afficher la page 404
 		 */
-		public function display404(Smarty $smarty){
+		public static function display404(Smarty $smarty){
 			// gérer la redirection pour le Web Service
 			if(preg_match('^/WS/models$^', $_SERVER['REDIRECT_URL'], $match, PREG_OFFSET_CAPTURE)){
 			  //modification du code retour

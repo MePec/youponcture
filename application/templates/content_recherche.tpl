@@ -32,10 +32,6 @@
 				<script type="text/javascript">
 				// fonction qui gère affichage recherche par mot-clés
 				function loadKwSearch() {
-					// fonction normalement appelé/chargé dès le début du code et qui reste active tout le long (AJAX)
-					// dans le principe cette fonction sera déclenchée quand la valeur changera dans le php index.php?p=7 => le faire par onreadyStateChange où auto ?
-					  // var xhttp = new XMLHttpRequest();
-
 					   $.ajax({
 					       url : 'index.php?p=7',
 					       type : 'GET',
@@ -54,7 +50,7 @@
 							  }
 					       },
 					       error : function(resultat, statut, erreur){
-
+					       	 alert('Erreur AJAX JS :' + retour);
 					       }
 					    });
 					} 
@@ -100,8 +96,8 @@
 				}					
 				</script>
 
-				<script type="text/javascript">Meridien_selected();</script>
-				<script type="text/javascript">loadKwSearch();</script>
+
+
 
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
 				  <select name="type_meridien[]" multiple >
@@ -184,5 +180,8 @@
 			{/section}
 		</table>
 	</div>
+
+	<script type="text/javascript">Meridien_selected();</script>
+	<script type="text/javascript">$(window).load(loadKwSearch());</script>
 
 {/block}
