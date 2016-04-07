@@ -120,7 +120,7 @@
 			$sql = "SELECT DISTINCT pat.desc AS Patho,sy.desc AS Symp FROM patho pat
 					LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
 					LEFT JOIN symptome sy ON sp.idS = sy.idS
-					LEFT JOIN keysympt ks ON sy.idS = ks.idS
+					LEFT JOIN keySympt ks ON sy.idS = ks.idS
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
 					WHERE kw.name LIKE '".$keyword."' ";
 					
@@ -213,7 +213,7 @@
 		*/
 		function getList_SymptomsByPatho($meridien,$type_mer) {
 			$sql = "SELECT s.desc FROM symptome s
-					LEFT JOIN symptpatho sp ON s.idS = sp.idS
+					LEFT JOIN symptPatho sp ON s.idS = sp.idS
 					LEFT JOIN patho p ON sp.idP = p.idP
 					WHERE p.mer = :MER AND p.type = :TYPE ;";
 
