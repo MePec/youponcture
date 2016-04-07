@@ -124,12 +124,12 @@ table {
 
 .member_search{
 	display: none;
-	visibility:hidden;
+	/* visibility:hidden; */
 }
 
 div.keyword_results{
 	display: none;
-	visibility:hidden;
+	/* visibility:hidden; */
 }
 
 /*# sourceMappingURL=stylesheet.css.map */

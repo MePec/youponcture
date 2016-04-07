@@ -3,7 +3,7 @@
 
 		<div class="login">
 			<h1>Se connecter</h1>
-			<form action="#" method="post">
+			<form action="index.php?p=1&q=2" method="post" name="connexion">
 				<input class="email" type="email" id="email_addr" name="email_addr" tabindex="1" required oninput="checkMail(this)">
 				<input class="pwd" type="password" id="password" name="password" tabindex="2" required>
 				<input type="submit" tabindex="3">

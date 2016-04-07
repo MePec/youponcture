@@ -32,14 +32,31 @@
 				<script type="text/javascript">
 				// fonction qui gère affichage recherche par mot-clés
 				function loadKwSearch() {
-					  var xhttp = new XMLHttpRequest();
-					  xhttp.onreadystatechange = function() {
-					    if (xhttp.readyState == 4 && xhttp.status == 200) {
-					     document.getElementById("demo").innerHTML = xhttp.responseText;
-					    }
-					  };
-					  xhttp.open("GET", "ajax_info.txt", true);
-					  xhttp.send();
+					// fonction normalement appelé/chargé dès le début du code et qui reste active tout le long (AJAX)
+					// dans le principe cette fonction sera déclenchée quand la valeur changera dans le php index.php?p=7 => le faire par onreadyStateChange où auto ?
+					  // var xhttp = new XMLHttpRequest();
+
+					   $.ajax({
+					       url : 'index.php?p=7',
+					       type : 'GET',
+					       dataType : 'text',
+					       success : function(retour, statut){ 				       
+					       	 if(retour == 'connected'){
+							  	// on montre le formulaire + resultats rechercher par mot-clés
+							  	$(".member_search").show();	// form
+							  	$(".keyword_results").show();	
+							  	//alert(retour);
+							  }
+							  else{
+							  	$(".member_search").hide();	// form
+							  	$(".keyword_results").hide();	
+							  	//alert(retour);
+							  }
+					       },
+					       error : function(resultat, statut, erreur){
+
+					       }
+					    });
 					} 
 
 				function Meridien_selected(){
@@ -84,6 +101,7 @@
 				</script>
 
 				<script type="text/javascript">Meridien_selected();</script>
+				<script type="text/javascript">loadKwSearch();</script>
 
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
 				  <select name="type_meridien[]" multiple >
