@@ -61,13 +61,9 @@
 			}		
 		}
 
-
-
-
 		/* fonction getPathos()
-		 Description : permet de récupérer la liste de toutes les pathologies de la BDD
-		 Paramètres : ...
-		*/
+		 * Permet de récupérer la liste de toutes les pathologies de la BDD
+		 */
 		function getPathos() {
 			$sql = "SELECT * FROM patho ;";
 
@@ -81,9 +77,8 @@
 		}
 
 		/* fonction getSymptoms()
-		 Description : permet de récupérer la liste de toutes les symptomes
-		 Paramètres : ...
-		*/
+		 * Permet de récupérer la liste de toutes les symptomes
+		 */
 		function getSymptoms() {
 			$sql = "SELECT * FROM symptome ;";
 
@@ -97,9 +92,8 @@
 		}
 
 		/* fonction getMeridiens()
-		 Description : permet de récupérer la liste de toutes les méridiens de la BDD
-		 Paramètres : aucun
-		*/
+		 *Permet de récupérer la liste de toutes les méridiens de la BDD
+		 */
 		function getMeridiens() {
 			$sql = "SELECT nom FROM meridien ;";
 
@@ -113,9 +107,8 @@
 		}
 
 		/* fonction getPathos_Keywords()
-		 Description : permet de récupérer la liste des pathologies par mot-clé
-		 Paramètres : aucun
-		*/
+		 * Permet de récupérer la liste des pathologies par mot-clé
+		 */
 		function getPathos_Keywords($keyword) {
 			$sql = "SELECT DISTINCT pat.desc AS Patho,sy.desc AS Symp FROM patho pat
 					LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
@@ -135,9 +128,8 @@
 
 
 		/* fonction getCodeMeridien()
-		 Description : permet de récupérer le code pour chaque méridiens
-		 Paramètres : aucun
-		*/
+		 * Permet de récupérer le code pour chaque méridiens
+		 */
 		function getCodeMeridien($merid) {
 			$sql = "SELECT code FROM meridien
 					WHERE nom LIKE '".$merid."' ";
@@ -171,7 +163,8 @@
 
 		/**
 		 * getType_Merid_Default
-		 * Permet de récupérer le type de meridien */
+		 * Permet de récupérer le type de meridien 
+		 */
 		public function getType_Merid_Default($categorie_patho) {
 			$sql = "SELECT type_mer FROM caracteristiques
 					WHERE type_patho = '".$categorie_patho."' ;";
@@ -187,9 +180,8 @@
 		}
 
 		/* fonction getList_Patho()
-		 Description : permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
-		 Paramètres : aucun
-		*/
+		 * Permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
+		 */
 		function getList_Patho($meridien,$type_mer) {
 			$sql = "SELECT p.desc FROM patho p
 					WHERE p.mer = :MER AND p.type = :TYPE ;";
@@ -208,9 +200,8 @@
 		}
 
 		/* fonction getList_SymptomsByPatho()
-		 Description : permet de récupérer la liste des psymptomes associés à chaque pathologie en fonction des 3 critères du premier formulaire
-		 Paramètres : aucun
-		*/
+		 * Permet de récupérer la liste des psymptomes associés à chaque pathologie en fonction des 3 critères du premier formulaire
+		 */
 		function getList_SymptomsByPatho($meridien,$type_mer) {
 			$sql = "SELECT s.desc FROM symptome s
 					LEFT JOIN symptPatho sp ON s.idS = sp.idS

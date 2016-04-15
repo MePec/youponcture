@@ -2,8 +2,6 @@
     class DB {
 		private $dbh = null;
 
-        //private $charset = 'utf8';
-
 		/**
 	   	 * Constructeur
 	   	 * Ouverture de la connexion à la BDD.

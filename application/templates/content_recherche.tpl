@@ -1,8 +1,6 @@
 {extends file='./skeleton.tpl'}
 {block name=contenu}
 
-
-
 	<div class="search">
 		<h1>Recherche</h1>
 		<form action="index.php?p=2&q=2" method="post">
@@ -39,14 +37,12 @@
 					       success : function(retour, statut){ 				       
 					       	 if(retour == 'connected'){
 							  	// on montre le formulaire + resultats rechercher par mot-clés
-							  	$(".member_search").show();	// form
+							  	$(".member_search").show();	// affichage du formulaire (form)
 							  	$(".keyword_results").show();	
-							  	//alert(retour);
 							  }
 							  else{
-							  	$(".member_search").hide();	// form
+							  	$(".member_search").hide();	// cacher le formulaire (form)
 							  	$(".keyword_results").hide();	
-							  	//alert(retour);
 							  }
 					       },
 					       error : function(resultat, statut, erreur){
@@ -96,9 +92,6 @@
 				}					
 				</script>
 
-
-
-
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
 				  <select name="type_meridien[]" multiple >
 				 	{section name=merid loop=$meridiens}
@@ -117,8 +110,6 @@
 		</form>
 	</div>
 
-
-
 	<div class="keyword_results">
 		<h1>Résultats par mots-clé :</h1>
 		<table id="ky_results" border="1" >
@@ -135,8 +126,6 @@
 		</table>
 	</div>
 
-
-
 	<div class="criter_results">
 		<h1>Résultats par critères :</h1>
 		<table id="cri_results_pat" border="1" >
@@ -147,10 +136,7 @@
 			{section name=result_criter loop=$patho_res}
 			<tr>
 				<td>{$patho_res[result_criter].RESULT_PATHO}</td>
-				<!-- {counter start=0 assign=cmpt} -->
-				<!-- $nb_sy[{$smarty.section.result_criter.index}]	 -->
 				<td><ul>{section name=itera loop=$sy_res[{$smarty.section.result_criter.index}]}<li>{$sy_res[{$smarty.section.result_criter.index}].{$smarty.section.itera.index}.RESULT_SY}</li>{/section}</ul></td>
-
 			</tr>	
 			{/section}
 		</table>

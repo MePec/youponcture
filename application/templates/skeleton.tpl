@@ -16,7 +16,6 @@
 <body>
 	<header>
 		<div class="bandeau">
-			<!-- <img src="" alt=""> -->
 			<h1>YouPoncture</h1>
 			<span><i class="fa fa-user"></i></span>
 		</div>

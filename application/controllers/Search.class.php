@@ -40,7 +40,6 @@
 			}
 			$smarty->assign('meridiens',$list_merid);
 
-
 			// Assignation Symptomes
 			if($nb_sympt > 0) {								
 				for($i = 0; $i < $nb_sympt; $i++){	
@@ -48,8 +47,6 @@
 				}
 			}
 			$smarty->assign('symptoms',$list_sympt);
-			// pour gérer l'affichage ou non du formulaire de recherche par mots-clé (réservé aux membres)
-			// $smarty->assign('show_keywords',$show_keyword_search);
 
 			$smarty->display(TPL_DIR."content_recherche.tpl");
 
@@ -64,10 +61,9 @@
 				$data_send = true;
 			else{
 				$data_send = false;
-				header('Location: index.php?p=4'); //prévoir message d'erreur
+				header('Location: index.php?p=4');
 			}
 			
-
 			if($data_send == true){
 				$key = $_POST['keywords'];
 
@@ -104,15 +100,12 @@
 		 * Fonction submitForm_MainRecherches
 		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par critère
 		 */
-		public static function submitForm_MainSearch(Engine $engine, Smarty $smarty, $show_keyword_search){
-			if (isset($_POST['type_patho']) && !empty($_POST['type_patho']) 
-					&& isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) 
-					&& isset($_POST['caracteristiques_meridien']) && !empty($_POST['caracteristiques_meridien']) )
+		public static function submitForm_MainSearch(Engine $engine, Smarty $smarty){
+				if (isset($_POST['type_patho']) && !empty($_POST['type_patho']) && isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) && isset($_POST['caracteristiques_meridien']) && !empty($_POST['caracteristiques_meridien']))
 					$data_send = true;
-				else{
+				else {
 					$data_send = false;
 					header('Location: index.php?p=4');
-					//prévoir message d'erreur
 				}
 
 				if($data_send == true){
@@ -136,7 +129,7 @@
 						$cpt = 1;
 					}
 
-					// pour selection multiple Meridien
+					// pour selection multiple sur type Meridien
 					$j = 0;
 					foreach($_POST['type_meridien'] as $val){   
 						$data_meridien = $engine->getCodeMeridien($val);
@@ -149,14 +142,11 @@
 					$mark = 0;
 					for($i = 0; $i < $cpt; $i++){
 						for($l = 0;$l < $j;$l++){
-							$result_path = $engine->getList_Patho($meridien[$l],$type_mer[$i]);
-							// $data_path[$i][$l] = $result_path['data'];
-							// $nb_path[$i][$l] = $result_path['nb'];							
+							$result_path = $engine->getList_Patho($meridien[$l],$type_mer[$i]);				
 							$data_path[$mark] = $result_path['data'];
 							$nb_path[$mark]= $result_path['nb'];
-							// $mark++;
 
-							// traitement pour récupérer les symptomes associées
+							// traitement pour récupérer les symptomes associés
 							$result_sy = $engine->getList_SymptomsByPatho($meridien[$l],$type_mer[$i]);
 							$data_sy[$mark] = $result_sy['data'];
 							$nb_sy[$mark] = $result_sy['nb'];
@@ -172,7 +162,7 @@
 							for($p = 0; $p < $nb_path[$kl]; $p++){				
 								$list_patho[$tmp]['RESULT_PATHO'] = $data_path[$kl][$p]['desc'];
 								$mpt = 0;
-								// ajouter commentaire 
+								// traitement pour boucler sur la liste de TOUS les Symptomes associés à UNE seule Pathologie
 								while($mpt < $nb_sy[$kl] ){
 									$list_sy[$tmp][$mpt]['RESULT_SY'] = $data_sy[$kl][$mpt]['desc'];
 
@@ -195,10 +185,10 @@
 
 					if($list_sy != null){
 						$smarty->assign('sy_res',$list_sy);	
-						// $this->smarty->assign('nb_sy',$nb_sy);	
+						$smarty->assign('nb_sy',$nb_sy);	
 					}
 					else{
-						$msg[0]['RESULT_SY'] = "Pas de résultats trouvés pour cette recherche";
+						$msg[0][0]['RESULT_SY'] = "Pas de résultats trouvés pour cette recherche";
 						$smarty->assign('sy_res',$msg);
 					}
 

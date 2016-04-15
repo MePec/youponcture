@@ -9,7 +9,6 @@
 			//fonction Affichage flux RSS
 
 			// Flux RSS source
-			// $url_feed = "http://www.pcastuces.com/xml/pca_logitheque.xml";
 			$url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
 
 			// Nombre d'éléments à afficher
@@ -30,7 +29,6 @@
 				foreach ($items as $val) {
 					$list_rss[$cpt]['ITEM_TITLE'] = utf8_encode($val['title']);
 					$list_rss[$cpt]['ITEM_LINK'] = utf8_encode($val['link']);					
-					// $list_rss[$cpt]['ITEM_DATE'] = $val['pubDate'];
 					$list_rss[$cpt]['ITEM_DESCRIPTION'] = utf8_encode($val['description']);
 					
 					$cpt++;
@@ -48,10 +46,10 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public static function submitLoginForm(Engine $engine){
+		public static function submitLoginForm(Engine $engine,Smarty $smarty){
 			// Controle du Login et MDP lors de la connexion
 			if (isset($_POST['login']) && isset($_POST['password'])) {
-				//$mdp = md5($_POST['MDP']); ou sha256()
+				//$mdp = md5($_POST['MDP']); // mode MD5 sécurisé
 				$password = $_POST['password'];
 				
 				$loged = $engine->checkIdentity($_POST['login'], $password);
@@ -60,33 +58,44 @@
 					$_SESSION['login'] = $_POST['login'];
 					$_SESSION['password'] = $password;	
 					$_SESSION['Logged'] = true;	
-					header('Location: index.php?p=2');		
-					// on peut prévoir une alert() en JS qui dit qu'on est bien connecté
+
+					// affecte le message à afficher
+					$msg = "Vous êtes maitenant bien connecté!";
+					$smarty->assign('contenu_msg',$msg);
+					$smarty->display(TPL_DIR."display_msg.tpl");
+			
 				}
 				else {
 					$_SESSION['Logged'] = false;
-					header('Location: index.php?p=1'); 
-					// prévoir Vrai message d'erreur
+
+					$msg = "Erreur lors de la connexion! Veuillez réessayer.";
+					$smarty->assign('contenu_msg',$msg);
+					$smarty->display(TPL_DIR."display_msg.tpl");
+					
 				}
 			}
-			else
-				header('Location: index.php?p=1'); 
-				//prévoir Vrai message d'erreur		
+			else {
+					$msg = "Un des champs n'a pas été complété! Veuillez réessayer.";
+					$smarty->assign('contenu_msg',$msg);
+					$smarty->display(TPL_DIR."display_msg.tpl");
+			}
 		}	
 
 		/**
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public static function submitSignForm(Engine $engine){
-			var_dump($_POST);
+		public static function submitSignForm(Engine $engine,Smarty $smarty){
 
-			if (isset($_POST['accnt_subscr']) && !empty($_POST['accnt_subscr']))
+			if (isset($_POST['accnt_subscr']) && !empty($_POST['accnt_subscr']) && !empty($_POST['name']) && !empty($_POST['first_name']) && !empty($_POST['login']) && !empty($_POST['pwd_subscr']) && !empty($_POST['pwd_2_subscr']) ) {
 				$data_send = true;
+			}	
 			else {
 				$data_send = false;
-				header('Location: index.php?p=1'); 
-				// prévoir fonction php de gestion de message d'erreur qui renvoit une alerte JS
+
+				$msg = "Un des champs n'a pas été complété ou mal complété! Veuillez réessayer.";
+				$smarty->assign('contenu_msg',$msg);
+				$smarty->display(TPL_DIR."display_msg.tpl");
 			}
 
 			if ($data_send == true) {
@@ -101,26 +110,30 @@
 				if($pwd == $pwd2){
 
 					$sign_in = $engine->signIn($login, $pwd, $name , $first_name);
-					// $this->engine->signIn($login, $mdp, $nom , $prenom);
 				
 					// message si erreur dans l'insertion en BDD
 					if ($sign_in == false)  {
-						header('Location: index.php?p=1');
+						$msg = "Un problème s'est passé pour l'insertion en BDD.Veuillez réessayer.";
+						$smarty->assign('contenu_msg',$msg);
+						$smarty->display(TPL_DIR."display_msg.tpl");
 					}
 					else {
-						// insertion s'est bien passé
+						$msg = "L'insertion s'est bien passée.";
+						$smarty->assign('contenu_msg',$msg);
+						$smarty->display(TPL_DIR."display_msg.tpl");
 					}
 
-					// penser à prévoir messsage JS (ou insertion en PHP  en dur) pour confirmer l'inscription quand pas de problèmes
-					header('Location: index.php?p=2');
+					$msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
+					$smarty->assign('contenu_msg',$msg);
+					$smarty->display(TPL_DIR."display_msg.tpl");
 
 				}
 				else{
-					header('Location: index.php?p=1');
-					// message d'avertissement : MDP non égaux
-
+					$msg = "Les deux MDP saisis ne sont pas similaires : Veuillez réessayer.";
+					$smarty->assign('contenu_msg',$msg);
+					$smarty->display(TPL_DIR."display_msg.tpl");
 				}
-				// penser à gérer si utilisateur déjà inscrit
+				// gérer si utilisateur déjà inscrit
 			}
 	
 		}

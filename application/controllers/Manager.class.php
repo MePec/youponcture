@@ -22,7 +22,6 @@
 			$this->db = $classDB->getInstance();
 	       	$this->engine = new Engine($this->db);
 	       	$this->smarty = new Smarty();
-	       	//$this->template = new Template(TPL_DIR);
 			
 			$this->page = $page;
 			$this->section = $section;
@@ -39,22 +38,18 @@
 			elseif(isset($_SESSION['Logged']) && $_SESSION['Logged'] == true){
 				$_SESSION['logon_status'] = "Connecté";
 			}
-			
-			// var_dump($_SESSION['Logged']);
 
-			// a voir si je le laisse ici ou à déplacer	: pour indiquer sur toutes les pages si on est connectés			
-			// normalement $_SESSION['logon_status'] toujours définie mais vérifier avant
 			$this->smarty->assign('logon',$_SESSION['logon_status']);
 
 			switch($page){
 				case "1":
 				switch($this->section){
 						case "1":
-							Home::submitSignForm($this->engine);
+							Home::submitSignForm($this->engine,$this->smarty);
 							break;	
 
 						case "2":
-							Home::submitLoginForm($this->engine);
+							Home::submitLoginForm($this->engine,$this->smarty);
 							break;	
 
 						default:
@@ -118,6 +113,8 @@
 				default:
 					Home::displayHome($this->smarty);
 			}
+
+
 		}
 
 	}
