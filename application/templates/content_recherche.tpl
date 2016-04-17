@@ -1,8 +1,6 @@
 {extends file='./skeleton.tpl'}
 {block name=contenu}
 
-
-
 	<div class="search">
 		<h1>Recherche</h1>
 		<form action="index.php?p=2&q=2" method="post">
@@ -10,7 +8,7 @@
 				<legend>Par critère : </legend>
 				<label class="type_critere" for="type_patho">Type de Pathologie :</label>
 				 <select name="type_patho" id="type_patho">
-				   <option value="m">Méridien</option>
+				   <option value="m" selected="selected">Méridien</option>
 				   <option value="tf">Organe/Viscère</option>
 				   <option value="l">Luo</option>
 				   <option value="mv">Merveilleux vaisseaux</option>
@@ -19,7 +17,7 @@
 
 				<label class="caracteristiques_meridien" for="caracteristiques">Caractéristiques :</label>
 				 <select name="caracteristiques_meridien" class="caracteristiques_meridien">
-				<!--  <option selected="true" disabled="disabled">-</option> -->
+				 <option selected="true" value="default">-</option>
 				   <option value="i">Interne</option>
 				   <option value="e">Externe</option>
 				   <option value="p">Plein</option>
@@ -30,6 +28,29 @@
 
 
 				<script type="text/javascript">
+				// fonction qui gère affichage recherche par mot-clés
+				function loadKwSearch() {
+					   $.ajax({
+					       url : 'index.php?p=7',
+					       type : 'GET',
+					       dataType : 'text',
+					       success : function(retour, statut){ 				       
+					       	 if(retour == 'connected'){
+							  	// on montre le formulaire + resultats rechercher par mot-clés
+							  	$(".member_search").show();	// affichage du formulaire (form)
+							  	$(".keyword_results").show();	
+							  }
+							  else{
+							  	$(".member_search").hide();	// cacher le formulaire (form)
+							  	$(".keyword_results").hide();	
+							  }
+					       },
+					       error : function(resultat, statut, erreur){
+					       	 alert('Erreur AJAX JS :' + retour);
+					       }
+					    });
+					} 
+
 				function Meridien_selected(){
 
 					$(".caracteristiques_meridien").show();	
@@ -49,7 +70,6 @@
 						  	$(".caracteristiques_meridien").show();	
 						  	$("select[name='caracteristiques_meridien'] option:not([value='c'],[value='f'],[value='p'],[value='v'])").hide();
 						  	$("select[name='caracteristiques_meridien'] option:not([value='e'],[value='i'])").show();
-							// $("select[name='caracteristiques_meridien'] option[value='p'].attr('selected','selected'");
 
 							break; 		    
 						  case 'j': 
@@ -72,18 +92,16 @@
 				}					
 				</script>
 
-				<script type="text/javascript">Meridien_selected();</script>
-
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
-				 <select name="type_meridien" multiple tabindex="">
+				  <select name="type_meridien[]" multiple >
 				 	{section name=merid loop=$meridiens}
-					<option value="{$meridiens[merid].MERID_DESC}">{$meridiens[merid].MERID_DESC}</option>
+					<option value="{$meridiens[merid].MERID_DESC}" selected="selected">{$meridiens[merid].MERID_DESC}</option>
 					{/section}
 				</select> 
 				<input type="submit" value="Rechercher"></input>
 			</fieldset>
 		</form>
-		<form action="index.php?p=2&q=3" method="post">
+		<form action="index.php?p=2&q=3" method="post" class="member_search">
 			<fieldset class="member_search">
 				<legend>Par mot-clés : </legend>
 				<input type="text" id="search_input" name="keywords"/>
@@ -97,11 +115,12 @@
 		<table id="ky_results" border="1" >
 			<tr>
 			   <th>Pathologie</th>
-			   <!-- <th>Symptômes</th> -->
+			   <th>Symptômes</th>
 			</tr>
 			{section name=result_patho loop=$patho_ky}
 			<tr>
-				<td>{$patho_ky[result_patho].PATHOS}</td>			
+				<td>{$patho_ky[result_patho].PATHOS}</td>	
+				<td>{$patho_ky[result_patho].SYMPT}</td>			
 			</tr>		
 			{/section}	
 		</table>
@@ -109,15 +128,17 @@
 
 	<div class="criter_results">
 		<h1>Résultats par critères :</h1>
-		<table id="cri_results" border="1" >
+		<table id="cri_results_pat" border="1" >
 			<tr>
 			   <th>Pathologies</th>
+			   <th>Symptômes</th>
 			</tr>
 			{section name=result_criter loop=$patho_res}
 			<tr>
-				<td>{$patho_res[result_criter].RESULT_PATHO}</td>		
-			</tr>		
-			{/section}	
+				<td>{$patho_res[result_criter].RESULT_PATHO}</td>
+				<td><ul>{section name=itera loop=$sy_res[{$smarty.section.result_criter.index}]}<li>{$sy_res[{$smarty.section.result_criter.index}].{$smarty.section.itera.index}.RESULT_SY}</li>{/section}</ul></td>
+			</tr>	
+			{/section}
 		</table>
 	</div>
  
@@ -134,17 +155,6 @@
 			{/section}
 		</table>
 
-		<table id="list_result_mer" border="1" >
-			<tr>
-			   <th>Méridiens</th>
-			</tr>
-			{section name=merid loop=$meridiens}
-			<tr>
-				<td>{$meridiens[merid].MERID_DESC}</td>	
-			</tr>
-			{/section}
-		</table>
-
 		<table id="list_result_sympt" border="1" >
 			<tr>
 			   <th>Symptomes</th>
@@ -157,16 +167,7 @@
 		</table>
 	</div>
 
+	<script type="text/javascript">Meridien_selected();</script>
+	<script type="text/javascript">$(window).load(loadKwSearch());</script>
+
 {/block}
-
-
-{* {/section}
-{section name=result_sympt loop=$symptoms_ky}
-	<td>{$symptoms_ky[result_sympt].SYMPTOMS}</td>			
-
-{section name=resultats loop=$results}
-<tr>
-	<td>{$results[resultats].sympt.SYMPTOMS}</td>
-	<td>{$results[resultats].pat.PATHOS}</td>
-</tr>
-{/section} *}
