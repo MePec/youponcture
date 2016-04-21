@@ -1,58 +1,5 @@
 <?php
-
-	require_once(VDR_DIR."magpierss/rss_fetch.inc");
-	
 	class Home {
-
-		// Flux RSS source
-		var $url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
-		// Nombre d'éléments à afficher
-		var $nb_items = 2;
-
-
-		/**
-		 * Constructeur
-		 */
-		public function __construct(){}
-
-		/**
-		 * Constructeur avec customisation du flux RSS
-		 */
-		public function customized($urlfeed, $nb_items){
-			$this->urlfeed = $urlfeed;
-			$this->nb_items = $nb_items;
-		}
-
-		/**
-		 * Fonction getRss
-		 * Permet d'afficher la page d'accueil
-		 */
-		public function getRss(){	
-			//fonction Affichage flux RSS
-			// Lecture du flux distant
-
-			$rss = fetch_rss($this->url_feed);
-
-			// Lecture des éléments
-			if (is_array($rss->items))
-			{
-				// On récupère les éléments les plus récents
-				// fonction array_slice = permet d'extraire une portion de tableau/ ici 0 est l'indice de début
-				$items = array_slice($rss->items, 0, $this->nb_items);
-				$cpt = 0; $list_rss = Array();
-
-				// Boucle sur tous les éléments
-				foreach ($items as $val) {
-					$list_rss[$cpt]['ITEM_TITLE'] = utf8_encode($val['title']);
-					$list_rss[$cpt]['ITEM_LINK'] = utf8_encode($val['link']);					
-					$list_rss[$cpt]['ITEM_DESCRIPTION'] = utf8_encode($val['description']);
-					
-					$cpt++;
-				}
-			}
-
-			return $list_rss;
-		}
 
 		/**
 		 * Fonction displayHome

@@ -4,9 +4,9 @@
 
 	require_once("../application/config/config.php");
 
-	require_once("../application/config/DB.class.php");
-	require_once("../application/models/Engine.class.php");
-	require_once("../application/controllers/Manager.class.php");
+	//require_once("../application/config/DB.class.php");
+	//require_once("../application/models/Engine.class.php");
+	require_once(CTL_DIR."/Manager.class.php");
 
 	// Récupération de la page
 	if(isset($_GET['p']) && !empty($_GET['p']))

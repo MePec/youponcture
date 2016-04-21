@@ -1,9 +1,4 @@
 <?php
-
-	require_once('Smarty.class.php');
-	require_once("../application/config/config.php");
-	require_once(CONF_DIR."DB.class.php");
-	require_once(MDL_DIR."Engine.class.php");
 	require_once ('Home.class.php');
 	require_once ('Search.class.php');
 	require_once ('Credits.class.php');
@@ -116,11 +111,7 @@
 					break;
 
 				default:
-					//Home::displayHome($this->smarty);
-					$home = new Home();
-					$list_rss = $home->getRss();
-					$this->smarty->assign('rss',$list_rss);
-					$this->smarty->display(TPL_DIR."content_accueil.tpl");
+					Home::displayHome($this->smarty);
 			}
 
 
