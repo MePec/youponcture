@@ -10,13 +10,15 @@
 	require_once ('Web_Service.class.php');
 	require_once ('ErrorPage.class.php');
 	require_once ('Member.class.php');
+	require_once(VIEW_DIR."Display.class.php");
 
 	class Manager {
 		private $db;
 		private $engine;
-		
+
 		private $section;
 		private $page;
+		private $display;
 		
 		/**
 		 * Constructeur
@@ -30,7 +32,8 @@
 			
 			$this->page = $page;
 			$this->section = $section;
-			
+			$this->display = new Display();
+
 			// Vérification si on est déjà logué
 			if(!isset($_SESSION['Logged']) && empty($_SESSION['Logged'])){
 				$logged = false;
@@ -57,15 +60,13 @@
 						case "2":
 							//Home::submitLoginForm($this->engine);
 							$home->submitLoginForm($this->engine);
-							$this->smarty->assign('contenu_msg',$home->getMsg());
-							$this->smarty->display(TPL_DIR."display_msg.tpl");
+							$this->display->displayMsg($home->getMsg());
 							break;	
 
 						default:
 							//Home::displayHome($this->smarty);
 							$list_rss = $home->getRss();
-							$this->smarty->assign('rss',$list_rss);
-							$this->smarty->display(TPL_DIR."content_accueil.tpl");
+							$this->display->displayHome($list_rss);       
 				}
 				break;
 
@@ -126,8 +127,7 @@
 					//Home::displayHome($this->smarty);
 					$home = new Home();
 					$list_rss = $home->getRss();
-					$this->smarty->assign('rss',$list_rss);
-					$this->smarty->display(TPL_DIR."content_accueil.tpl");
+					$this->display->displayHome($list_rss);
 			}
 
 

@@ -19,11 +19,44 @@
 		// public function __construct(){}
 
 		/**
-		 * Fonction de customisation du flux RSS
+		 * Fonction setUrlFeed()
+		 * Setter de l'attribut url_feed (Flux RSS source)
 		 */
-		public function customized($urlfeed, $nb_items){
-			$this->urlfeed = $urlfeed;
+		public function setUrlFeed($url_feed){
+			$this->url_feed = $url_feed;
+		}
+
+		/**
+		 * Fonction setNbItems()
+		 * Setter de l'attribut nb_items (Nombre d'éléments à afficher)
+		 */
+		public function setNbItems($nb_items){
 			$this->nb_items = $nb_items;
+		}
+
+
+		/**
+		 * Fonction getUrlFeed()
+		 * Getter de l'attribut url_feed (Flux RSS source)
+		 */
+		public function getUrlFeed(){
+			return $this->url_feed;
+		}
+
+		/**
+		 * Fonction getNbItems()
+		 * Getter de l'attribut nb_items (Nombre d'éléments à afficher)
+		 */
+		public function getNbItems(){
+			return $this->nb_items;
+		}
+
+		/**
+		 * Fonction getMsg()
+		 * Getter de l'attribut msg (Message à l'utilisateur)
+		 */
+		public function getMsg(){
+			return $this->msg;
 		}
 
 		/**
@@ -195,14 +228,6 @@
 				// gérer si utilisateur déjà inscrit
 			}
 	
-		}
-
-		/**
-		 * Fonction getMsg()
-		 * Getter de l'attribut msg (Message à l'utilisateur)
-		 */
-		public function getMsg(){
-			return $this->msg;
 		}
 
 	}

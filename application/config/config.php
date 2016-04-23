@@ -9,7 +9,7 @@ define('APP_DIR', BASE_DIR.'application/');
 define('CONF_DIR', APP_DIR.'config/');
 define('CTL_DIR', APP_DIR.'controllers/');
 define('MDL_DIR', APP_DIR.'models/');
-define('VIEW_DIR', APP_DR.'views/');
+define('VIEW_DIR', APP_DIR.'views/');
 define('TPL_DIR', APP_DIR.'templates/');
 define('VDR_DIR', BASE_DIR.'vendors/');
 
