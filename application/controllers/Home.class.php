@@ -1,22 +1,25 @@
 <?php
 
 	require_once(VDR_DIR."magpierss/rss_fetch.inc");
-	
+	require_once(CTL_DIR."CheckValues.class.php");
+
 	class Home {
 
 		// Flux RSS source
-		var $url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
+		private $url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
 		// Nombre d'éléments à afficher
-		var $nb_items = 2;
+		private $nb_items = 2;
+		// Message à l'utilisateur
+		private $msg = '';
 
 
 		/**
 		 * Constructeur
 		 */
-		public function __construct(){}
+		// public function __construct(){}
 
 		/**
-		 * Constructeur avec customisation du flux RSS
+		 * Fonction de customisation du flux RSS
 		 */
 		public function customized($urlfeed, $nb_items){
 			$this->urlfeed = $urlfeed;
@@ -25,12 +28,11 @@
 
 		/**
 		 * Fonction getRss
-		 * Permet d'afficher la page d'accueil
+		 * Permet de récuperer le flux RSS
 		 */
 		public function getRss(){	
-			//fonction Affichage flux RSS
+			
 			// Lecture du flux distant
-
 			$rss = fetch_rss($this->url_feed);
 
 			// Lecture des éléments
@@ -99,38 +101,42 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public static function submitLoginForm(Engine $engine,Smarty $smarty){
-			// Controle du Login et MDP lors de la connexion
-			if (isset($_POST['login']) && isset($_POST['password'])) {
-				//$mdp = md5($_POST['MDP']); // mode MD5 sécurisé
+		public function submitLoginForm(Engine $engine){
+			$login = ''; $password = '';
+
+			// Controle du Login
+			if(isset($_POST['login']) && CheckValues::checkEmail($_POST['login'])){
+				$login = $_POST['login'];
+			} else {
+				$this->msg = "Il semble qu'il y ait un problème avec votre identifiant! Veuillez réessayer.";
+				return false;
+			}
+
+			// Controle du MDP
+			if(isset($_POST['password']) && CheckValues::checkNoSpace($_POST['password'])){
 				$password = $_POST['password'];
+			} else {
+				$this->msg = "Il semble qu'il y ait un problème avec votre mot de passe! Veuillez réessayer.";
+				return false;
+			}
+
 				
-				$loged = $engine->checkIdentity($_POST['login'], $password);
+			$logged = $engine->checkIdentity($_POST['login'], $password);
 
-				if (isset($_POST['connection']) && ($loged > 0)) {
-					$_SESSION['login'] = $_POST['login'];
-					$_SESSION['password'] = $password;	
-					$_SESSION['Logged'] = true;	
+			if (isset($_POST['connection']) && ($logged > 0)) {
+				$_SESSION['login'] = $_POST['login'];
+				//$_SESSION['password'] = $password;	
+				$_SESSION['Logged'] = true;	
 
-					// affecte le message à afficher
-					$msg = "Vous êtes maitenant bien connecté!";
-					$smarty->assign('contenu_msg',$msg);
-					$smarty->display(TPL_DIR."display_msg.tpl");
-			
-				}
-				else {
-					$_SESSION['Logged'] = false;
-
-					$msg = "Erreur lors de la connexion! Veuillez réessayer.";
-					$smarty->assign('contenu_msg',$msg);
-					$smarty->display(TPL_DIR."display_msg.tpl");
-					
-				}
+				// affecte le message à afficher
+				$this->msg = "Vous êtes maitenant bien connecté!";
+				return true;			
 			}
 			else {
-					$msg = "Un des champs n'a pas été complété! Veuillez réessayer.";
-					$smarty->assign('contenu_msg',$msg);
-					$smarty->display(TPL_DIR."display_msg.tpl");
+				$_SESSION['Logged'] = false;
+
+				$this->msg = "Erreur lors de la connexion! Veuillez réessayer.";
+				return false;					
 			}
 		}	
 
@@ -189,6 +195,14 @@
 				// gérer si utilisateur déjà inscrit
 			}
 	
+		}
+
+		/**
+		 * Fonction getMsg()
+		 * Getter de l'attribut msg (Message à l'utilisateur)
+		 */
+		public function getMsg(){
+			return $this->msg;
 		}
 
 	}

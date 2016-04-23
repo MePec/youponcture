@@ -48,17 +48,24 @@
 
 			switch($page){
 				case "1":
+				$home = new Home();
 				switch($this->section){
 						case "1":
 							Home::submitSignForm($this->engine,$this->smarty);
 							break;	
 
 						case "2":
-							Home::submitLoginForm($this->engine,$this->smarty);
+							//Home::submitLoginForm($this->engine);
+							$home->submitLoginForm($this->engine);
+							$this->smarty->assign('contenu_msg',$home->getMsg());
+							$this->smarty->display(TPL_DIR."display_msg.tpl");
 							break;	
 
 						default:
-							Home::displayHome($this->smarty);
+							//Home::displayHome($this->smarty);
+							$list_rss = $home->getRss();
+							$this->smarty->assign('rss',$list_rss);
+							$this->smarty->display(TPL_DIR."content_accueil.tpl");
 				}
 				break;
 
