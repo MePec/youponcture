@@ -19,7 +19,6 @@
 		 * @result le résultat de la requete
 		 */
 		public function checkIdentity($login,$MDP){
-			var_dump(array($login, $MDP));
 
 			// $sql = "SELECT DISTINCT login, 
 			// 						MDP

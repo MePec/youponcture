@@ -2,6 +2,8 @@
 
 	require_once(VDR_DIR."magpierss/rss_fetch.inc");
 	require_once(CTL_DIR."CheckValues.class.php");
+	require_once(MDL_DIR."Engine.class.php");
+	require_once(CONF_DIR."DB.class.php");
 
 	class Home {
 
@@ -66,7 +68,7 @@
 		public function getRss(){	
 			
 			// Lecture du flux distant
-			$rss = fetch_rss($this->url_feed);
+			$rss = @fetch_rss($this->url_feed);
 
 			// Lecture des éléments
 			if (is_array($rss->items))
@@ -103,7 +105,7 @@
 			$nb_items = 2;
 
 			// Lecture du flux distant
-			$rss = fetch_rss($url_feed);
+			$rss = @fetch_rss($url_feed);
 
 			// Lecture des éléments
 			if (is_array($rss->items))
@@ -134,8 +136,10 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public function submitLoginForm(Engine $engine){
+		public function submitLoginForm(DB $classDB){
 			$login = ''; $password = '';
+			$db = $classDB->getInstance();
+			$engine = new Engine($db);
 
 			// Controle du Login
 			if(isset($_POST['login']) && CheckValues::checkEmail($_POST['login'])){
@@ -177,13 +181,15 @@
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public function submitSignForm(Engine $engine){
+		public function submitSignForm(DB $classDB){
 
 			$login = '';
 			$pwd = '';
 			$pwd2 = '';
 			$name = '';
 			$first_name = '';
+			$db = $classDB->getInstance();
+			$engine = new Engine($db);
 
 			// Controle si un ou plusieurs champs ne sont pas vide
 			if (!isset($_POST['accnt_subscr']) || empty($_POST['accnt_subscr']) || empty($_POST['name']) || empty($_POST['first_name']) || empty($_POST['login']) || empty($_POST['pwd_subscr']) || empty($_POST['pwd_2_subscr']) ) {

@@ -1,6 +1,5 @@
 <?php
 
-	require_once('Smarty.class.php');
 	require_once("../application/config/config.php");
 	require_once(CONF_DIR."DB.class.php");
 	require_once(MDL_DIR."Engine.class.php");
@@ -13,26 +12,23 @@
 	require_once(VIEW_DIR."Display.class.php");
 
 	class Manager {
-		private $db;
-		private $engine;
+
+		private $classDB;
+		private $display;
 
 		private $section;
 		private $page;
-		private $display;
 		
 		/**
 		 * Constructeur
 		 */
 		public function __construct($page = null , $section = null){
-			$classDB = new DB();
 			
-			$this->db = $classDB->getInstance();
-	       	$this->engine = new Engine($this->db);
-	       	$this->smarty = new Smarty();
+			$this->classDB = new DB();
+			$this->display = new Display();
 			
 			$this->page = $page;
 			$this->section = $section;
-			$this->display = new Display();
 
 			// Vérification si on est déjà logué
 			if(!isset($_SESSION['Logged']) && empty($_SESSION['Logged'])){
@@ -47,32 +43,32 @@
 				$_SESSION['logon_status'] = "Connecté";
 			}
 
-			$this->smarty->assign('logon',$_SESSION['logon_status']);
+			$this->display->logonStatus($_SESSION['logon_status']);
 
 			switch($page){
 				case "1":
 				$home = new Home();
 				switch($this->section){
 						case "1":
-							//Home::submitSignForm($this->engine,$this->smarty);
-							$home->submitSignForm($this->engine);
+							$home->submitSignForm($this->classDB);
 							$this->display->displayMsg($home->getMsg());
 							break;	
 
 						case "2":
-							//Home::submitLoginForm($this->engine);
-							$home->submitLoginForm($this->engine);
+							$home->submitLoginForm($this->classDB);
 							$this->display->displayMsg($home->getMsg());
 							break;	
 
 						default:
-							//Home::displayHome($this->smarty);
 							$list_rss = $home->getRss();
 							$this->display->displayHome($list_rss);       
 				}
 				break;
 
 				case "2":
+					$this->db = $classDB->getInstance();
+	       			$this->engine = new Engine($this->db);
+	       			$this->smarty = new Smarty();
 					switch($this->section){
 						case "1":
 							Search::displaySearch($this->engine, $this->smarty);
@@ -92,10 +88,12 @@
 				break;
 				
 				case "3":
+					$this->smarty = new Smarty();
 					Credits::displayCredits($this->smarty);
 					break;
 
 				case "4":
+					$this->smarty = new Smarty();
 					ErrorPage::display404($this->smarty);
 					break;
 
@@ -110,6 +108,7 @@
 							break;
 
 						case "3":
+							$this->smarty = new Smarty();
 							Web_Service::Web_Service_modify($this->smarty);
 							break;
 
@@ -118,6 +117,7 @@
 					}
 
 				case "6":
+					$this->smarty = new Smarty();
 					Web_Service::Web_Service_Calculatrice($this->smarty);
 					break;
 
@@ -126,7 +126,6 @@
 					break;
 
 				default:
-					//Home::displayHome($this->smarty);
 					$home = new Home();
 					$list_rss = $home->getRss();
 					$this->display->displayHome($list_rss);
