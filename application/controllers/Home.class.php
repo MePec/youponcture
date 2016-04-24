@@ -233,19 +233,17 @@
 			}
 			
 			// vérification de la double saisie du mdp
-			if($pwd == $pwd2){
+			if($pwd === $pwd2){
 
 				$sign_in = $engine->signIn($login, $pwd, $name , $first_name);
-			
+
 				// message si erreur dans l'insertion en BDD
 				if ($sign_in == false)  {
-					$this->msg = "Un problème s'est passé pour l'insertion en BDD.Veuillez réessayer.";
+					$this->msg = "Il y eu un problème, vous êtes peut-être déja inscrit.Veuillez réessayer.";
 				}
 				else {
-					$this->msg = "L'insertion s'est bien passée.";
+					$this->msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
 				}
-
-				$this->msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
 
 			}
 			else{

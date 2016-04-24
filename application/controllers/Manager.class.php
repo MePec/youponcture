@@ -66,7 +66,7 @@
 				break;
 
 				case "2":
-					$this->db = $classDB->getInstance();
+					$this->db = $this->classDB->getInstance();
 	       			$this->engine = new Engine($this->db);
 	       			$this->smarty = new Smarty();
 					switch($this->section){

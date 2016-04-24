@@ -36,7 +36,11 @@
 			$query->bindValue(':LOGIN', $login, PDO::PARAM_STR);
 			// $query->bindValue(':MDP', $MDP, PDO::PARAM_STR);
 			
-			$query->execute();
+			try{
+				$query->execute();
+			} catch( PDOException $exception ) {
+				print "Echec de l'insertion : " . $exception->getMessage();
+			}
 
 			$hashed_pwd = $query->fetchColumn(1);
 
@@ -55,27 +59,28 @@
 		 */
 		public function signIn($login,$mdp, $nom ,$prenom){
 
-			var_dump(array($login,$mdp, $nom ,$prenom));
-			print "<br/>".password_hash($mdp, PASSWORD_DEFAULT);
-
 			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN)";
 			
 			$query = $this->db->prepare($sql);		
+			$resultats = null;
+
+			$query->bindValue(':LOGIN', $login, PDO::PARAM_STR);
+			$query->bindValue(':MDP', password_hash($mdp, PASSWORD_DEFAULT), PDO::PARAM_STR);
+			//$query->bindValue(':MDP', $mdp, PDO::PARAM_STR);
+			$query->bindValue(':NOM', $nom, PDO::PARAM_STR);
+			$query->bindValue(':PRENOM', $prenom, PDO::PARAM_STR);
 			
-			$query->bindValue(':LOGIN', $login);
-			// $query->bindValue(':MDP', password_hash($mdp, PASSWORD_DEFAULT));
-			$query->bindValue(':MDP', $mdp);
-			$query->bindValue(':NOM', $nom);
-			$query->bindValue(':PRENOM', $prenom);
-			
-			$resultats = $query->execute();
+			try{
+				$resultats = $query->execute();
+			} catch( PDOException $exception ) {
+				print "Echec de l'insertion : " . $exception->getMessage();
+			}
 
 			//pour tester si l'insertion s'est bien faite
-			if($resultats===FALSE){
-				$data = false;
+			if($resultats==FALSE){
+				return false;
 			}else{
-				$data = true;
-				return $data;
+				return true;
 			}		
 		}
 
