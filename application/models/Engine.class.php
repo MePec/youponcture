@@ -19,20 +19,34 @@
 		 * @result le résultat de la requete
 		 */
 		public function checkIdentity($login,$MDP){
+			var_dump(array($login, $MDP));
+
+			// $sql = "SELECT DISTINCT login, 
+			// 						MDP
+			// 		FROM  Users
+			// 		WHERE login = :LOGIN AND 
+			// 			  MDP = :MDP";
+
 			$sql = "SELECT DISTINCT login, 
 									MDP
 					FROM  Users
-					WHERE login = :LOGIN AND 
-						  MDP = :MDP";
+					WHERE login = :LOGIN";
 			
 			$query = $this->db->prepare($sql);		
 			
-			$query->bindValue(':LOGIN', $login);
-			$query->bindValue(':MDP', $MDP);
+			$query->bindValue(':LOGIN', $login, PDO::PARAM_STR);
+			// $query->bindValue(':MDP', $MDP, PDO::PARAM_STR);
 			
 			$query->execute();
-				
-			return $query->rowCount();			
+
+			$hashed_pwd = $query->fetchColumn(1);
+
+			if(password_verify($MDP, $hashed_pwd)){
+				return $query->rowCount();		
+			print "test";
+			} else {
+				return false;
+			}
 		}
 
 		/**
@@ -41,11 +55,16 @@
 		 * @result le résultat de la requete
 		 */
 		public function signIn($login,$mdp, $nom ,$prenom){
-			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN) ";
+
+			var_dump(array($login,$mdp, $nom ,$prenom));
+			print "<br/>".password_hash($mdp, PASSWORD_DEFAULT);
+
+			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN)";
 			
 			$query = $this->db->prepare($sql);		
 			
 			$query->bindValue(':LOGIN', $login);
+			// $query->bindValue(':MDP', password_hash($mdp, PASSWORD_DEFAULT));
 			$query->bindValue(':MDP', $mdp);
 			$query->bindValue(':NOM', $nom);
 			$query->bindValue(':PRENOM', $prenom);

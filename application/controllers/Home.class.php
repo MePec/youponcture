@@ -177,56 +177,75 @@
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public static function submitSignForm(Engine $engine,Smarty $smarty){
+		public function submitSignForm(Engine $engine){
 
-			if (isset($_POST['accnt_subscr']) && !empty($_POST['accnt_subscr']) && !empty($_POST['name']) && !empty($_POST['first_name']) && !empty($_POST['login']) && !empty($_POST['pwd_subscr']) && !empty($_POST['pwd_2_subscr']) ) {
-				$data_send = true;
-			}	
-			else {
-				$data_send = false;
+			$login = '';
+			$pwd = '';
+			$pwd2 = '';
+			$name = '';
+			$first_name = '';
 
-				$msg = "Un des champs n'a pas été complété ou mal complété! Veuillez réessayer.";
-				$smarty->assign('contenu_msg',$msg);
-				$smarty->display(TPL_DIR."display_msg.tpl");
+			// Controle si un ou plusieurs champs ne sont pas vide
+			if (!isset($_POST['accnt_subscr']) || empty($_POST['accnt_subscr']) || empty($_POST['name']) || empty($_POST['first_name']) || empty($_POST['login']) || empty($_POST['pwd_subscr']) || empty($_POST['pwd_2_subscr']) ) {
+				$this->msg = "Un des champs n'a pas été complété ou mal complété! Veuillez réessayer.";
+				return false;
 			}
 
-			if ($data_send == true) {
-				//$mdp = md5($_POST['MDP']);
+
+			// Controle du nom de famille
+			if(isset($_POST['name']) && CheckValues::checkName($_POST['name'])){
+				$name = $_POST['name'];
+			} else {
+				$this->msg = "Il semble qu'il y ait un problème avec votre nom! Veuillez réessayer.";
+				return false;
+			}
+
+			// Controle du prénom
+			if(isset($_POST['first_name']) && CheckValues::checkName($_POST['first_name'])){
+				$first_name = $_POST['first_name'];
+			} else {
+				$this->msg = "Il semble qu'il y ait un problème avec votre prénom! Veuillez réessayer.";
+				return false;
+			}
+
+			// Controle du Login
+			if(isset($_POST['login']) && CheckValues::checkEmailwithMX($_POST['login'])){
 				$login = $_POST['login'];
+			} else {
+				$this->msg = "Il semble qu'il y ait un problème avec votre e-mail! Veuillez réessayer.";
+				return false;
+			}
+
+			// Controle des MDP
+			if(isset($_POST['pwd_subscr']) && CheckValues::checkPwd($_POST['pwd_subscr']) &&
+				isset($_POST['pwd_2_subscr']) && CheckValues::checkPwd($_POST['pwd_2_subscr'])){
 				$pwd = $_POST['pwd_subscr'];
 				$pwd2 = $_POST['pwd_2_subscr'];
-				$name = $_POST['name'];
-				$first_name = $_POST['first_name'];
-				
-				// vérification de la double saisie du mdp
-				if($pwd == $pwd2){
-
-					$sign_in = $engine->signIn($login, $pwd, $name , $first_name);
-				
-					// message si erreur dans l'insertion en BDD
-					if ($sign_in == false)  {
-						$msg = "Un problème s'est passé pour l'insertion en BDD.Veuillez réessayer.";
-						$smarty->assign('contenu_msg',$msg);
-						$smarty->display(TPL_DIR."display_msg.tpl");
-					}
-					else {
-						$msg = "L'insertion s'est bien passée.";
-						$smarty->assign('contenu_msg',$msg);
-						$smarty->display(TPL_DIR."display_msg.tpl");
-					}
-
-					$msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
-					$smarty->assign('contenu_msg',$msg);
-					$smarty->display(TPL_DIR."display_msg.tpl");
-
-				}
-				else{
-					$msg = "Les deux MDP saisis ne sont pas similaires : Veuillez réessayer.";
-					$smarty->assign('contenu_msg',$msg);
-					$smarty->display(TPL_DIR."display_msg.tpl");
-				}
-				// gérer si utilisateur déjà inscrit
+			} else {
+				$this->msg = "Votre mot de passe doit faire 8 caractères minimum, contenir au moins une majuscule, une miniscule, un chiffre et aucun espace";
+				return false;
 			}
+			
+			// vérification de la double saisie du mdp
+			if($pwd == $pwd2){
+
+				$sign_in = $engine->signIn($login, $pwd, $name , $first_name);
+			
+				// message si erreur dans l'insertion en BDD
+				if ($sign_in == false)  {
+					$this->msg = "Un problème s'est passé pour l'insertion en BDD.Veuillez réessayer.";
+				}
+				else {
+					$this->msg = "L'insertion s'est bien passée.";
+				}
+
+				$this->msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
+
+			}
+			else{
+				$this->msg = "Les deux MDP saisis ne sont pas similaires : Veuillez réessayer.";
+			}
+			// gérer si utilisateur déjà inscrit
 	
 		}
 

@@ -54,7 +54,9 @@
 				$home = new Home();
 				switch($this->section){
 						case "1":
-							Home::submitSignForm($this->engine,$this->smarty);
+							//Home::submitSignForm($this->engine,$this->smarty);
+							$home->submitSignForm($this->engine);
+							$this->display->displayMsg($home->getMsg());
 							break;	
 
 						case "2":
