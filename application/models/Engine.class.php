@@ -7,7 +7,7 @@
 	   	 * @param db : objet contenant la connexion à la BDD
 	   	 */
 	  	public function __construct($db){
-	       	$this->db = $db;		
+	       	$this->db = $db->getInstance();	
 	  	}
 
 

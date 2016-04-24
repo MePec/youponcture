@@ -136,9 +136,8 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public function submitLoginForm(DB $classDB){
+		public function submitLoginForm(DB $db){
 			$login = ''; $password = '';
-			$db = $classDB->getInstance();
 			$engine = new Engine($db);
 
 			// Controle du Login
@@ -181,14 +180,13 @@
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public function submitSignForm(DB $classDB){
+		public function submitSignForm(DB $db){
 
 			$login = '';
 			$pwd = '';
 			$pwd2 = '';
 			$name = '';
 			$first_name = '';
-			$db = $classDB->getInstance();
 			$engine = new Engine($db);
 
 			// Controle si un ou plusieurs champs ne sont pas vide
