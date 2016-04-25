@@ -3,7 +3,6 @@
 	require_once(VDR_DIR."magpierss/rss_fetch.inc");
 	require_once(CTL_DIR."CheckValues.class.php");
 	require_once(MDL_DIR."Engine.class.php");
-	require_once(CONF_DIR."DB.class.php");
 
 	class Home {
 
@@ -138,7 +137,6 @@
 		 */
 		public function submitLoginForm(){
 			$login = ''; $password = '';
-			$engine = new Engine();
 
 			// Controle du Login
 			if(isset($_POST['login']) && CheckValues::checkEmail($_POST['login'])){
@@ -157,7 +155,7 @@
 			}
 
 				
-			$logged = $engine->checkIdentity($_POST['login'], $password);
+			$logged = Engine::checkIdentity($_POST['login'], $password);
 
 			if (isset($_POST['connection']) && ($logged > 0)) {
 				$_SESSION['login'] = $_POST['login'];
@@ -187,7 +185,6 @@
 			$pwd2 = '';
 			$name = '';
 			$first_name = '';
-			$engine = new Engine();
 
 			// Controle si un ou plusieurs champs ne sont pas vide
 			if (!isset($_POST['accnt_subscr']) || empty($_POST['accnt_subscr']) || empty($_POST['name']) || empty($_POST['first_name']) || empty($_POST['login']) || empty($_POST['pwd_subscr']) || empty($_POST['pwd_2_subscr']) ) {
@@ -233,7 +230,7 @@
 			// vérification de la double saisie du mdp
 			if($pwd === $pwd2){
 
-				$sign_in = $engine->signIn($login, $pwd, $name , $first_name);
+				$sign_in = Engine::signIn($login, $pwd, $name , $first_name);
 
 				// message si erreur dans l'insertion en BDD
 				if ($sign_in == false)  {

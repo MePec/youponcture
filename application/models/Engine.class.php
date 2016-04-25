@@ -1,15 +1,40 @@
 <?php
+
+	require_once(CONF_DIR."DB.class.php");
+
 	class Engine {
 		private $db;
 		
 	  	/**
-	   	 * Constructeur
+	   	 * Constructeur : /!\ Deprecated
 	   	 * @param db : objet contenant la connexion à la BDD
 	   	 */
 	  	public function __construct(){
-	       	$this->db = DB::getDB();	
+	       	$this->db = DB::getDBH();	
 	  	}
 
+
+	  	/*
+	  	 * Fonction qui demande la préparation d'un objet PDO
+	  	 *
+	  	 */
+	  	private static function prepareRequest($sql){
+	  		$db = DB::getInstance();
+	  		return $db->prepareRequestInDB($sql);
+	  	}
+
+
+	  	/*
+	  	 * Fonction d'execution des requêtes avec gestion des erreurs
+	  	 *
+	  	 */
+	    private static function executeResquest(PDOStatement &$sth){
+	  		try{
+				$sth->execute();
+			} catch( PDOException $exception ) {
+				trigger_error("Echec de l'insertion : " . $exception->getMessage(), E_USER_WARNING);
+			}
+	  	} 
 
 	  	/**
 		 * checkIdentity
@@ -18,7 +43,7 @@
 		 * @param $MDP : MDP envoyé par le formulaire $_POST
 		 * @result le résultat de la requete
 		 */
-		public function checkIdentity($login,$MDP){
+		public static function checkIdentity($login,$password){
 
 			// $sql = "SELECT DISTINCT login, 
 			// 						MDP
@@ -31,22 +56,17 @@
 					FROM  Users
 					WHERE login = :LOGIN";
 			
-			$query = $this->db->prepare($sql);		
+			$sth = Self::prepareRequest($sql);		
 			
-			$query->bindValue(':LOGIN', $login, PDO::PARAM_STR);
-			// $query->bindValue(':MDP', $MDP, PDO::PARAM_STR);
+			$sth->bindValue(':LOGIN', $login, PDO::PARAM_STR);
+			// $query->bindValue(':PASSWORD', $password, PDO::PARAM_STR);
 			
-			try{
-				$query->execute();
-			} catch( PDOException $exception ) {
-				print "Echec de l'insertion : " . $exception->getMessage();
-			}
+			Self::executeResquest($sth);
 
-			$hashed_pwd = $query->fetchColumn(1);
+			$hashed_pwd = $sth->fetchColumn(1);
 
-			if(password_verify($MDP, $hashed_pwd)){
-				return $query->rowCount();		
-			print "test";
+			if(password_verify($password, $hashed_pwd)){
+				return $sth->rowCount();		
 			} else {
 				return false;
 			}
@@ -57,27 +77,22 @@
 		 * Permet d'insérer les données pour l'inscription d'un membre
 		 * @result le résultat de la requete
 		 */
-		public function signIn($login,$mdp, $nom ,$prenom){
+		public static function signIn($login,$password, $nom ,$prenom){
 
-			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :MDP , :LOGIN)";
+			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :PASSWORD , :LOGIN)";
 			
-			$query = $this->db->prepare($sql);		
-			$resultats = null;
+			$sth = Self::prepareRequest($sql);		
 
-			$query->bindValue(':LOGIN', $login, PDO::PARAM_STR);
-			$query->bindValue(':MDP', password_hash($mdp, PASSWORD_DEFAULT), PDO::PARAM_STR);
+			$sth->bindValue(':LOGIN', $login, PDO::PARAM_STR);
+			$sth->bindValue(':PASSWORD', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
 			//$query->bindValue(':MDP', $mdp, PDO::PARAM_STR);
-			$query->bindValue(':NOM', $nom, PDO::PARAM_STR);
-			$query->bindValue(':PRENOM', $prenom, PDO::PARAM_STR);
+			$sth->bindValue(':NOM', $nom, PDO::PARAM_STR);
+			$sth->bindValue(':PRENOM', $prenom, PDO::PARAM_STR);
 			
-			try{
-				$resultats = $query->execute();
-			} catch( PDOException $exception ) {
-				print "Echec de l'insertion : " . $exception->getMessage();
-			}
+			Self::executeResquest($sth);
 
 			//pour tester si l'insertion s'est bien faite
-			if($resultats==FALSE){
+			if($sth==FALSE){
 				return false;
 			}else{
 				return true;

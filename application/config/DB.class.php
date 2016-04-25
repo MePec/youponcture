@@ -17,23 +17,48 @@
 	   	 * Constructeur
 	   	 * Ouverture de la connexion à la BDD.
 	   	 */
-        public function __construct() {
+        private function __construct() {
             if(Self::$dbh == null){
                 try {
                     Self::$dbh = new PDO($this->db_dsn, $this->db_user, $this->db_password);
                     Self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     Self::$dbh->exec('SET NAMES utf8');
-                } catch (PDOException $e) {
-                    echo 'Echec de la connexion : ' . $e->getMessage();
+                } catch (PDOException $exception) {
+                    trigger_error("Echec de la connexion : " . $exception->getMessage(), E_USER_WARNING);
                 }
             }
         }
 
-        public static function &getDB() {
+
+        /**
+         * /!\ Deprecated
+         * Fonction de recupération de l'objet PDO de l'instance DB.
+         */
+        public static function &getDBH() {
             if (Self::$instance == null) {
                 Self::$instance = new Self();
             }
             return Self::$dbh;
+        }
+
+        /**
+         * Fonction de recupération de l'instance DB.
+         *
+         */
+        public static function &getInstance() {
+            if (Self::$instance == null) {
+                Self::$instance = new Self();
+            }
+            return Self::$instance;
+        }
+
+
+        /**
+         * Fonction de préparation des requetes avec l'objet PDO
+         *
+         */
+        public function prepareRequestInDB($sql){
+            return Self::$dbh->prepare($sql); 
         }
     }
 ?>
