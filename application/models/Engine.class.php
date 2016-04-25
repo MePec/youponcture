@@ -6,8 +6,8 @@
 	   	 * Constructeur
 	   	 * @param db : objet contenant la connexion à la BDD
 	   	 */
-	  	public function __construct($db){
-	       	$this->db = $db->getInstance();	
+	  	public function __construct(){
+	       	$this->db = DB::getDB();	
 	  	}
 
 

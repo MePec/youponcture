@@ -13,7 +13,6 @@
 
 	class Manager {
 
-		private $classDB;
 		private $display;
 
 		private $section;
@@ -24,7 +23,6 @@
 		 */
 		public function __construct($page = null , $section = null){
 			
-			$this->classDB = new DB();
 			$this->display = new Display();
 			
 			$this->page = $page;
@@ -50,12 +48,12 @@
 				$home = new Home();
 				switch($this->section){
 						case "1":
-							$home->submitSignForm($this->classDB);
+							$home->submitSignForm();
 							$this->display->displayMsg($home->getMsg());
 							break;	
 
 						case "2":
-							$home->submitLoginForm($this->classDB);
+							$home->submitLoginForm();
 							$this->display->displayMsg($home->getMsg());
 							break;	
 
@@ -66,7 +64,7 @@
 				break;
 
 				case "2":
-	       			$this->engine = new Engine($this->classDB);
+	       			$this->engine = new Engine();
 	       			$this->smarty = new Smarty();
 					switch($this->section){
 						case "1":

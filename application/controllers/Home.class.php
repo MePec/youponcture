@@ -136,9 +136,9 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public function submitLoginForm(DB $db){
+		public function submitLoginForm(){
 			$login = ''; $password = '';
-			$engine = new Engine($db);
+			$engine = new Engine();
 
 			// Controle du Login
 			if(isset($_POST['login']) && CheckValues::checkEmail($_POST['login'])){
@@ -180,14 +180,14 @@
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public function submitSignForm(DB $db){
+		public function submitSignForm(){
 
 			$login = '';
 			$pwd = '';
 			$pwd2 = '';
 			$name = '';
 			$first_name = '';
-			$engine = new Engine($db);
+			$engine = new Engine();
 
 			// Controle si un ou plusieurs champs ne sont pas vide
 			if (!isset($_POST['accnt_subscr']) || empty($_POST['accnt_subscr']) || empty($_POST['name']) || empty($_POST['first_name']) || empty($_POST['login']) || empty($_POST['pwd_subscr']) || empty($_POST['pwd_2_subscr']) ) {

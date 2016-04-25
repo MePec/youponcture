@@ -1,6 +1,9 @@
 <?php
     class DB {
-		private $dbh = null;
+		
+        private static $instance = null;
+
+        private static $dbh = null;
 
         // private $db_dsn =  'mysql:dbname=youponcture_develop;host=localhost';
         // private $db_user = 'root';
@@ -14,18 +17,23 @@
 	   	 * Constructeur
 	   	 * Ouverture de la connexion à la BDD.
 	   	 */
-        public function getInstance() {
-            if($this->dbh == null){
+        public function __construct() {
+            if(Self::$dbh == null){
                 try {
-                    $this->dbh = new PDO($this->db_dsn, $this->db_user, $this->db_password);
-                    $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $this->dbh->exec('SET NAMES utf8');
+                    Self::$dbh = new PDO($this->db_dsn, $this->db_user, $this->db_password);
+                    Self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    Self::$dbh->exec('SET NAMES utf8');
                 } catch (PDOException $e) {
                     echo 'Echec de la connexion : ' . $e->getMessage();
                 }
             }
-			
-			return $this->dbh;
+        }
+
+        public static function &getDB() {
+            if (Self::$instance == null) {
+                Self::$instance = new Self();
+            }
+            return Self::$dbh;
         }
     }
 ?>
