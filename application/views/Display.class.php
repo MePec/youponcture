@@ -1,6 +1,7 @@
 <?php
 	require_once('Smarty.class.php');
 	require_once (CTL_DIR.'Home.class.php');
+	require_once (CTL_DIR.'Search.class.php');
 
 	class Display {
 
@@ -22,6 +23,14 @@
 		public function displayMsg($msg){
 			$this->smarty->assign('contenu_msg',$msg);
 			$this->smarty->display(TPL_DIR."display_msg.tpl");
+		}
+
+
+		public function displaySearch(Search $search){
+			$this->smarty->assign('pathology',$search->getPathos());
+			$this->smarty->assign('meridiens',$search->getMeridiens());
+			$this->smarty->assign('symptoms',$search->getSymptoms());
+			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 		}
 	}
 ?>

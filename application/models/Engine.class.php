@@ -96,6 +96,51 @@
 			return $status;		
 		}
 
+		/* fonction requestPathos()
+		 * Permet de récupérer la liste de toutes les pathologies de la BDD
+		 */
+		public static function requestPathos() {
+			$sql = "SELECT * FROM patho ;";
+
+			$query = Self::prepareRequest($sql);
+			Self::executeResquest($query);
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$result['nb'] = $query->rowCount();
+				
+			return $result;	
+		}
+
+		/* fonction requestSymptoms()
+		 * Permet de récupérer la liste de toutes les symptomes
+		 */
+		public static function requestSymptoms() {
+			$sql = "SELECT * FROM symptome ;";
+
+			$query = Self::prepareRequest($sql);
+			Self::executeResquest($query);
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$result['nb'] = $query->rowCount();
+				
+			return $result;	
+		}
+
+		/* fonction requestMeridiens()
+		 *Permet de récupérer la liste de toutes les méridiens de la BDD
+		 */
+		public static function requestMeridiens() {
+			$sql = "SELECT nom FROM meridien ;";
+
+			$query = Self::prepareRequest($sql);
+			Self::executeResquest($query);
+
+			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$result['nb'] = $query->rowCount();
+				
+			return $result;	
+		}
+
 		/* fonction getPathos()
 		 * Permet de récupérer la liste de toutes les pathologies de la BDD
 		 */

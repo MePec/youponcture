@@ -1,5 +1,91 @@
 <?php
+
+	require_once(MDL_DIR."Engine.class.php");
+
 	class Search {
+		
+		private $list_patho;
+		private $list_merid;
+		private $list_sympt;
+
+		/**
+		 * Constructeur
+		 */
+		public function __construct(){
+			$this->definePathos();
+			$this->defineMeridiens();
+			$this->defineSymptoms();
+		}
+
+		/**
+		 * Fonction getPathos()
+		 * Getter de l'attribut list_patho
+		 */
+		public function getPathos(){
+			return $this->list_patho;
+		}
+
+		/**
+		 * Fonction getMeridiens()
+		 * Getter de l'attribut list_merid
+		 */
+		public function getMeridiens(){
+			return $this->list_merid;
+		}
+
+		/**
+		 * Fonction getsSymptoms()
+		 * Getter de l'attribut list_sympt
+		 */
+		public function getSymptoms(){
+			return $this->list_sympt;
+		}
+
+		private function definePathos(){
+			$this->list_patho = array();
+
+			$resultat_patho = Engine::requestPathos();
+			$data_patho = $resultat_patho['data'];
+			$nb_patho = $resultat_patho['nb'];
+
+			// Assignation Pathos
+			if($nb_patho > 0) {								
+				for($i = 0; $i < $nb_patho; $i++){	
+					$this->list_patho[$i]['PATHO_DESC'] = $data_patho[$i]['desc'];
+				}
+			}
+		}
+
+		private function defineMeridiens(){
+			$this->list_merid = array();
+
+			$resultat_merid = Engine::requestMeridiens();
+			$data_merid = $resultat_merid['data'];
+			$nb_merid = $resultat_merid['nb'];
+
+			// Assignation Méridiens
+			if($nb_merid > 0) {								
+				for($i = 0; $i < $nb_merid; $i++){	
+					$this->list_merid[$i]['MERID_DESC'] = $data_merid[$i]['nom'];
+				}
+			}
+		}
+
+		private function defineSymptoms(){
+			$this->list_sympt = array();
+
+			$resultat_sympt = Engine::requestSymptoms();
+			$data_sympt = $resultat_sympt['data'];
+			$nb_sympt = $resultat_sympt['nb'];
+
+			// Assignation Symptomes
+			if($nb_sympt > 0) {								
+				for($i = 0; $i < $nb_sympt; $i++){	
+					$this->list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desc'];
+				}
+			}
+		}
+
 		/**
 		 * Fonction displaySearch
 		 * Permet d'afficher la page principale de recherches (sans traitements)

@@ -66,7 +66,7 @@
 	       			$this->smarty = new Smarty();
 					switch($this->section){
 						case "1":
-							Search::displaySearch($this->engine, $this->smarty);
+							$this->display->displaySearch(new Search());
 							break;	
 
 						case "2":
@@ -78,7 +78,7 @@
 							break;		
 
 						default:
-							Search::displaySearch($this->engine, $this->smarty);
+							$this->display->displaySearch(new Search());
 					}	
 				break;
 				
