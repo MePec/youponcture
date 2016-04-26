@@ -1,5 +1,6 @@
 <?php
 	require_once('Smarty.class.php');
+	require_once (CTL_DIR.'Home.class.php');
 
 	class Display {
 
@@ -13,8 +14,8 @@
 			$this->smarty->assign('logon',$logonStatus);
 		}
 
-		public function displayHome(array $list_rss){
-			$this->smarty->assign('rss',$list_rss);
+		public function displayHome(Home $home){
+			$this->smarty->assign('rss',$home->getRss());
 			$this->smarty->display(TPL_DIR."content_accueil.tpl");
 		}
 

@@ -45,21 +45,19 @@
 
 			switch($page){
 				case "1":
-				$home = new Home();
 				switch($this->section){
 						case "1":
-							$home->submitSignForm($msg);
+							Home::submitSignForm($msg);
 							$this->display->displayMsg($msg);
 							break;	
 
 						case "2":
-							$home->submitLoginForm($msg);
+							Home::submitLoginForm($msg);
 							$this->display->displayMsg($msg);
 							break;	
 
 						default:
-							$list_rss = $home->getRss();
-							$this->display->displayHome($list_rss);       
+							$this->display->displayHome(new Home());       
 				}
 				break;
 
@@ -123,9 +121,7 @@
 					break;
 
 				default:
-					$home = new Home();
-					$list_rss = $home->getRss();
-					$this->display->displayHome($list_rss);
+					$this->display->displayHome(new Home());
 			}
 
 

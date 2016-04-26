@@ -125,7 +125,7 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public function submitLoginForm(&$msg = NULL){
+		public static function submitLoginForm(&$msg = NULL){
 			$login = ''; $password = '';
 
 			// Controle du Login
@@ -168,7 +168,7 @@
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public function submitSignForm(&$msg = NULL){
+		public static function submitSignForm(&$msg = NULL){
 
 			$login = '';
 			$pwd = '';
