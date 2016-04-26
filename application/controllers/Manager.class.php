@@ -48,13 +48,13 @@
 				$home = new Home();
 				switch($this->section){
 						case "1":
-							$home->submitSignForm();
-							$this->display->displayMsg($home->getMsg());
+							$home->submitSignForm($msg);
+							$this->display->displayMsg($msg);
 							break;	
 
 						case "2":
-							$home->submitLoginForm();
-							$this->display->displayMsg($home->getMsg());
+							$home->submitLoginForm($msg);
+							$this->display->displayMsg($msg);
 							break;	
 
 						default:

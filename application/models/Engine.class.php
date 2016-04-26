@@ -30,7 +30,7 @@
 	  	 */
 	    private static function executeResquest(PDOStatement &$sth){
 	  		try{
-				$sth->execute();
+				return $sth->execute();
 			} catch( PDOException $exception ) {
 				trigger_error("Echec de l'insertion : " . $exception->getMessage(), E_USER_WARNING);
 			}
@@ -46,13 +46,12 @@
 		public static function checkIdentity($login,$password){
 
 			// $sql = "SELECT DISTINCT login, 
-			// 						MDP
+			// 						password
 			// 		FROM  Users
 			// 		WHERE login = :LOGIN AND 
 			// 			  MDP = :MDP";
 
-			$sql = "SELECT DISTINCT login, 
-									MDP
+			$sql = "SELECT password
 					FROM  Users
 					WHERE login = :LOGIN";
 			
@@ -63,7 +62,7 @@
 			
 			Self::executeResquest($sth);
 
-			$hashed_pwd = $sth->fetchColumn(1);
+			$hashed_pwd = $sth->fetchColumn();
 
 			if(password_verify($password, $hashed_pwd)){
 				return $sth->rowCount();		
@@ -77,26 +76,24 @@
 		 * Permet d'insérer les données pour l'inscription d'un membre
 		 * @result le résultat de la requete
 		 */
-		public static function signIn($login,$password, $nom ,$prenom){
+		public static function signIn($login, $password, $name ,$first_name){
 
-			$sql = "INSERT INTO Users(name, first_name, MDP , login) VALUES (:NOM , :PRENOM , :PASSWORD , :LOGIN)";
+			$sql = "INSERT INTO Users(name, first_name, password , login) VALUES (:NAME , :FIRST_NAME , :PASSWORD , :LOGIN)";
 			
-			$sth = Self::prepareRequest($sql);		
+			$sth = Self::prepareRequest($sql);
+			
+			$hashed_pwd = password_hash($password, PASSWORD_DEFAULT);	
 
 			$sth->bindValue(':LOGIN', $login, PDO::PARAM_STR);
-			$sth->bindValue(':PASSWORD', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
-			//$query->bindValue(':MDP', $mdp, PDO::PARAM_STR);
-			$sth->bindValue(':NOM', $nom, PDO::PARAM_STR);
-			$sth->bindValue(':PRENOM', $prenom, PDO::PARAM_STR);
+			$sth->bindValue(':PASSWORD', $hashed_pwd, PDO::PARAM_STR);
+			//$query->bindValue(':PASSWORD', $mdp, PDO::PARAM_STR);
+			$sth->bindValue(':NAME', $name, PDO::PARAM_STR);
+			$sth->bindValue(':FIRST_NAME', $name, PDO::PARAM_STR);
 			
-			Self::executeResquest($sth);
+			$status = Self::executeResquest($sth);
 
 			//pour tester si l'insertion s'est bien faite
-			if($sth==FALSE){
-				return false;
-			}else{
-				return true;
-			}		
+			return $status;		
 		}
 
 		/* fonction getPathos()

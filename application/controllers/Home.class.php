@@ -11,8 +11,6 @@
 		// Nombre d'éléments à afficher
 		private $nb_items = 2;
 		// Message à l'utilisateur
-		private $msg = '';
-
 
 		/**
 		 * Constructeur
@@ -53,14 +51,6 @@
 		}
 
 		/**
-		 * Fonction getMsg()
-		 * Getter de l'attribut msg (Message à l'utilisateur)
-		 */
-		public function getMsg(){
-			return $this->msg;
-		}
-
-		/**
 		 * Fonction getRss
 		 * Permet de récuperer le flux RSS
 		 */
@@ -90,7 +80,7 @@
 			return $list_rss;
 		}
 
-		/**
+		/** /!\ Deprecated
 		 * Fonction displayHome
 		 * Permet d'afficher la page d'accueil
 		 */
@@ -135,14 +125,14 @@
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
 		 */
-		public function submitLoginForm(){
+		public function submitLoginForm(&$msg = NULL){
 			$login = ''; $password = '';
 
 			// Controle du Login
 			if(isset($_POST['login']) && CheckValues::checkEmail($_POST['login'])){
 				$login = $_POST['login'];
 			} else {
-				$this->msg = "Il semble qu'il y ait un problème avec votre identifiant! Veuillez réessayer.";
+				$msg = "Il semble qu'il y ait un problème avec votre identifiant! Veuillez réessayer.";
 				return false;
 			}
 
@@ -150,7 +140,7 @@
 			if(isset($_POST['password']) && CheckValues::checkNoSpace($_POST['password'])){
 				$password = $_POST['password'];
 			} else {
-				$this->msg = "Il semble qu'il y ait un problème avec votre mot de passe! Veuillez réessayer.";
+				$msg = "Il semble qu'il y ait un problème avec votre mot de passe! Veuillez réessayer.";
 				return false;
 			}
 
@@ -163,13 +153,13 @@
 				$_SESSION['Logged'] = true;	
 
 				// affecte le message à afficher
-				$this->msg = "Vous êtes maitenant bien connecté!";
+				$msg = "Vous êtes maitenant bien connecté!";
 				return true;			
 			}
 			else {
 				$_SESSION['Logged'] = false;
 
-				$this->msg = "Erreur lors de la connexion! Veuillez réessayer.";
+				$msg = "Erreur lors de la connexion! Veuillez réessayer.";
 				return false;					
 			}
 		}	
@@ -178,7 +168,7 @@
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
 		 */
-		public function submitSignForm(){
+		public function submitSignForm(&$msg = NULL){
 
 			$login = '';
 			$pwd = '';
@@ -188,7 +178,7 @@
 
 			// Controle si un ou plusieurs champs ne sont pas vide
 			if (!isset($_POST['accnt_subscr']) || empty($_POST['accnt_subscr']) || empty($_POST['name']) || empty($_POST['first_name']) || empty($_POST['login']) || empty($_POST['pwd_subscr']) || empty($_POST['pwd_2_subscr']) ) {
-				$this->msg = "Un des champs n'a pas été complété ou mal complété! Veuillez réessayer.";
+				$msg = "Un des champs n'a pas été complété ou mal complété! Veuillez réessayer.";
 				return false;
 			}
 
@@ -197,7 +187,7 @@
 			if(isset($_POST['name']) && CheckValues::checkName($_POST['name'])){
 				$name = $_POST['name'];
 			} else {
-				$this->msg = "Il semble qu'il y ait un problème avec votre nom! Veuillez réessayer.";
+				$msg = "Il semble qu'il y ait un problème avec votre nom! Veuillez réessayer.";
 				return false;
 			}
 
@@ -205,7 +195,7 @@
 			if(isset($_POST['first_name']) && CheckValues::checkName($_POST['first_name'])){
 				$first_name = $_POST['first_name'];
 			} else {
-				$this->msg = "Il semble qu'il y ait un problème avec votre prénom! Veuillez réessayer.";
+				$msg = "Il semble qu'il y ait un problème avec votre prénom! Veuillez réessayer.";
 				return false;
 			}
 
@@ -213,7 +203,7 @@
 			if(isset($_POST['login']) && CheckValues::checkEmailwithMX($_POST['login'])){
 				$login = $_POST['login'];
 			} else {
-				$this->msg = "Il semble qu'il y ait un problème avec votre e-mail! Veuillez réessayer.";
+				$msg = "Il semble qu'il y ait un problème avec votre e-mail! Veuillez réessayer.";
 				return false;
 			}
 
@@ -223,7 +213,7 @@
 				$pwd = $_POST['pwd_subscr'];
 				$pwd2 = $_POST['pwd_2_subscr'];
 			} else {
-				$this->msg = "Votre mot de passe doit faire 8 caractères minimum, contenir au moins une majuscule, une miniscule, un chiffre et aucun espace";
+				$msg = "Votre mot de passe doit faire 8 caractères minimum, contenir au moins une majuscule, une miniscule, un chiffre et aucun espace";
 				return false;
 			}
 			
@@ -233,19 +223,19 @@
 				$sign_in = Engine::signIn($login, $pwd, $name , $first_name);
 
 				// message si erreur dans l'insertion en BDD
-				if ($sign_in == false)  {
-					$this->msg = "Il y eu un problème, vous êtes peut-être déja inscrit.Veuillez réessayer.";
+				if ($sign_in)  {
+					$msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
 				}
 				else {
-					$this->msg = "Vous êtes maintenant bien inscrit.Veuillez vous connecter.";
+					$msg = "Il y eu un problème, vous êtes peut-être déja inscrit.Veuillez réessayer.";
 				}
+				return $sign_in;
 
+			} else {
+				$msg = "Les deux MDP saisis ne sont pas similaires : Veuillez réessayer.";
+				return false;	
 			}
-			else{
-				$this->msg = "Les deux MDP saisis ne sont pas similaires : Veuillez réessayer.";
-			}
-			// gérer si utilisateur déjà inscrit
-	
+
 		}
 
 	}
