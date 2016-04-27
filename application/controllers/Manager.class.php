@@ -74,7 +74,9 @@
 							break;
 
 						case "3":
-							Search::submitForm_KeywordSearch($this->engine, $this->smarty);
+							$search = new Search();
+							$search->submitForm_KeywordSearch();
+							$this->display->displaySearch($search);
 							break;		
 
 						default:

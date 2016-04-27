@@ -100,8 +100,8 @@
 			return $status;		
 		}
 
-		/* fonction requestMeridiens()
-		 *Permet de récupérer la liste de toutes les méridiens de la BDD
+		/* fonction requestList()
+		 *Permet de récupérer la liste de toutes les pathologies, méridiens ou symptômes de la BDD
 		 */
 		public static function requestList($list_name) {
 
@@ -185,10 +185,10 @@
 			return $result;	
 		}
 
-		/* fonction getPathos_Keywords()
+		/* fonction requestPathos_Keywords()
 		 * Permet de récupérer la liste des pathologies par mot-clé
 		 */
-		function getPathos_Keywords($keyword) {
+		public static function requestPathos_Keywords($keyword) {
 			$sql = "SELECT DISTINCT pat.desc AS Patho,sy.desc AS Symp FROM patho pat
 					LEFT JOIN symptPatho sp ON pat.idP = sp.idP 
 					LEFT JOIN symptome sy ON sp.idS = sy.idS
@@ -196,13 +196,22 @@
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
 					WHERE kw.name LIKE '".$keyword."' ";
 					
-			$query = $this->db->prepare($sql);
-			$query->execute();
+			$query = Self::prepareRequest($sql);
+			Self::executeResquest($query);
 
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
+			$data_patho_ky = $query->fetchAll(PDO::FETCH_ASSOC);
+			$nb_patho_ky = $query->rowCount();
+
+			$list_patho_ky = array();
+
+			if($nb_patho_ky > 0) {								
+				for($row = 0; $row < $nb_patho_ky; $row++){	
+					$list_patho_ky[$row]['PATHOS'] = $data_patho_ky[$row]['Patho'];
+					$list_patho_ky[$row]['SYMPT'] = $data_patho_ky[$row]['Symp'];
+				}
+			}
 				
-			return $result;	
+			return $list_patho_ky;	
 		}
 
 
