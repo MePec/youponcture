@@ -80,6 +80,46 @@
 			return $list_rss;
 		}
 
+		/** /!\ Deprecated
+		 * Fonction displayHome
+		 * Permet d'afficher la page d'accueil
+		 */
+		public static function displayHome(Smarty $smarty){
+			//fonction Affichage flux RSS
+
+			// Flux RSS source
+			$url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
+
+			// Nombre d'éléments à afficher
+			$nb_items = 2;
+
+			// Lecture du flux distant
+			$rss = @fetch_rss($url_feed);
+
+			// Lecture des éléments
+			if (is_array($rss->items))
+			{
+				// On récupère les éléments les plus récents
+				// fonction array_slice = permet d'extraire une portion de tableau/ ici 0 est l'indice de début
+				$items = array_slice($rss->items, 0, $nb_items);
+				$cpt = 0; $list_rss = Array();
+
+				// Boucle sur tous les éléments
+				foreach ($items as $val) {
+					$list_rss[$cpt]['ITEM_TITLE'] = utf8_encode($val['title']);
+					$list_rss[$cpt]['ITEM_LINK'] = utf8_encode($val['link']);					
+					$list_rss[$cpt]['ITEM_DESCRIPTION'] = utf8_encode($val['description']);
+					
+					$cpt++;
+				}
+			}
+
+			// affecte les valeurs de RSS pour affichage sur la page
+			$smarty->assign('rss',$list_rss);	
+
+			$smarty->display(TPL_DIR."content_accueil.tpl");	
+		}
+
 		/**
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier

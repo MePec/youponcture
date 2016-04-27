@@ -3,6 +3,10 @@
 	require_once(CONF_DIR."DB.class.php");
 
 	class Engine {
+
+		const PATHOLOGIES = 0;
+		const MERIDIENS = 1;
+		const SYMPTOMS =  2;
 		private $db;
 		
 	  	/**
@@ -32,7 +36,7 @@
 	  		try{
 				return $sth->execute();
 			} catch( PDOException $exception ) {
-				trigger_error("Echec de l'insertion : " . $exception->getMessage(), E_USER_WARNING);
+				trigger_error("Echec de la requête : " . $exception->getMessage(), E_USER_WARNING);
 			}
 	  	} 
 
@@ -96,50 +100,42 @@
 			return $status;		
 		}
 
-		/* fonction requestPathos()
-		 * Permet de récupérer la liste de toutes les pathologies de la BDD
-		 */
-		public static function requestPathos() {
-			$sql = "SELECT * FROM patho ;";
-
-			$query = Self::prepareRequest($sql);
-			Self::executeResquest($query);
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
-				
-			return $result;	
-		}
-
-		/* fonction requestSymptoms()
-		 * Permet de récupérer la liste de toutes les symptomes
-		 */
-		public static function requestSymptoms() {
-			$sql = "SELECT * FROM symptome ;";
-
-			$query = Self::prepareRequest($sql);
-			Self::executeResquest($query);
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
-				
-			return $result;	
-		}
-
 		/* fonction requestMeridiens()
 		 *Permet de récupérer la liste de toutes les méridiens de la BDD
 		 */
-		public static function requestMeridiens() {
-			$sql = "SELECT nom FROM meridien ;";
+		public static function requestList($list_name) {
+
+			switch($list_name){
+				case Self::PATHOLOGIES:
+					$sql = "SELECT * FROM patho ;";
+					break;
+				case Self::MERIDIENS:
+					$sql = "SELECT nom FROM meridien ;";
+					break;
+				case Self::SYMPTOMS:
+					$sql = "SELECT * FROM symptome ;";
+					break;
+				default:
+					trigger_error("Unknown list_name: ". $list_name, E_USER_ERROR);
+			}
 
 			$query = Self::prepareRequest($sql);
 			Self::executeResquest($query);
 
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
+			$data = $query->fetchAll(PDO::FETCH_ASSOC);
+			$nb = $query->rowCount();
 				
-			return $result;	
-		}
+			$list = array();
+
+			// Assignation
+			if($nb > 0) {								
+				for($i = 0; $i < $nb; $i++){	
+					$list[$i]['DESC'] = $data[$i]['desc'];
+				}
+			}
+
+			return $list;
+		}		
 
 		/* fonction getPathos()
 		 * Permet de récupérer la liste de toutes les pathologies de la BDD

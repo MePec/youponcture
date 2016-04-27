@@ -95,7 +95,7 @@
 				<label class="type_critere" for="type_meridien">Choix des méridiens :</label>
 				  <select name="type_meridien[]" multiple >
 				 	{section name=merid loop=$meridiens}
-					<option value="{$meridiens[merid].MERID_DESC}" selected="selected">{$meridiens[merid].MERID_DESC}</option>
+					<option value="{$meridiens[merid].DESC}" selected="selected">{$meridiens[merid].DESC}</option>
 					{/section}
 				</select> 
 				<input type="submit" value="Rechercher"></input>
@@ -150,7 +150,7 @@
 			</tr>
 			{section name=customer loop=$pathology}
 			<tr>
-				<td>{$pathology[customer].PATHO_DESC}</td>	
+				<td>{$pathology[customer].DESC}</td>	
 			</tr>
 			{/section}
 		</table>
@@ -161,7 +161,7 @@
 			</tr>
 			{section name=sympt loop=$symptoms}
 			<tr>
-				<td>{$symptoms[sympt].SYMPT_DESC}</td>	
+				<td>{$symptoms[sympt].DESC}</td>	
 			</tr>
 			{/section}
 		</table>

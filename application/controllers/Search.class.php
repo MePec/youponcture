@@ -12,9 +12,9 @@
 		 * Constructeur
 		 */
 		public function __construct(){
-			$this->definePathos();
-			$this->defineMeridiens();
-			$this->defineSymptoms();
+			$this->list_patho = Engine::requestList(Engine::PATHOLOGIES);
+			$this->list_merid = Engine::requestList(Engine::MERIDIENS);
+			$this->list_sympt = Engine::requestList(Engine::SYMPTOMS);
 		}
 
 		/**
@@ -41,51 +41,6 @@
 			return $this->list_sympt;
 		}
 
-		private function definePathos(){
-			$this->list_patho = array();
-
-			$resultat_patho = Engine::requestPathos();
-			$data_patho = $resultat_patho['data'];
-			$nb_patho = $resultat_patho['nb'];
-
-			// Assignation Pathos
-			if($nb_patho > 0) {								
-				for($i = 0; $i < $nb_patho; $i++){	
-					$this->list_patho[$i]['PATHO_DESC'] = $data_patho[$i]['desc'];
-				}
-			}
-		}
-
-		private function defineMeridiens(){
-			$this->list_merid = array();
-
-			$resultat_merid = Engine::requestMeridiens();
-			$data_merid = $resultat_merid['data'];
-			$nb_merid = $resultat_merid['nb'];
-
-			// Assignation Méridiens
-			if($nb_merid > 0) {								
-				for($i = 0; $i < $nb_merid; $i++){	
-					$this->list_merid[$i]['MERID_DESC'] = $data_merid[$i]['nom'];
-				}
-			}
-		}
-
-		private function defineSymptoms(){
-			$this->list_sympt = array();
-
-			$resultat_sympt = Engine::requestSymptoms();
-			$data_sympt = $resultat_sympt['data'];
-			$nb_sympt = $resultat_sympt['nb'];
-
-			// Assignation Symptomes
-			if($nb_sympt > 0) {								
-				for($i = 0; $i < $nb_sympt; $i++){	
-					$this->list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desc'];
-				}
-			}
-		}
-
 		/**
 		 * Fonction displaySearch
 		 * Permet d'afficher la page principale de recherches (sans traitements)
@@ -110,7 +65,7 @@
 
 			if($nb_patho > 0) {								
 				for($i = 0; $i < $nb_patho; $i++){	
-					$list_patho[$i]['PATHO_DESC'] = $data_patho[$i]['desc'];
+					$list_patho[$i]['DESC'] = $data_patho[$i]['desc'];
 				}
 			}
 			// else {
@@ -121,7 +76,7 @@
 			// Assignation Méridiens
 			if($nb_merid > 0) {								
 				for($i = 0; $i < $nb_merid; $i++){	
-					$list_merid[$i]['MERID_DESC'] = $data_merid[$i]['nom'];
+					$list_merid[$i]['DESC'] = $data_merid[$i]['nom'];
 				}
 			}
 			$smarty->assign('meridiens',$list_merid);
@@ -129,7 +84,7 @@
 			// Assignation Symptomes
 			if($nb_sympt > 0) {								
 				for($i = 0; $i < $nb_sympt; $i++){	
-					$list_sympt[$i]['SYMPT_DESC'] = $data_sympt[$i]['desc'];
+					$list_sympt[$i]['DESC'] = $data_sympt[$i]['desc'];
 				}
 			}
 			$smarty->assign('symptoms',$list_sympt);
