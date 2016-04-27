@@ -108,12 +108,15 @@
 			switch($list_name){
 				case Self::PATHOLOGIES:
 					$sql = "SELECT * FROM patho ;";
+					$column = "desc";
 					break;
 				case Self::MERIDIENS:
 					$sql = "SELECT nom FROM meridien ;";
+					$column = "nom";
 					break;
 				case Self::SYMPTOMS:
 					$sql = "SELECT * FROM symptome ;";
+					$column = "desc";
 					break;
 				default:
 					trigger_error("Unknown list_name: ". $list_name, E_USER_ERROR);
@@ -129,8 +132,8 @@
 
 			// Assignation
 			if($nb > 0) {								
-				for($i = 0; $i < $nb; $i++){	
-					$list[$i]['DESC'] = $data[$i]['desc'];
+				for($row = 0; $row < $nb; $row++){
+					$list[$row]['DESC'] = $data[$row][$column];
 				}
 			}
 

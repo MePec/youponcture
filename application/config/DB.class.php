@@ -5,13 +5,13 @@
 
         private static $dbh = null;
 
-        private $db_dsn =  'mysql:dbname=youponcture_develop;host=localhost';
-        private $db_user = 'root';
-        private $db_password = '';
-
         // private $db_dsn =  'mysql:dbname=youponcture_develop;host=localhost';
-        // private $db_user = 'guest';
-        // private $db_password = 'Y0uPonctur3';
+        // private $db_user = 'root';
+        // private $db_password = '';
+
+        private $db_dsn =  'mysql:dbname=youponcture_develop;host=localhost';
+        private $db_user = 'guest';
+        private $db_password = 'Y0uPonctur3';
 
 		/**
 	   	 * Constructeur
