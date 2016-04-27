@@ -19,8 +19,9 @@
 
 <body>
 	<header>
-		<div class="bandeau">
-			<h1>YouPoncture</h1>
+
+		<div class="bandeau" role="banner">
+			<a href="../public/index.php?p=1"><h1>YouPoncture</h1>
 			<ul class="list-inline">
 				<li class="list-inline-item"><a href="../public/index.php?p=1">Accueil</a></li>
 				<li class="list-inline-item"><a href="../public/index.php?p=2">Wiki pathologie</a></li>
@@ -45,8 +46,8 @@
 
 	<footer>
 		<ul>
-			<li><a href="">Auteur</a></li>
-			<li><a href="">Plan du site</a></li>
+			<li><a tabindex="13" href="../public/index.php?p=3#auteurs">Auteur</a></li>
+			<li><a tabindex="14" href="">Plan du site</a></li>
 			<li>Copyright</li>
 		</ul>
 	</footer>
