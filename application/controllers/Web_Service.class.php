@@ -10,7 +10,7 @@
 		 */
 		public static function Web_Service_modelDownload(){
 			// gérer contenu de fichier exporté (readfile) :
-			readfile("../application/models/pathologie.xml");
+			readfile("../public/xml/pathologie.xml");
 
 			header("Cache-Control: no-cache, must-revalidate");
 			header("Cache-Control: post-check=0,pre-check=0");
@@ -27,7 +27,7 @@
 		 * Permet de rediriger vers le Web_service de vue du modèle XML
 		 */
 		public static function Web_Service_modelView(){
-			header("Location: ../application/models/pathologie.xml");
+			header("Location: ../public/xml/pathologie.xml");
 		}
 
 		/**
