@@ -16,7 +16,7 @@
 <body>
 	<header>
 		<div class="bandeau" role="banner">
-			<h1>YouPoncture</h1>
+			<a href="../public/index.php?p=1"><h1>YouPoncture</h1></a>
 			<span><i class="fa fa-user"></i></span>
 		</div>
 		<div class="menu" role="navigation">

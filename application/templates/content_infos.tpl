@@ -13,6 +13,7 @@
 
 		<div class="sources">
 			<h1>Nos sources</h1>
+				<p>Pour le CSS(style), une partie utilise la librairie bootstrap.</p>
 				<p>Pour ce site nous nous sommes servi de Github.</p>
 				<p>Nombre d'information quant au développement ont été inspirée du cours de TLI, dispensé par Bruno Mascret, et ont été complétées par les données du site www.w3school.com</p>
 
