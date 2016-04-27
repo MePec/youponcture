@@ -20,9 +20,10 @@
 		<div class="auteurs">
 			<h1>Auteurs - développeurs</h1>
 			<ul>	
-				<li>test</li>
-				<li>test</li>
-				<li>test</li>
+				<li>Maxime Brunet</li>
+				<li>Christophe Chaumier</li>
+				<li>François Michel</li>
+				<li>Pierre-Emmanuel Cochet</li>
 			<ul/>
 		</div>
 

@@ -35,8 +35,8 @@
 
 	<footer role="contentinfo">
 		<ul>
-			<li><a href="../public/index.php?p=3#auteurs">Auteurs</a></li>
-			<li><a href="">Plan du site</a></li>
+			<li><a tabindex="13" href="../public/index.php?p=3#auteurs">Auteurs</a></li>
+			<li><a tabindex="14" href="">Plan du site</a></li>
 			<li>Copyright</li>
 		</ul>
 	</footer>
