@@ -107,7 +107,7 @@
 
 			switch($list_name){
 				case Self::PATHOLOGIES:
-					$sql = "SELECT * FROM patho ;";
+					$sql = "SELECT `desc` FROM patho ;";
 					$column = "desc";
 					break;
 				case Self::MERIDIENS:
@@ -115,7 +115,7 @@
 					$column = "nom";
 					break;
 				case Self::SYMPTOMS:
-					$sql = "SELECT * FROM symptome ;";
+					$sql = "SELECT `desc` FROM symptome ;";
 					$column = "desc";
 					break;
 				default:
