@@ -2,7 +2,8 @@
 {block name=contenu}
 
 		<div class="login">
-			<h1>Se connecter</h1>
+			<h1>Se connecter <i class="fa fa-sign-in" aria-hidden="true"></i></h1>
+
 			<form action="index.php?p=1&q=2" method="post" name="login_form">
 				<input class="email" type="email" id="email_addr" name="login" tabindex="1" required oninput="checkMail(this)" placeholder="Rentrez votre login">
 				<input class="pwd" type="password" id="password" name="password" tabindex="2" required placeholder="Rentrez votre MDP">

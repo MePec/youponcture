@@ -14,7 +14,6 @@
 	class Manager {
 
 		private $display;
-
 		private $section;
 		private $page;
 		
