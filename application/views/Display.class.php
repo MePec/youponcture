@@ -30,6 +30,9 @@
 			$this->smarty->assign('pathology',$search->getPathos());
 			$this->smarty->assign('meridiens',$search->getMeridiens());
 			$this->smarty->assign('symptoms',$search->getSymptoms());
+			if($list_patho_ky = $search->getPathosForKeywords()){
+				$this->smarty->assign('patho_ky',$list_patho_ky);
+			}
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 		}
 	}

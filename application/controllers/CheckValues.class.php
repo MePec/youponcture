@@ -6,10 +6,15 @@
             return preg_match ( '/^\S+$/', $sting);
         }
 
-        public static function checkName($login) {
-            return preg_match ( "/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u", $login);
+        // Verifie que un nom: support l'aphabet + caractères accentués + ponctuation des noms
+        public static function checkName($name) {
+            return preg_match ( "/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u", $name);
         }
 
+        // Verifie une chaine Alphanumérique + les espaces
+        public static function checkIsAlphaNumWithSpace($string) {
+            return preg_match ( "/^[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-|\s]+$/u", $string);
+        }
 
         // Le login peut contenir des caractères alphaumériques et des tirets unique, sa longueur est comprise entre 3 et 15.
         public static function checkLogin($login) {

@@ -7,6 +7,7 @@
 		private $list_patho;
 		private $list_merid;
 		private $list_sympt;
+		private $list_patho_ky;
 
 		/**
 		 * Constructeur
@@ -39,6 +40,14 @@
 		 */
 		public function getSymptoms(){
 			return $this->list_sympt;
+		}
+
+		/**
+		 * Fonction getsSymptoms()
+		 * Getter de l'attribut list_sympt
+		 */
+		public function getPathosForKeywords(){
+			return $this->list_patho_ky;
 		}
 
 		/**
@@ -95,46 +104,28 @@
 
 		/**
 		 * Fonction submitForm_KeywordSearch
-		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par mot clés
+		 * Permet d'afficher les résultats d'une requete de recherche par mot clés
 		 */
-		public static function submitForm_KeywordSearch(Engine $engine, Smarty $smarty){
-			if (isset($_POST['keywords']) && !empty($_POST['keywords']))
-				$data_send = true;
-			else{
-				$data_send = false;
-				header('Location: index.php?p=4');
-			}
-			
-			if($data_send == true){
+		public function submitForm_KeywordSearch(){
+						
+			if(isset($_POST['keywords']) && CheckValues::checkIsAlphaNumWithSpace($_POST['keywords'])){
 				$key = $_POST['keywords'];
 
-				// récupération des résultats de pathologie selon le mots clé
-				$result_path_ky = $engine->getPathos_Keywords($key);
-				$data_patho_ky = $result_path_ky['data'];
-				$nb_patho_ky = $result_path_ky['nb'];
+				$this->list_patho_ky = Engine::requestPathos_Keywords($key);
 
-				$list_patho_ky = array();
-
-				if($nb_patho_ky > 0) {								
-					for($i = 0; $i < $nb_patho_ky; $i++){	
-						$list_patho_ky[$i]['PATHOS'] = $data_patho_ky[$i]['Patho'];
-						$list_patho_ky[$i]['SYMPT'] = $data_patho_ky[$i]['Symp'];
-					}
-				}
-				if($list_patho_ky != null){
-					$smarty->assign('patho_ky',$list_patho_ky);
+				if($this->list_patho_ky != null){
+					return $this->list_patho_ky;
 				}
 				else{
-					$msg[0]['PATHOS'] = 'Pas de résultats trouvés pour cette recherche';
-					$msg[0]['SYMPT'] = 'Pas de résultats trouvés pour cette recherche';
-					$smarty->assign('patho_ky',$msg);		
+					$this->list_patho_ky[0]['PATHOS'] = 'Pas de résultats trouvés pour cette recherche';
+					$this->list_patho_ky[0]['SYMPT'] = 'Pas de résultats trouvés pour cette recherche';
+					return $this->list_patho_ky;		
 				}
 
-			}		
-
-			Search::displaySearch($engine, $smarty);	
-
-			$smarty->display(TPL_DIR."content_recherche.tpl");		
+			}else{
+				header('Location: index.php?p=4');
+				exit;
+			}	
 		}	
 
 		/**
@@ -142,9 +133,17 @@
 		 * Permet de calculer et d'afficher les résultats d'une requete de recherche par critère
 		 */
 		public static function submitForm_MainSearch(Engine $engine, Smarty $smarty){
-				if (isset($_POST['type_patho']) && !empty($_POST['type_patho']) && isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) && isset($_POST['caracteristiques_meridien']) && !empty($_POST['caracteristiques_meridien']))
-					$data_send = true;
-				else {
+				
+				if (isset($_POST['type_patho']) && CheckValues::checkName($_POST['type_patho']) && isset($_POST['type_meridien']) && !empty($_POST['type_meridien']) && isset($_POST['caracteristiques_meridien']) && CheckValues::checkName($_POST['caracteristiques_meridien'])){
+					foreach ($_POST['type_meridien'] as $value) {
+						if(CheckValues::checkName($value)){
+							$data_send = true;
+						} else {
+							$data_send = false;
+							header('Location: index.php?p=4');
+						}
+					}
+				} else {
 					$data_send = false;
 					header('Location: index.php?p=4');
 				}
@@ -237,7 +236,7 @@
 
 			Search::displaySearch($engine, $smarty);	
 
-			$smarty->display(TPL_DIR."content_recherche.tpl");	
+			//$smarty->display(TPL_DIR."content_recherche.tpl");	
 		}
 
 	}
