@@ -1,7 +1,5 @@
 <?php
 
-	require_once ('Home.class.php');
-
     class Web_Service {
 
     	/**
