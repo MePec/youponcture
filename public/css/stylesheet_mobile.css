@@ -123,4 +123,64 @@ footer {
     overflow: scroll;
     margin-left: 5px; }
 
+.content_infos {
+  padding: 5px 5px 5px 5px;
+  width: 100%;
+  min-width: 250px;
+  margin: 0 auto 10px auto;
+  overflow: hidden; }
+  .content_infos h1 {
+    margin-left: 0%; }
+  .content_infos ul {
+    font-size: 18px; }
+  .content_infos p {
+    font-size: 18px; }
+  .content_infos a:link {
+    color: white; }
+  .content_infos a:visited {
+    color: white; }
+  .content_infos a:hover {
+    color: white;
+    text-decoration: none; }
+  .content_infos a:active {
+    color: white; }
+  .content_infos small {
+    font-size: 20px; }
+  .content_infos select {
+    width: 30%; }
+  .content_infos input {
+    width: 60%; }
+
+input[type="submit"] {
+  width: auto;
+  height: 30px;
+  display: block;
+  margin-bottom: 10px; }
+
+label {
+  width: 65%;
+  height: 30px;
+  opacity: 0.4;
+  display: block;
+  margin: 2px auto 2px auto;
+  z-index: 3; }
+
+table {
+  display: inline-block; }
+
+.col1 {
+  width: 60%;
+  float: left; }
+
+.col2 {
+  width: 40%;
+  float: left;
+  display: block; }
+
+.member_search {
+  display: none; }
+
+.keyword_results {
+  display: none; }
+
 /*# sourceMappingURL=stylesheet_mobile.css.map */
