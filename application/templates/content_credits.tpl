@@ -17,7 +17,7 @@
 			<p>Pour le CSS, une partie utilise la librairie <abbr title="Bootstrap, kit CSS créé par les développeurs de Twitter">Bootstrap</abbr>.
 			Ainsi que SASS basé sur langage dynamique de génération de feuilles de style LESS.</p>
 			<p>Comme gestionnaire de version nous avons utilisé GitHub.</p>
-			<p>Enfin, nombre d'informations quant au développement ont été inspirée du cours de TLI, dispensé par Bruno MASCRET, et ont été complétées par les données du site <a href="www.w3school.com">W3 School</a>, <a href="www.getbootstrap.com/getting-started">Getting Started for Bootstrap</a> !</p>
+			<p>Enfin, nombre d'informations quant au développement ont été inspirée du cours de TLI, dispensé par Bruno MASCRET, et ont été complétées par les données du site <a href="http://www.w3schools.com/">W3 School</a>, <a href="http://www.getbootstrap.com/getting-started/">Getting Started for Bootstrap</a> !</p>
 		</div>
 
 		<div class="ressources">

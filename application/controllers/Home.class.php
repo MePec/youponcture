@@ -1,9 +1,9 @@
 <?php
-/**
- * classe Home
- *
- *@category classes
- */
+	/**
+	 * classe Home
+	 *
+	 *@category classes
+	 */
 
 	require_once(VDR_DIR."magpierss/rss_fetch.inc");
 	require_once(CTL_DIR."CheckValues.class.php");
