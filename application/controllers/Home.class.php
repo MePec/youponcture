@@ -1,4 +1,9 @@
 <?php
+/**
+ * classe Home
+ *
+ *@category classes
+ */
 
 	require_once(VDR_DIR."magpierss/rss_fetch.inc");
 	require_once(CTL_DIR."CheckValues.class.php");
@@ -6,20 +11,21 @@
 
 	class Home {
 
-		// Flux RSS source
-		private $url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
-		// Nombre d'éléments à afficher
-		private $nb_items = 2;
-		// Message à l'utilisateur
-
 		/**
-		 * Constructeur
+		 * Adresse URL de flux RSS à récupérer (flux RSS source)
+		 * @var string $url_feed
 		 */
-		// public function __construct(){}
+		private $url_feed = "http://www.medecine-globale.ch/feed/?post_type=listing_type";
+		/**
+		 * Nombre d'éléments à afficher du flux RSS
+		 * @var int $nb_items
+		 */
+		private $nb_items = 2;
 
 		/**
 		 * Fonction setUrlFeed()
-		 * Setter de l'attribut url_feed (Flux RSS source)
+		 * Setter de l'attribut url_feed (Flux RSS source)7
+		 * @param string $url_feed valeur de url_feed
 		 */
 		public function setUrlFeed($url_feed){
 			$this->url_feed = $url_feed;
@@ -28,6 +34,7 @@
 		/**
 		 * Fonction setNbItems()
 		 * Setter de l'attribut nb_items (Nombre d'éléments à afficher)
+		 * @param int $nb_items valeur de nb_items
 		 */
 		public function setNbItems($nb_items){
 			$this->nb_items = $nb_items;
@@ -37,6 +44,7 @@
 		/**
 		 * Fonction getUrlFeed()
 		 * Getter de l'attribut url_feed (Flux RSS source)
+		 * @return string $url_feed valeur de url_feed 
 		 */
 		public function getUrlFeed(){
 			return $this->url_feed;
@@ -45,6 +53,7 @@
 		/**
 		 * Fonction getNbItems()
 		 * Getter de l'attribut nb_items (Nombre d'éléments à afficher)
+		 * @return int $nb_items valeur de nb_items 
 		 */
 		public function getNbItems(){
 			return $this->nb_items;
@@ -53,6 +62,7 @@
 		/**
 		 * Fonction getRss
 		 * Permet de récuperer le flux RSS
+		 * @return array $list_rss
 		 */
 		public function getRss(){	
 			
@@ -83,6 +93,9 @@
 		/**
 		 * Fonction submitLoginForm
 		 * Permet de soumettre le formulaire de connexion et de le valider/vérifier
+		 * @param string &$msg, message par défaut
+		 * Indique si la connexion a été faite
+		 * @return boolean Vrai si pas de probleme de connexion, Faux sinon
 		 */
 		public static function submitLoginForm(&$msg = NULL){
 			$login = ''; $password = '';
@@ -126,6 +139,9 @@
 		/**
 		 * Fonction submitSignForm
 		 * Permet de soumettre le formulaire d'inscription et de le valider/vérifier
+		 * @param string &$msg, message par défaut
+		 * Indique si l'inscription a été faite sans erreur ou non
+		 * @return boolean Vrai si pas de probleme d'inscription, Faux sinon
 		 */
 		public static function submitSignForm(&$msg = NULL){
 

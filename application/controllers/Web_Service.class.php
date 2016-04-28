@@ -39,7 +39,9 @@
 
 			$add = $_GET['champs'];
 		  
-			$patho_model = simplexml_load_file('pathologie.xml');
+		  	$filename = '../public/xml/pathologie.xml';
+		  	// vérifier sur la VM si marche avec ce chemin
+			$patho_model = simplexml_load_file($filename);
 			$file = "pathologie.xml";
 
 			$patho_model->pathologie->meridien->addAttribute($add,"");

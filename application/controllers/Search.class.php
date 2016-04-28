@@ -113,9 +113,9 @@
 					$list_patho[$i]['PATHO_DESC'] = $data_patho[$i]['desc'];
 				}
 			}
-			// else {
-			// 	$smarty->assign('pathology',array());
-			// }
+			else {
+				$smarty->assign('pathology',array());
+			}
 			$smarty->assign('pathology',$list_patho);
 
 			// Assignation Méridiens
