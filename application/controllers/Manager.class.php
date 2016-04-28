@@ -1,15 +1,12 @@
 <?php
 
 	require_once("../application/config/config.php");
-	require_once(CONF_DIR."DB.class.php");
-	require_once(MDL_DIR."Engine.class.php");
+	require_once(VIEW_DIR."Display.class.php");
 	require_once ('Home.class.php');
 	require_once ('Search.class.php');
-	require_once ('Credits.class.php');
 	require_once ('Web_Service.class.php');
 	require_once ('ErrorPage.class.php');
 	require_once ('Member.class.php');
-	require_once(VIEW_DIR."Display.class.php");
 
 	class Manager {
 
@@ -83,13 +80,12 @@
 				break;
 				
 				case "3":
-					$this->smarty = new Smarty();
-					Credits::displayCredits($this->smarty);
+					$this->display->displayCredits();
 					break;
 
 				case "4":
-					$this->smarty = new Smarty();
-					ErrorPage::display404($this->smarty);
+					if(!ErrorPage::isUrlExist())
+						$this->display->display404();
 					break;
 
 				case "5":
@@ -103,8 +99,7 @@
 							break;
 
 						case "3":
-							$this->smarty = new Smarty();
-							Web_Service::Web_Service_modify($this->smarty);
+							Web_Service::Web_Service_modify();
 							break;
 
 						default:
@@ -112,8 +107,7 @@
 					}
 
 				case "6":
-					$this->smarty = new Smarty();
-					Web_Service::Web_Service_Calculatrice($this->smarty);
+					Web_Service::Web_Service_Calculatrice();
 					break;
 
 				case "7":

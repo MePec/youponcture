@@ -34,7 +34,7 @@
 		 * Fonction Web_Service_modify
 		 * Permet de rediriger vers le Web_service
 		 */
-		public static function Web_Service_modify(Smarty $smarty){
+		public static function Web_Service_modify(){
 			// pour exemple, permet d'ajouter un champs à la balise <pathologie>
 
 			$add = $_GET['champs'];
@@ -47,15 +47,13 @@
 			$patho_model->pathologie->meridien->addAttribute($add,"");
 
 			$patho_model->saveXML($file);
- 
-			Home::displayHome($smarty);
 		}
 
 		/**
 		 * Fonction Web_Service_Calculatrice
 		 * Permet de rediriger vers le Web_service Calculatrice (uniquement fonction d'addition implémentée)
 		 */
-		public static function Web_Service_Calculatrice(Smarty $smarty){
+		public static function Web_Service_Calculatrice(){
 
 			if(isset($_GET['param1']) && isset($_GET['param1'])){
 				$p1 = $_GET['param1'];
@@ -64,8 +62,6 @@
 
 				echo "Resultat addition : " ;
 				echo $sum; 
-
-				Home::displayHome($smarty);
 			}	
 			else
 				echo 'Erreur';

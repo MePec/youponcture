@@ -42,5 +42,21 @@
 			}
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 		}
+
+		/**
+		 * Fonction displayCredits
+		 * Permet d'afficher la page principale d'informations
+		 */
+		public function displayCredits(){
+			$this->smarty->display(TPL_DIR."content_infos.tpl");
+		}
+
+		/**
+		 * Fonction display404
+		 * Permet d'afficher la page 404
+		 */
+		public function display404(){
+			$this->smarty->display(TPL_DIR."404.tpl");
+		}
 	}
 ?>

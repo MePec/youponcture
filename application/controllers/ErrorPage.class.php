@@ -2,10 +2,10 @@
 
     class ErrorPage {
     	/**
-		 * Fonction display404
-		 * Permet d'afficher la page 404
+		 * Fonction isUrlExist()
+		 * Si le document n'existe pas, verifie si il ne s'agit pas du Web Service
 		 */
-		public static function display404(Smarty $smarty){
+		public static function isUrlExist(){
 			// gérer la redirection pour le Web Service
 			if(preg_match('^/WS/models$^', $_SERVER['REQUEST_URI'], $match, PREG_OFFSET_CAPTURE)){  
 			  //à garder en commentaire : 1ère version de redirection : $_SERVER['REDIRECT_URL']
@@ -37,7 +37,7 @@
 			  header("Location: /youponcture/public/index.php?p=6&param1=".$_GET['param1']."&param2=".$_GET['param2']);
 			} 
 			else
-				$smarty->display(TPL_DIR."404.tpl");	
+				return false;	
 		}
 	}
 ?>
