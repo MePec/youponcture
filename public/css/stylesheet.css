@@ -1,11 +1,27 @@
-/*GENERAL CONF */
-html, body, div, header {
+/**
+* General Conf
+**/
+
+/*html, body, div, header {
   margin: 0;
   padding: 0;
+  position: relative;
+  min-height: 100%;
+}*/
+
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
 }
 
-/*TOP HEAD */
-/* HEADER */
+/**
+* Top Head
+**/
+/**
+* Header
+**/
 header, nav {
   margin: 0;
   padding: 0;
@@ -57,7 +73,7 @@ header, nav {
 .bandeau a:active {
   color: white;
 }
-.menu {
+/*.menu {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -81,19 +97,38 @@ header, nav {
 .menu ul li a {
   color: black;
   text-decoration: none;
-}
+}*/
 
-/*BOTTOM FOOTER */
-/*FOOTER */
-footer {
+/**
+* Bottom Footer
+**/
+/**
+* Footer
+**/
+.foo-content div {
+  padding-top: 40px;
+  text-align: center;
+}
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -142px;
+  background-color: #b3e0ff;
+  background-repeat: no-repeat;
+  background-position: right top;
+}
+.page-wrap:after {
+  content: "";
   display: block;
-  width: 100%;
-  margin: 0px;
-  padding: 0 0 0 0px;
+}
+footer, .page-wrap:after {
+  height: 142px; 
+}
+footer {
   font: 1.5em Helvetica Neue, Helvetica, Arial, sans-serif;
   font-weight: bold;
   color: white;
-  background-color: #4c585c; /*4C585C*/
+  background-color: #4c585c;
 }
 footer ul {
   list-style-type: none;
@@ -112,16 +147,23 @@ footer a:visited {
 footer a:hover {
   color: white;
   display: block;
-  background-color: #80898c;
+  color: #80898c;
   text-decoration: none;
 }
 footer a:active {
   color: white;
 }
 
-/*CONTENT PAGE */
-/*CONTENT */
+/**
+* Content Page
+**/
+/**
+* Content
+**/
 .content {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -142px;
   margin: 0px;
   padding: 40px 0 10px 0;
   display: block;
@@ -129,9 +171,12 @@ footer a:active {
   background: white;
   height: 90%;
   background-color: #b3e0ff;
-/*  background-image: url("../img/image_acupuncture_dos.jpg");*/
   background-repeat: no-repeat;
   background-position: right top;
+}
+.content :after {
+  content: "";
+  display: block;
 }
 .login small {
   font-size: 13px;
@@ -203,11 +248,13 @@ table {
 @media (max-width: 780px) {
   .col1 {
     width: 100%;
+    min-width: 400px;
   }
   .col2 {
     float: none;
     display: block;
     width: 100%;
+    min-width: 400px;
     padding: 5px 10% 5px 10%;
   }
 }
@@ -218,4 +265,4 @@ table {
 div.keyword_results{
 	display: none;
   /*visibility: hidden;*/
-}
+}*/
