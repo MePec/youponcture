@@ -61,25 +61,24 @@
 				break;
 
 				case "2":
-	       			$this->engine = new Engine();
-	       			$this->smarty = new Smarty();
+					$search = new Search();
 					switch($this->section){
 						case "1":
-							$this->display->displaySearch(new Search());
+							$this->display->displaySearch($search);
 							break;	
 
 						case "2":
-							Search::submitForm_MainSearch($this->engine, $this->smarty);
+							$search->submitForm_MainSearch();
+							$this->display->displaySearch($search);
 							break;
 
 						case "3":
-							$search = new Search();
 							$search->submitForm_KeywordSearch();
 							$this->display->displaySearch($search);
 							break;		
 
 						default:
-							$this->display->displaySearch(new Search());
+							$this->display->displaySearch($search);
 					}	
 				break;
 				

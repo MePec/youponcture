@@ -33,6 +33,13 @@
 			if($list_patho_ky = $search->getPathosForKeywords()){
 				$this->smarty->assign('patho_ky',$list_patho_ky);
 			}
+			if($list_patho_main = $search->getPathosForMain()){
+				$this->smarty->assign('patho_res',$list_patho_main);
+			}
+			if($list_sympt_main = $search->getSymptsForMain()){
+				$this->smarty->assign('sy_res',$list_sympt_main);
+				$this->smarty->assign('nb_sy',sizeof($list_sympt_main));
+			}
 			$this->smarty->display(TPL_DIR."content_recherche.tpl");
 		}
 	}

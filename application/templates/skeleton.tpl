@@ -25,9 +25,9 @@
 				<a href="../public/index.php?p=1"><h1>YouPoncture</h1></a>
 				<nav role="navigation">
 					<ul class="list-inline">
-						<li class="list-inline-item"><a href="../public/index.php?p=1">Accueil</a></li>
-						<li class="list-inline-item"><a href="../public/index.php?p=2">Wiki pathologie</a></li>
-						<li class="list-inline-item"><a href="../public/index.php?p=3">Informations</a></li>			
+						<li class="list-inline-item"><a href="../public/index.php?p=1" tabindex="1">Accueil</a></li>
+						<li class="list-inline-item"><a href="../public/index.php?p=2" tabindex="2">Wiki pathologie</a></li>
+						<li class="list-inline-item"><a href="../public/index.php?p=3" tabindex="3">Informations</a></li>			
 						<li class="list-inline-item">{$smarty.session.logon_status}</li>	
 					</ul>
 				</nav>
