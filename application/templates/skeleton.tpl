@@ -42,7 +42,7 @@
 	<footer>
 		<div class="container-fluid">
 			<div class="row foo-content">
-				<div class="col-md-4"><a tabindex="13" href="../public/index.php?p=3#auteurs">Auteur</a></div>
+				<div class="col-md-4"><a tabindex="13" href="../public/index.php?p=3#auteurs">Auteurs</a></div>
 				<div class="col-md-4"><a tabindex="14" href="">Plan du site</a></div>
 				<div class="col-md-4">Copyright 2016</div>
 			</div>			

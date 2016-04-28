@@ -154,6 +154,12 @@ footer {
     text-decoration: none; }
   .content_infos a:active {
     color: white; }
+  .content_infos small {
+    font-size: 20px; }
+  .content_infos select {
+    width: 30%; }
+  .content_infos input {
+    width: 20%; }
 
 input[type="submit"] {
   width: auto;
