@@ -18,11 +18,11 @@
 	   	 * Ouverture de la connexion à la BDD.
 	   	 */
         private function __construct() {
-            if(Self::$dbh == null){
+            if(self::$dbh == null){
                 try {
-                    Self::$dbh = new PDO($this->db_dsn, $this->db_user, $this->db_password);
-                    Self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    Self::$dbh->exec('SET NAMES utf8');
+                    self::$dbh = new PDO($this->db_dsn, $this->db_user, $this->db_password);
+                    self::$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    self::$dbh->exec('SET NAMES utf8');
                 } catch (PDOException $exception) {
                     trigger_error("Echec de la connexion : " . $exception->getMessage(), E_USER_WARNING);
                 }
@@ -35,10 +35,10 @@
          * Fonction de recupération de l'objet PDO de l'instance DB.
          */
         public static function &getDBH() {
-            if (Self::$instance == null) {
-                Self::$instance = new Self();
+            if (self::$instance == null) {
+                self::$instance = new self();
             }
-            return Self::$dbh;
+            return self::$dbh;
         }
 
         /**
@@ -46,10 +46,10 @@
          *
          */
         public static function &getInstance() {
-            if (Self::$instance == null) {
-                Self::$instance = new Self();
+            if (self::$instance == null) {
+                self::$instance = new self();
             }
-            return Self::$instance;
+            return self::$instance;
         }
 
 
@@ -58,7 +58,7 @@
          *
          */
         public function prepareRequestInDB($sql){
-            return Self::$dbh->prepare($sql); 
+            return self::$dbh->prepare($sql); 
         }
     }
 ?>

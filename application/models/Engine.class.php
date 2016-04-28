@@ -59,12 +59,12 @@
 					FROM  Users
 					WHERE login = :LOGIN";
 			
-			$sth = Self::prepareRequest($sql);		
+			$sth = self::prepareRequest($sql);		
 			
 			$sth->bindValue(':LOGIN', $login, PDO::PARAM_STR);
 			// $query->bindValue(':PASSWORD', $password, PDO::PARAM_STR);
 			
-			Self::executeResquest($sth);
+			self::executeResquest($sth);
 
 			$hashed_pwd = $sth->fetchColumn();
 
@@ -84,7 +84,7 @@
 
 			$sql = "INSERT INTO Users(name, first_name, password , login) VALUES (:NAME , :FIRST_NAME , :PASSWORD , :LOGIN)";
 			
-			$sth = Self::prepareRequest($sql);
+			$sth = self::prepareRequest($sql);
 			
 			$hashed_pwd = password_hash($password, PASSWORD_DEFAULT);	
 
@@ -94,7 +94,7 @@
 			$sth->bindValue(':NAME', $name, PDO::PARAM_STR);
 			$sth->bindValue(':FIRST_NAME', $name, PDO::PARAM_STR);
 			
-			$status = Self::executeResquest($sth);
+			$status = self::executeResquest($sth);
 
 			//pour tester si l'insertion s'est bien faite
 			return $status;		
@@ -106,15 +106,15 @@
 		public static function requestList($list_name) {
 
 			switch($list_name){
-				case Self::PATHOLOGIES:
+				case self::PATHOLOGIES:
 					$sql = "SELECT `desc` FROM patho ;";
 					$column = "desc";
 					break;
-				case Self::MERIDIENS:
+				case self::MERIDIENS:
 					$sql = "SELECT nom FROM meridien ;";
 					$column = "nom";
 					break;
-				case Self::SYMPTOMS:
+				case self::SYMPTOMS:
 					$sql = "SELECT `desc` FROM symptome ;";
 					$column = "desc";
 					break;
@@ -122,8 +122,8 @@
 					trigger_error("Unknown list_name: ". $list_name, E_USER_ERROR);
 			}
 
-			$query = Self::prepareRequest($sql);
-			Self::executeResquest($query);
+			$query = self::prepareRequest($sql);
+			self::executeResquest($query);
 
 			$data = $query->fetchAll(PDO::FETCH_ASSOC);
 			$nb = $query->rowCount();
@@ -196,8 +196,8 @@
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
 					WHERE kw.name LIKE '".$keyword."' ";
 					
-			$query = Self::prepareRequest($sql);
-			Self::executeResquest($query);
+			$query = self::prepareRequest($sql);
+			self::executeResquest($query);
 
 			$data_patho_ky = $query->fetchAll(PDO::FETCH_ASSOC);
 			$nb_patho_ky = $query->rowCount();
