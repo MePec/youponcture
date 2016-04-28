@@ -4,20 +4,8 @@
 
 	class Engine {
 
-		const PATHOLOGIES = 0;
-		const MERIDIENS = 1;
-		const SYMPTOMS =  2;
-		private $db;
+		const PATHOLOGIES = 0, MERIDIENS = 1, SYMPTOMS =  2;
 		
-	  	/**
-	   	 * Constructeur : /!\ Deprecated
-	   	 * @param db : objet contenant la connexion à la BDD
-	   	 */
-	  	public function __construct(){
-	       	$this->db = DB::getDBH();	
-	  	}
-
-
 	  	/*
 	  	 * Fonction qui demande la préparation d'un objet PDO
 	  	 *
