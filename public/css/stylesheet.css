@@ -74,6 +74,7 @@ color: white;
 **/
 .foo-content div {
 padding-top: 40px;
+padding-bottom: 40px;
 text-align: center;
 }
 .page-wrap {
@@ -89,7 +90,7 @@ content: "";
 display: block;
 }
 footer, .page-wrap:after {
-height: 142px; 
+min-height: 142px; 
 }
 footer {
 font: 1.5em Helvetica Neue, Helvetica, Arial, sans-serif;
