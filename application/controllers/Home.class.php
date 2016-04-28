@@ -156,7 +156,6 @@
 				return false;
 			}
 
-				
 			$logged = Engine::checkIdentity($_POST['login'], $password);
 
 			if (isset($_POST['connection']) && ($logged > 0)) {
