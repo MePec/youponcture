@@ -47,7 +47,7 @@
 
             $domain = '';
 
-            if(Self::checkEmail($email)){
+            if(self::checkEmail($email)){
                 $domain = substr(strrchr($email, "@"), 1);
                 if(checkdnsrr($domain, 'MX')){
                     return true;

@@ -33,7 +33,7 @@
 		 * Permet de vérifier si l'utilisateur est loggué 
 		 * @param $login : Login envoyé par le formulaire $_POST
 		 * @param $MDP : MDP envoyé par le formulaire $_POST
-		 * @result le résultat de la requete
+		 * @return le résultat de la requete
 		 */
 		public static function checkIdentity($login,$password){
 
@@ -59,7 +59,7 @@
 		/**
 		 * signIn
 		 * Permet d'insérer les données pour l'inscription d'un membre
-		 * @result le résultat de la requete
+		 * @return le résultat de la requete
 		 */
 		public static function signIn($login, $password, $name ,$first_name){
 
@@ -67,7 +67,7 @@
 			
 			$sth = self::prepareRequest($sql);
 			
-			$hashed_pwd = password_hash($password, PASSWORD_DEFAULT);	
+			$hashed_pwd = password_hash($password , PASSWORD_DEFAULT);	
 
 			$sth->bindValue(':LOGIN', $login, PDO::PARAM_STR);
 			$sth->bindValue(':PASSWORD', $hashed_pwd, PDO::PARAM_STR);
@@ -81,8 +81,11 @@
 			return $status;		
 		}
 
-		/* fonction requestList()
-		 *Permet de récupérer la liste de toutes les pathologies, méridiens ou symptômes de la BDD
+		/**
+		 * requestList()
+		 * Permet de récupérer la liste de toutes les pathologies, méridiens ou symptômes de la BDD
+		 * @param $list_name
+		 * @return $list
 		 */
 		public static function requestList($list_name) {
 
@@ -121,8 +124,11 @@
 			return $list;
 		}		
 
-		/* fonction requestPathos_Keywords()
+		/** 
+		 * requestPathos_Keywords()
 		 * Permet de récupérer la liste des pathologies par mot-clé
+		 * @param mot clé à chercher
+		 * @return liste des pathologies
 		 */
 		public static function requestPathos_Keywords($keyword) {
 			$sql = "SELECT DISTINCT pat.desc AS Patho,sy.desc AS Symp FROM patho pat
@@ -154,8 +160,11 @@
 		}
 
 
-		/* fonction requestCodeMeridien()
+		/**
+		 * requestCodeMeridien()
 		 * Permet de récupérer le code pour chaque méridiens
+		 * @param $list_type
+		 * @return liste des code chaque meridien
 		 */
 		public static function requestCodeMeridien(array $list_type) {
 			$sql = "SELECT code FROM meridien
@@ -180,7 +189,9 @@
 		/**
 		 * requestType_Merid
 		 * Permet de récupérer le type de meridien en rentrant en paramètre la catégorie de meridien et le caracteristique
-		 * @result le résultat de la requete
+		 * @param $categorie_patho
+		 * @param $caracter
+		 * @return le résultat de la requete
 		 */
 		public static function requestType_Merid($categorie_patho,$caracter) {
 			$sql = "SELECT type_mer FROM caracteristiques
@@ -202,7 +213,9 @@
 
 		/**
 		 * requestType_Merid_Default
-		 * Permet de récupérer le type de meridien 
+		 * Permet de récupérer le type de meridien
+		 * @param $categorie_patho
+		 * @return $type_mer 
 		 */
 		public static function requestType_Merid_Default($categorie_patho) {
 			$sql = "SELECT type_mer FROM caracteristiques
@@ -226,8 +239,12 @@
 			return $type_mer;	
 		}
 
-		/* fonction requestList_Patho()
+		/**
+		 * requestList_Patho()
 		 * Permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
+		 * @param $list_meridien
+		 * @param $list_type
+		 * @return $list_pathologie
 		 */
 		public static function requestList_Patho(array $list_meridien,array $list_type) {
 			$sql = "SELECT p.desc FROM patho p
@@ -250,8 +267,12 @@
 			return $list_patho;	
 		}
 
-		/* fonction requestList_SymptomsByPatho()
+		/**
+		 * requestList_SymptomsByPatho()
 		 * Permet de récupérer la liste des psymptomes associés à chaque pathologie en fonction des 3 critères du premier formulaire
+		 * @param $list_meridien
+		 * @param $list_type
+		 * @return $list_symptome
 		 */
 		public static function requestList_SymptomsByPatho(array $list_meridien,array $list_type) {
 			$sql = "SELECT s.desc FROM symptome s
