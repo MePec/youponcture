@@ -13,7 +13,7 @@
 				   <option value="l">Luo</option>
 				   <option value="mv">Merveilleux vaisseaux</option>
 				   <option value="j">Jing jin</option>
-				</select> 
+				</select>
 
 				<label class="caracteristiques_meridien" for="caracteristiques">Caractéristiques :</label>
 				 <select name="caracteristiques_meridien" class="caracteristiques_meridien">

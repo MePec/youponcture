@@ -132,6 +132,29 @@ footer {
   .register h1, .login h1 {
     margin-left: 0%; }
 
+.content_infos {
+  border-radius: 10px;
+  padding: 5px 5% 5px 5%;
+  width: 100%;
+  min-width: 250px;
+  margin: 0 auto 15px auto;
+  overflow: hidden; }
+  .content_infos h1 {
+    margin-left: 0%; }
+  .content_infos ul {
+    font-size: 18px; }
+  .content_infos p {
+    font-size: 18px; }
+  .content_infos a:link {
+    color: white; }
+  .content_infos a:visited {
+    color: white; }
+  .content_infos a:hover {
+    color: white;
+    text-decoration: none; }
+  .content_infos a:active {
+    color: white; }
+
 input[type="submit"] {
   width: auto;
   height: 30px;
