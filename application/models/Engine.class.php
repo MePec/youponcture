@@ -49,12 +49,6 @@
 		 */
 		public static function checkIdentity($login,$password){
 
-			// $sql = "SELECT DISTINCT login, 
-			// 						password
-			// 		FROM  Users
-			// 		WHERE login = :LOGIN AND 
-			// 			  MDP = :MDP";
-
 			$sql = "SELECT password
 					FROM  Users
 					WHERE login = :LOGIN";
@@ -62,7 +56,6 @@
 			$sth = self::prepareRequest($sql);		
 			
 			$sth->bindValue(':LOGIN', $login, PDO::PARAM_STR);
-			// $query->bindValue(':PASSWORD', $password, PDO::PARAM_STR);
 			
 			self::executeResquest($sth);
 

@@ -11,9 +11,14 @@
             return preg_match ( "/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u", $name);
         }
 
-        // Verifie une chaine Alphanumérique + les espaces
+        // Verifie une chaine Alphanumérique + les espaces et les accents
         public static function checkIsAlphaNumWithSpace($string) {
             return preg_match ( "/^[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-|\s]+$/u", $string);
+        }
+
+        // Verifie une chaine alpahnumérique simple
+        public static function checkIsAlphaNum($string) {
+            return preg_match ( "/^[0-9a-zA-Z]+$/u", $string);
         }
 
         // Le login peut contenir des caractères alphaumériques et des tirets unique, sa longueur est comprise entre 3 et 15.

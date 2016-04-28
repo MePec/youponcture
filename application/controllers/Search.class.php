@@ -1,5 +1,6 @@
 <?php
-
+	
+	require_once(CTL_DIR."CheckValues.class.php");
 	require_once(MDL_DIR."Engine.class.php");
 
 	class Search {
