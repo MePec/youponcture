@@ -11,7 +11,7 @@
 		
 	  	/**
 	   	 * Constructeur : /!\ Deprecated
-	   	 * @param db : objet contenant la connexion à la BDD
+	   	 * @param db : objet contenant la connexion Ã  la BDD
 	   	 */
 	  	public function __construct(){
 	       	$this->db = DB::getDBH();	
@@ -19,7 +19,7 @@
 
 
 	  	/*
-	  	 * Fonction qui demande la préparation d'un objet PDO
+	  	 * Fonction qui demande la prÃ©paration d'un objet PDO
 	  	 *
 	  	 */
 	  	private static function prepareRequest($sql){
@@ -29,23 +29,23 @@
 
 
 	  	/*
-	  	 * Fonction d'execution des requêtes avec gestion des erreurs
+	  	 * Fonction d'execution des requÃªtes avec gestion des erreurs
 	  	 *
 	  	 */
 	    private static function executeResquest(PDOStatement &$sth){
 	  		try{
 				return $sth->execute();
 			} catch( PDOException $exception ) {
-				trigger_error("Echec de la requête : " . $exception->getMessage(), E_USER_WARNING);
+				trigger_error("Echec de la requÃªte : " . $exception->getMessage(), E_USER_WARNING);
 			}
 	  	} 
 
 	  	/**
 		 * checkIdentity
-		 * Permet de vérifier si l'utilisateur est loggué 
-		 * @param $login : Login envoyé par le formulaire $_POST
-		 * @param $MDP : MDP envoyé par le formulaire $_POST
-		 * @result le résultat de la requete
+		 * Permet de vÃ©rifier si l'utilisateur est logguÃ© 
+		 * @param $login : Login envoyÃ© par le formulaire $_POST
+		 * @param $MDP : MDP envoyÃ© par le formulaire $_POST
+		 * @result le rÃ©sultat de la requete
 		 */
 		public static function checkIdentity($login,$password){
 
@@ -77,8 +77,8 @@
 
 		/**
 		 * signIn
-		 * Permet d'insérer les données pour l'inscription d'un membre
-		 * @result le résultat de la requete
+		 * Permet d'insÃ©rer les donnÃ©es pour l'inscription d'un membre
+		 * @result le rÃ©sultat de la requete
 		 */
 		public static function signIn($login, $password, $name ,$first_name){
 
@@ -101,7 +101,7 @@
 		}
 
 		/* fonction requestList()
-		 *Permet de récupérer la liste de toutes les pathologies, méridiens ou symptômes de la BDD
+		 *Permet de rÃ©cupÃ©rer la liste de toutes les pathologies, mÃ©ridiens ou symptÃ´mes de la BDD
 		 */
 		public static function requestList($list_name) {
 
@@ -140,53 +140,8 @@
 			return $list;
 		}		
 
-		/* fonction getPathos()
-		 * Permet de récupérer la liste de toutes les pathologies de la BDD
-		 */
-		function getPathos() {
-			$sql = "SELECT * FROM patho ;";
-
-			$query = $this->db->prepare($sql);
-			$query->execute();
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
-				
-			return $result;	
-		}
-
-		/* fonction getSymptoms()
-		 * Permet de récupérer la liste de toutes les symptomes
-		 */
-		function getSymptoms() {
-			$sql = "SELECT * FROM symptome ;";
-
-			$query = $this->db->prepare($sql);
-			$query->execute();
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
-				
-			return $result;	
-		}
-
-		/* fonction getMeridiens()
-		 *Permet de récupérer la liste de toutes les méridiens de la BDD
-		 */
-		function getMeridiens() {
-			$sql = "SELECT nom FROM meridien ;";
-
-			$query = $this->db->prepare($sql);
-			$query->execute();
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
-				
-			return $result;	
-		}
-
 		/* fonction requestPathos_Keywords()
-		 * Permet de récupérer la liste des pathologies par mot-clé
+		 * Permet de rÃ©cupÃ©rer la liste des pathologies par mot-clÃ©
 		 */
 		public static function requestPathos_Keywords($keyword) {
 			$sql = "SELECT DISTINCT pat.desc AS Patho,sy.desc AS Symp FROM patho pat
@@ -194,9 +149,12 @@
 					LEFT JOIN symptome sy ON sp.idS = sy.idS
 					LEFT JOIN keySympt ks ON sy.idS = ks.idS
 					LEFT JOIN keywords kw ON kw.idK = ks.idK 
-					WHERE kw.name LIKE '".$keyword."' ";
+					WHERE kw.name LIKE :KEYWORD ";
 					
 			$query = self::prepareRequest($sql);
+
+			$query->bindValue(':KEYWORD', $keyword, PDO::PARAM_STR);
+
 			self::executeResquest($query);
 
 			$data_patho_ky = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -215,98 +173,126 @@
 		}
 
 
-		/* fonction getCodeMeridien()
-		 * Permet de récupérer le code pour chaque méridiens
+		/* fonction requestCodeMeridien()
+		 * Permet de rÃ©cupÃ©rer le code pour chaque mÃ©ridiens
 		 */
-		function getCodeMeridien($merid) {
+		public static function requestCodeMeridien(array $list_type) {
 			$sql = "SELECT code FROM meridien
-					WHERE nom LIKE '".$merid."' ";
+					WHERE nom LIKE :TYPE ";
 
-			$query = $this->db->prepare($sql);
-			$query->execute();
+			$query = self::prepareRequest($sql);
 
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
+			$query->bindParam(':TYPE', $type, PDO::PARAM_STR);
+
+			$i = 0;
+			foreach($list_type as $type){
+				self::executeResquest($query);
+				$data_meridien = $query->fetchAll(PDO::FETCH_ASSOC);
+				$meridien[$i] = $data_meridien[0]['code'] ;
+				$i++;
+			}
 				
-			return $result;	
+			return $meridien;	
 		}
 
 
 		/**
-		 * getType_Merid
-		 * Permet de récupérer le type de meridien en rentrant en paramètre la catégorie de meridien et le caracteristique
-		 * @result le résultat de la requete
+		 * requestType_Merid
+		 * Permet de rÃ©cupÃ©rer le type de meridien en rentrant en paramÃ¨tre la catÃ©gorie de meridien et le caracteristique
+		 * @result le rÃ©sultat de la requete
 		 */
-		public function getType_Merid($categorie_patho,$caracter) {
+		public static function requestType_Merid($categorie_patho,$caracter) {
 			$sql = "SELECT type_mer FROM caracteristiques
-					WHERE type_patho = '".$categorie_patho."' AND type_caracteristiques = '".$caracter."' ;";
+					WHERE type_patho = :CATEGORIE_PATHO AND type_caracteristiques = :CARACTER ;";
 			
-			$query = $this->db->prepare($sql);		
-			
-			$resultats = $query->execute();
+			$query = self::prepareRequest($sql);
 
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-				
-			return $result;	
+			$query->bindValue(':CATEGORIE_PATHO', $categorie_patho, PDO::PARAM_STR);
+			$query->bindValue(':CARACTER', $caracter, PDO::PARAM_STR);	
+			
+			self::executeResquest($query);
+
+			$data_type_mer = $query->fetchAll(PDO::FETCH_ASSOC);
+
+			$type_mer[0] = $data_type_mer[0]['type_mer'];
+
+			return $type_mer;	
 		}
 
 		/**
-		 * getType_Merid_Default
-		 * Permet de récupérer le type de meridien 
+		 * requestType_Merid_Default
+		 * Permet de rÃ©cupÃ©rer le type de meridien 
 		 */
-		public function getType_Merid_Default($categorie_patho) {
+		public static function requestType_Merid_Default($categorie_patho) {
 			$sql = "SELECT type_mer FROM caracteristiques
-					WHERE type_patho = '".$categorie_patho."' ;";
+					WHERE type_patho = :CATEGORIE_PATHO ;";
 			
-			$query = $this->db->prepare($sql);		
-			
-			$resultats = $query->execute();
+			$query = self::prepareRequest($sql);
 
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
+			$query->bindValue(':CATEGORIE_PATHO', $categorie_patho, PDO::PARAM_STR);
+
+			self::executeResquest($query);
+
+			$data_type_mer = $query->fetchAll(PDO::FETCH_ASSOC);
+			$nb_data_type_mer = $query->rowCount();
+
+			if($nb_data_type_mer > 0){
+				for($row = 0;$row < $nb_data_type_mer;$row++){
+					$type_mer[$row] = $data_type_mer[$row]['type_mer'];
+				}
+			}
 				
-			return $result;	
+			return $type_mer;	
 		}
 
-		/* fonction getList_Patho()
-		 * Permet de récupérer la liste des pathologie en fonction des 3 critères du premier formulaire
+		/* fonction requestList_Patho()
+		 * Permet de rÃ©cupÃ©rer la liste des pathologie en fonction des 3 critÃ¨res du premier formulaire
 		 */
-		function getList_Patho($meridien,$type_mer) {
+		public static function requestList_Patho(array $list_meridien,array $list_type) {
 			$sql = "SELECT p.desc FROM patho p
-					WHERE p.mer = :MER AND p.type = :TYPE ;";
+					WHERE p.mer = :MERIDIEN AND p.type = :TYPE ;";
 
-			$query = $this->db->prepare($sql);
+			$query = self::prepareRequest($sql);
 			
-			$query->bindValue(':MER', $meridien);
-			$query->bindValue(':TYPE', $type_mer);
+			$query->bindParam(':MERIDIEN', $meridien, PDO::PARAM_STR);
+			$query->bindParam(':TYPE', $type, PDO::PARAM_STR);
 
-			$query->execute();
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
+			$i=0;
+			foreach ($list_type as $type) {
+				foreach ($list_meridien as $meridien) {
+					self::executeResquest($query);
+					$list_patho[$i] = $query->fetchAll(PDO::FETCH_ASSOC);		
+					$i++;		
+				}
+			}
 				
-			return $result;	
+			return $list_patho;	
 		}
 
-		/* fonction getList_SymptomsByPatho()
-		 * Permet de récupérer la liste des psymptomes associés à chaque pathologie en fonction des 3 critères du premier formulaire
+		/* fonction requestList_SymptomsByPatho()
+		 * Permet de rÃ©cupÃ©rer la liste des psymptomes associÃ©s Ã  chaque pathologie en fonction des 3 critÃ¨res du premier formulaire
 		 */
-		function getList_SymptomsByPatho($meridien,$type_mer) {
+		public static function requestList_SymptomsByPatho(array $list_meridien,array $list_type) {
 			$sql = "SELECT s.desc FROM symptome s
 					LEFT JOIN symptPatho sp ON s.idS = sp.idS
 					LEFT JOIN patho p ON sp.idP = p.idP
-					WHERE p.mer = :MER AND p.type = :TYPE ;";
+					WHERE p.mer = :MERIDIEN AND p.type = :TYPE ;";
 
-			$query = $this->db->prepare($sql);
+			$query = self::prepareRequest($sql);
 			
-			$query->bindValue(':MER', $meridien);
-			$query->bindValue(':TYPE', $type_mer);
+			$query->bindParam(':MERIDIEN', $meridien, PDO::PARAM_STR);
+			$query->bindParam(':TYPE', $type, PDO::PARAM_STR);
 
-			$query->execute();
-
-			$result['data'] = $query->fetchAll(PDO::FETCH_ASSOC);
-			$result['nb'] = $query->rowCount();
+			$i=0;
+			foreach ($list_type as $type) {
+				foreach ($list_meridien as $meridien) {
+					self::executeResquest($query);
+					$list_sympt[$i]= $query->fetchAll(PDO::FETCH_ASSOC);
+					$i++;
+				}
+			}
 				
-			return $result;	
+			return $list_sympt;	
 		}
 	}
 ?>
