@@ -76,7 +76,8 @@
 		 */
 		public function submitForm_KeywordSearch(){
 						
-			if(isset($_POST['keywords']) && CheckValues::checkIsAlphaNumWithSpace($_POST['keywords'])){
+			if(isset($_POST['keywords']) && CheckValues::checkIsAlphaNumWithSpace($_POST['keywords']) &&
+				$_SESSION['Logged']){
 				$key = $_POST['keywords'];
 
 				$this->list_patho_ky = Engine::requestPathos_Keywords($key);

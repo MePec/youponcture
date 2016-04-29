@@ -12,7 +12,8 @@
 	<link media="(max-width: 779px)" href="css/stylesheet_mobile.css" rel="stylesheet" type="text/css"/>
 	<link media="print" href="css/stylesheet_print.css" rel="stylesheet" type="text/css"/>
 
-	<script type="text/javascript" src="../vendors/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/ajax_check.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel="stylesheet" href="../vendors/parsley/doc/assets/docs.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
