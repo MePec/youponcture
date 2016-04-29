@@ -8,7 +8,7 @@
 		 */
 		public static function Web_Service_modelDownload(){
 			// gérer contenu de fichier exporté (readfile) :
-			readfile("../public/xml/pathologie.xml");
+			readfile("xml/pathologie.xml");
 
 			header("Cache-Control: no-cache, must-revalidate");
 			header("Cache-Control: post-check=0,pre-check=0");
@@ -25,7 +25,7 @@
 		 * Permet de rediriger vers le Web_service de vue du modèle XML
 		 */
 		public static function Web_Service_modelView(){
-			header("Location: ../public/xml/pathologie.xml");
+			header("Location: xml/pathologie.xml");
 		}
 
 		/**
@@ -37,7 +37,7 @@
 
 			$add = $_GET['champs'];
 		  
-		  	$filename = '../public/xml/pathologie.xml';
+		  	$filename = 'xml/pathologie.xml';
 		  	// vérifier sur la VM si marche avec ce chemin
 			$patho_model = simplexml_load_file($filename);
 			$file = "pathologie.xml";
