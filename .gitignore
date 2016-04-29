@@ -1,1 +1,4 @@
-/templates_c/
+/public/templates_c/
+/public/cache/
+/public/css/.sass-cache/
+application/templates/content_recherche.tpl.rej
