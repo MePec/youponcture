@@ -1,1 +1,1 @@
-ErrorDocument 404 /youponcture/public/index.php?p=4
+ErrorDocument 404 /index.php?p=4

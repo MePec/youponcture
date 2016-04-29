@@ -3,18 +3,16 @@
 	session_start();	
 
 	require_once("../application/config/config.php");
-
-	//require_once("../application/config/DB.class.php");
-	//require_once("../application/models/Engine.class.php");
+	require_once(CTL_DIR."CheckValues.class.php");
 	require_once(CTL_DIR."/Manager.class.php");
 
 	// Récupération de la page
-	if(isset($_GET['p']) && !empty($_GET['p']))
+	if(isset($_GET['p']) && CheckValues::checkIsAlphaNum($_GET['p']))
 		$page = htmlspecialchars($_GET['p'], ENT_QUOTES);
 	else
 		$page = null;
 	
-	if(isset($_GET['q']) && !empty($_GET['q']))
+	if(isset($_GET['q']) && CheckValues::checkIsAlphaNum($_GET['q']))
 		$section = htmlspecialchars($_GET['q'], ENT_QUOTES);
 	else
 		$section = null;

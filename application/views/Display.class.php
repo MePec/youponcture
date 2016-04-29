@@ -17,7 +17,7 @@
 
 		public function displayHome(Home $home){
 			$this->smarty->assign('rss',$home->getRss());
-			$this->smarty->display(TPL_DIR."content_accueil.tpl");
+			$this->smarty->display(TPL_DIR."content_home.tpl");
 		}
 
 		public function displayMsg($msg){
@@ -40,7 +40,7 @@
 				$this->smarty->assign('sy_res',$list_sympt_main);
 				$this->smarty->assign('nb_sy',sizeof($list_sympt_main));
 			}
-			$this->smarty->display(TPL_DIR."content_recherche.tpl");
+			$this->smarty->display(TPL_DIR."content_search.tpl");
 		}
 
 		/**
@@ -48,7 +48,7 @@
 		 * Permet d'afficher la page principale d'informations
 		 */
 		public function displayCredits(){
-			$this->smarty->display(TPL_DIR."content_infos.tpl");
+			$this->smarty->display(TPL_DIR."content_credits.tpl");
 		}
 
 		/**

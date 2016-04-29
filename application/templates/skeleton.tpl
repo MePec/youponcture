@@ -24,12 +24,12 @@
 		<header>
 
 			<div class="bandeau" role="banner">
-				<a href="../public/index.php?p=1"><h1>YouPoncture</h1></a>
+				<a href="index.php?p=1"><h1>YouPoncture</h1></a>
 				<nav role="navigation">
 					<ul class="list-inline">
-						<li class="list-inline-item"><a href="../public/index.php?p=1" tabindex="1">Accueil</a></li>
-						<li class="list-inline-item"><a href="../public/index.php?p=2" tabindex="2">Wiki pathologie</a></li>
-						<li class="list-inline-item"><a href="../public/index.php?p=3" tabindex="3">Informations</a></li>			
+						<li class="list-inline-item"><a href="index.php?p=1" tabindex="1">Accueil</a></li>
+						<li class="list-inline-item"><a href="index.php?p=2" tabindex="2">Wiki pathologie</a></li>
+						<li class="list-inline-item"><a href="index.php?p=3" tabindex="3">Informations</a></li>			
 						<li class="list-inline-item">{$smarty.session.logon_status}</li>	
 					</ul>
 				</nav>
@@ -44,7 +44,7 @@
 	<footer>
 		<div class="container-fluid">
 			<div class="row foo-content">
-				<div class="col-md-4"><a tabindex="13" href="../public/index.php?p=3#auteurs">Auteurs</a></div>
+				<div class="col-md-4"><a tabindex="13" href="index.php?p=3#auteurs">Auteurs</a></div>
 				<div class="col-md-4"><a tabindex="14" href="">Plan du site</a></div>
 				<div class="col-md-4">Copyright 2016</div>
 			</div>			
